@@ -3,18 +3,18 @@ import { useEffect, useMemo, useState } from "react";
 
 const defaultCities = [
   { name: "LCS", href: "/" },
-  { name: "Brescia", href: "/competitions/Brescia" },
-  { name: "Roma", href: "/competitions/Roma" },
-  { name: "Milano", href: "/competitions/Milano" },
-  { name: "Napoli", href: "/competitions/Napoli" },
-  { name: "Torino", href: "/competitions/Torino" },
-  { name: "Verona", href: "/competitions/Verona" },
-  { name: "Genova", href: "/competitions/Genova" },
-  { name: "Bologna", href: "/competitions/Bologna" },
-  { name: "Firenze", href: "/competitions/Firenze" },
-  { name: "Palermo", href: "/competitions/Palermo" },
-  { name: "Catania", href: "/competitions/Catania" },
-  { name: "Venezia", href: "/competitions/Venezia" },
+  { name: "Brescia", href: "/competitions/brescia" },
+  { name: "Roma", href: "/competitions/roma" },
+  { name: "Milano", href: "/competitions/milano" },
+  { name: "Napoli", href: "/competitions/napoli" },
+  { name: "Torino", href: "/competitions/torino" },
+  { name: "Verona", href: "/competitions/verona" },
+  { name: "Genova", href: "/competitions/genova" },
+  { name: "Bologna", href: "/competitions/bologna" },
+  { name: "Firenze", href: "/competitions/firenze" },
+  { name: "Palermo", href: "/competitions/palermo" },
+  { name: "Catania", href: "/competitions/catania" },
+  { name: "Venezia", href: "/competitions/venezia" },
 ];
 
 export function useCitiesNav(pathname) {

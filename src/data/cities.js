@@ -86,7 +86,7 @@ const cities = {
                     { id: 'leonardo', name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png', p: 3, w: 2, d: 0, l: 1, gf: 5, ga: 3, gd: 2, pts: 6 },
                     { id: 'itis-a', name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png', p: 3, w: 2, d: 0, l: 1, gf: 4, ga: 2, gd: 2, pts: 6 },
                     { id: 'liceo-b', name: 'Liceo B.', logo: '/logo/PNG-lcs_logo_white_t.png', p: 3, w: 1, d: 0, l: 2, gf: 2, ga: 4, gd: -2, pts: 3 },
-                    { id: 'itis-c', name: 'ITIS C.', logo: '/logo/PNG-lcs_logo_white_t.png', p: 3, w: 0, d: 1, l: 2, gf: 1, ga: 3, gd: -2, pts: 9 },
+                    { id: 'itis-c', name: 'ITIS C.', logo: '/logo/PNG-lcs_logo_white_t.png', p: 3, w: 0, d: 1, l: 2, gf: 1, ga: 3, gd: -2, pts: 1 },
                 ]
             }
         ],
@@ -112,6 +112,11 @@ const cities = {
                 date: '2025-10-18',
                 image: '/HomeFoto/DSCF6614-Migliorato-NR.webp'
             }
+        ],
+        partners: [
+            { id: 'partner-uno', name: 'Comune di Torino', type: 'Istituzionale', logo: '/logo/PNG-lcs_logo_white_t.png', url: 'https://www.comune.torino.it/' },
+            { id: 'partner-due', name: 'Torino Sport', type: 'Community', logo: '/logo/PNG-lcs_logo_white_t.png', url: 'https://www.torinosport.it/' },
+            { id: 'partner-tre', name: 'LCS Official Store', type: 'Merch', logo: '/logo/PNG-lcs_logo_white_t.png', url: 'https://www.example.com/' }
         ]
     },
 };

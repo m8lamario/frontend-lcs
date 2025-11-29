@@ -1,4 +1,4 @@
-.city-page{
+.city-page {
     color: var(--text);
 }
 /* Nascondi scrollbar orizzontale ma permetti lo scroll */
@@ -51,20 +51,26 @@
 
 /* ScrollNews: card con immagine e titolo in basso */
 .scroll-news {
+    position: relative;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
 .scroll-news__card {
-    border-radius: 16px;
+    position: relative;
+    border-radius: 24px;
     overflow: hidden;
-    box-shadow: 0 6px 24px rgba(0,0,0,0.18);
-    background: #0b0b0b;
+    background: #050505;
+    min-height: 340px;
 }
 
 .scroll-news__image-wrap {
     position: relative;
     width: 100%;
-    height: 240px; /* mobile */
+    height: 100%;
+    min-height: 340px;
 }
 
 .scroll-news__image {
@@ -74,57 +80,117 @@
 /* sfumatura per migliorare leggibilità della caption */
 .scroll-news__gradient {
     position: absolute;
-    left: 0; right: 0; bottom: 0; height: 55%;
-    background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.75) 100%);
-    pointer-events: none;
+    inset: 0;
+    background: radial-gradient(circle at 20% 20%, rgba(0,0,0,0.15), transparent 35%),
+                linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.85) 75%);
 }
 
-/* caption in basso */
-.scroll-news__caption {
+.scroll-news__content {
     position: absolute;
-    left: 0; right: 0; bottom: 0;
-    padding: 14px 16px 16px;
+    inset: auto 0 0;
+    padding: clamp(16px, 4vw, 28px);
     color: #fff;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 12px;
+    width: 700px;
+    background: linear-gradient(180deg, rgba(5,5,5,0.4) 0%, rgba(5,5,5,0.75) 70%);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
 }
 
-.scroll-news__label {
-    display: inline-block;
-    align-self: flex-start;
-    font-size: 12px;
-    letter-spacing: 0.04em;
+.scroll-news__eyebrow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    padding: 4px 8px;
-    border-radius: 999px;
-    background: rgba(255,255,255,0.15);
-    backdrop-filter: blur(2px);
+    opacity: 0.85;
+    gap: 12px;
 }
 
 .scroll-news__title {
     margin: 0;
-    font-size: clamp(18px, 3.8vw, 26px);
-    line-height: 1.2;
-    font-weight: 600;
-    text-wrap: balance;
+    font-size: clamp(1.2rem, 3vw, 2.2rem);
+    line-height: 1.1;
 }
 
-.scroll-news__date {
-    font-size: 12px;
-    opacity: 0.9;
+.scroll-news__excerpt {
+    margin: 0;
+    font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+    color: rgba(255,255,255,0.9);
+    max-width: 52ch;
 }
 
-/* Hover/focus su desktop */
+.scroll-news__controls {
+    position: absolute;
+    inset: auto 24px 24px auto;
+    display: flex;
+    gap: 8px;
+}
+
+.scroll-news__control {
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.4);
+    background: rgba(0,0,0,0.35);
+    color: #fff;
+    font-size: 1.25rem;
+    display: grid;
+    place-items: center;
+    transition: background .2s ease, transform .2s ease;
+}
+
 @media (hover: hover) {
-  .scroll-news__card { transition: transform .25s ease, box-shadow .25s ease; }
-  .scroll-news__card:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(0,0,0,0.22); }
+    .scroll-news__control:hover {
+        background: rgba(255,255,255,0.15);
+        transform: translateY(-1px);
+    }
 }
 
-/* breakpoint tablet/desktop */
-@media (min-width: 640px) {
-    .scroll-news__image-wrap { height: 320px; }
+.scroll-news__indicators {
+    display: flex;
+    gap: 8px;
+    padding: 0 4px;
+    justify-content: center;
 }
-@media (min-width: 1024px) {
-    .scroll-news__image-wrap { height: 420px; }
+
+.scroll-news__indicators button {
+    width: 32px;
+    height: 4px;
+    border-radius: 999px;
+    border: none;
+    background: rgba(255,255,255,0.25);
+    transition: background .2s ease, width .2s ease;
+}
+
+.scroll-news__indicators button.is-active {
+    background: var(--accent, #f7ce46);
+    width: 48px;
+}
+
+.scroll-news .visually-hidden {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+@media (min-width: 768px) {
+    .scroll-news__card {
+        min-height: 420px;
+    }
+
+    .scroll-news__controls {
+        inset: 24px 24px auto auto;
+    }
+}
+
+@media (min-width: 1200px) {
+    .scroll-news__card {
+        min-height: 520px;
+    }
 }

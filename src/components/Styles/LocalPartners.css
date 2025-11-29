@@ -1,0 +1,118 @@
+.local-partners {
+    margin-top: 4rem;
+    padding: 3rem 2rem;
+    border-radius: 32px;
+    background: radial-gradient(circle at top, rgba(76, 92, 255, 0.18), rgba(8, 9, 15, 0.95));
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+}
+
+.local-partners__header {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 2.5rem;
+}
+
+.local-partners__eyebrow {
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.3rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 0.75rem;
+}
+
+.local-partners__title {
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    margin-bottom: 0.5rem;
+}
+
+.local-partners__subtitle {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.local-partners__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+}
+
+.local-partner-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    border-radius: 20px;
+    background: rgba(17, 19, 28, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+}
+
+.local-partner-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(111, 132, 255, 0.7);
+    background: rgba(28, 31, 45, 0.9);
+}
+
+.local-partner-card__logo {
+    width: 64px;
+    height: 64px;
+    padding: 0.75rem;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.local-partner-card__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.local-partner-card__type {
+    font-size: 0.75rem;
+    letter-spacing: 0.2rem;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.local-partner-card__name {
+    font-size: 1.1rem;
+}
+
+.local-partner-card__cta {
+    margin-top: auto;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.9);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.local-partner-card__cta::after {
+    content: '→';
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+}
+
+.local-partner-card:hover .local-partner-card__cta::after {
+    transform: translateX(4px);
+}
+
+@media (max-width: 640px) {
+    .local-partners {
+        margin-top: 3rem;
+        padding: 2rem 1.25rem;
+        border-radius: 24px;
+    }
+
+    .local-partner-card {
+        padding: 1.25rem;
+    }
+}
+
