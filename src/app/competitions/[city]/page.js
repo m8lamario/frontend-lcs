@@ -36,7 +36,7 @@ export default async function CityPage({ params }) {
             </div>
             <div className="city-info">
                 {hasNews && (
-                    <CityScrollNews items={data.news} durationMs={1000} />
+                    <CityScrollNews items={data.news} durationMs={4000} />
                 )}
                 <LocalPartners partners={partners} />
             </div>

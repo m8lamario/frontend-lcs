@@ -67,7 +67,6 @@ export default async function SectionPage({ params }) {
 
                 {sectionKey === 'partite' && (
                     <>
-                        <AnimatedSectionTitle className={"CityTitleInfo"}>Matches</AnimatedSectionTitle>
                         <MatchesSlider matches={data.matches || []} />
                     </>
                 )}

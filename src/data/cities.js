@@ -23,7 +23,8 @@ const cities = {
                 home: { name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
                 away: { name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
                 score: '2 - 1',
-                status: 'FT'
+                status: 'FT',
+                isLive: false
             },
             {
                 id: 'm2',
@@ -31,8 +32,10 @@ const cities = {
                 stage: 'Girone A',
                 home: { name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
                 away: { name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
-                score: '-',
-                status: 'In programma'
+                score: '1 - 0',
+                status: 'LIVE',
+                isLive: true,
+                minute: 65
             },
             {
                 id: 'm3',
@@ -41,7 +44,8 @@ const cities = {
                 home: { name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
                 away: { name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
                 score: '1 - 1',
-                status: 'FT'
+                status: 'FT',
+                isLive: false
             },
             {
                 id: 'm4',
@@ -50,7 +54,8 @@ const cities = {
                 home: { name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
                 away: { name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
                 score: '1 - 1',
-                status: 'FT'
+                status: 'FT',
+                isLive: false
             },
             {
                 id: 'm5',
@@ -59,7 +64,59 @@ const cities = {
                 home: { name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
                 away: { name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
                 score: '1 - 1',
-                status: 'FT'
+                status: 'FT',
+                isLive: false
+            },
+            {
+                id: 'm6',
+                date: '2025-11-05T18:00:00+01:00',
+                stage: 'Semifinali',
+                home: { name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
+                away: { name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
+                score: '3 - 2',
+                status: 'FT',
+                isLive: false
+            },
+            {
+                id: 'm7',
+                date: '2025-11-06T20:30:00+01:00',
+                stage: 'Semifinali',
+                home: { name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
+                away: { name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
+                score: '0 - 0',
+                status: 'LIVE',
+                isLive: true,
+                minute: 38
+            },
+            {
+                id: 'm8',
+                date: '2025-11-10T16:00:00+01:00',
+                stage: 'Finale',
+                home: { name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
+                away: { name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
+                score: '2 - 0',
+                status: 'FT',
+                isLive: false
+            },
+            {
+                id: 'm9',
+                date: '2025-11-12T10:00:00+01:00',
+                stage: 'Finale',
+                home: { name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
+                away: { name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
+                score: '1 - 2',
+                status: 'FT',
+                isLive: false
+            },
+            {
+                id: 'm10',
+                date: '2025-11-14T14:00:00+01:00',
+                stage: 'Amichevole',
+                home: { name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
+                away: { name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
+                score: '-',
+                status: 'SCHEDULED',
+                isLive: false
             }
         ],
         groups: [

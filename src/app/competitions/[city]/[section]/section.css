@@ -151,6 +151,7 @@
     gap: .5rem;
     color: var(--text);
 }
+.city-page .match-meta-right { display:flex; align-items:center; gap:.5rem; }
 .city-page .match-date { font-size: .85rem; opacity: .9; }
 .city-page .match-stage { font-size: .75rem; opacity: .75; background: #1a1a1a; border: 1px solid #2a2a2a; padding: 2px 8px; border-radius: 999px; }
 
@@ -167,6 +168,58 @@
 .city-page .score-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 .5rem; min-width: 72px; }
 .city-page .score { font-size: clamp(1.4rem, 3.6vw, 2rem); font-weight: 700; letter-spacing: .5px; }
 .city-page .status { font-size: .7rem; opacity: .7; margin-top: 2px; }
+
+/* Tabs per data (filtra giorni) */
+.city-page .date-tabs {
+    margin: 0 1rem .5rem;
+    display: flex;
+    gap: .5rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: .25rem;
+}
+.city-page .date-tab {
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid #2a2a2a;
+    background: #121212;
+    color: var(--text);
+    font-size: .85rem;
+    cursor: pointer;
+    transition: background .2s ease, border-color .2s ease, color .2s ease;
+    white-space: nowrap;
+}
+.city-page .date-tab:hover { background: #171717; border-color: #3a3a3a; }
+.city-page .date-tab.active { background: #1f1f1f; border-color: #4a4a4a; }
+
+/* Badge LIVE */
+.city-page .live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #2a0000;
+    border: 1px solid #5a0000;
+    color: #ff4d4f;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: .72rem;
+    font-weight: 800;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+}
+.city-page .live-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ff4d4f;
+    box-shadow: 0 0 0 0 rgba(255,77,79, 0.7);
+    animation: pulse 1.5s infinite;
+}
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255,77,79, .7); }
+    70% { box-shadow: 0 0 0 8px rgba(255,77,79, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255,77,79, 0); }
+}
 
 /* Pulsanti navigazione (nascosti su mobile) */
 .city-page .matches-controls { position: absolute; inset: 0; pointer-events: none; }
