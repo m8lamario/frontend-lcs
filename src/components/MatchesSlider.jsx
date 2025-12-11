@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useMemo, useRef, useEffect, useState } from 'react';
+import { useMemo, useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 
 export default function MatchesSlider({ matches = [] }) {
@@ -10,7 +10,6 @@ export default function MatchesSlider({ matches = [] }) {
   const scrollerRef = useRef(null);
   const cardsRef = useRef([]);
   const reducedMotion = useRef(false);
-  const [selectedDay, setSelectedDay] = useState(null);
 
   const setCardRef = (el) => {
     if (el && !cardsRef.current.includes(el)) {
@@ -24,29 +23,34 @@ export default function MatchesSlider({ matches = [] }) {
     }
   }, []);
 
-  // Raggruppo per giorno (YYYY-MM-DD)
-  const groups = useMemo(() => {
-    const byDay = matches.reduce((acc, m) => {
-      const d = m.date ? new Date(m.date) : null;
-      const key = d ? `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}` : 'sconosciuto';
-      if (!acc[key]) acc[key] = [];
-      acc[key].push(m);
-      return acc;
-    }, {});
-    const orderedKeys = Object.keys(byDay).sort();
-    return { byDay, orderedKeys };
+  // Ordinamento cronologico unico (senza raggruppare per giornate)
+  const sortedMatches = useMemo(() => {
+    const toTs = (m) => {
+      const d = m?.date ? new Date(m.date) : null;
+      return d ? d.getTime() : Number.POSITIVE_INFINITY; // senza data in fondo
+    };
+    return [...matches].sort((a, b) => toTs(a) - toTs(b));
   }, [matches]);
 
-  // Selezione giorno di default (primo disponibile) o quello che contiene match live
-  useEffect(() => {
-    if (!groups.orderedKeys?.length) return;
-    const liveMatch = matches.find(m => m.isLive);
-    const defaultKey = liveMatch && liveMatch.date ? (() => {
-      const d = new Date(liveMatch.date);
-      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-    })() : groups.orderedKeys[0];
-    setSelectedDay(defaultKey);
-  }, [groups.orderedKeys, matches]);
+  // Trova l'indice pivot rispettando le regole:
+  // 1) Se esiste una partita LIVE → è la prima visibile (anche se ci sono concluse prima, che restano a sinistra)
+  // 2) Altrimenti, se nessuna è stata ancora raggiunta (tutte future) → prima card (indice 0)
+  // 3) Altrimenti, la prima futura (>= adesso); se tutte passate → l'ultima
+  const pivotIndex = useMemo(() => {
+    if (!sortedMatches.length) return 0;
+    const now = Date.now();
+    const isLive = (m) =>
+      m?.isLive === true ||
+      (typeof m?.status === 'string' && m.status.toUpperCase() === 'LIVE');
+    const liveIdx = sortedMatches.findIndex(isLive);
+    if (liveIdx !== -1) return liveIdx;
+    const futureIdx = sortedMatches.findIndex((m) => {
+      const d = m?.date ? new Date(m.date).getTime() : null;
+      return d !== null && d >= now;
+    });
+    if (futureIdx !== -1) return futureIdx;
+    return sortedMatches.length - 1;
+  }, [sortedMatches]);
 
   // Azzeriamo i refs PRIMA di creare le card, così i ref callback popoleranno l'elenco corretto
   cardsRef.current = [];
@@ -95,7 +99,21 @@ export default function MatchesSlider({ matches = [] }) {
     cardsRef.current.forEach((el) => observer.observe(el));
 
     return () => observer.disconnect();
-  }, [selectedDay, matches]);
+  }, [sortedMatches]);
+
+  // All'avvio posiziona lo slider in modo che la partita live/prossima sia la prima visibile
+  useEffect(() => {
+    const scroller = scrollerRef.current;
+    const cards = cardsRef.current;
+    if (!scroller || !cards.length) return;
+    const target = cards[pivotIndex];
+    if (!target) return;
+    // Attendi il layout e poi scrolla senza animazione
+    const id = requestAnimationFrame(() => {
+      scroller.scrollTo({ left: target.offsetLeft, behavior: 'auto' });
+    });
+    return () => cancelAnimationFrame(id);
+  }, [pivotIndex, sortedMatches]);
 
   const scrollByAmount = (dir = 1) => {
     const el = scrollerRef.current;
@@ -105,26 +123,21 @@ export default function MatchesSlider({ matches = [] }) {
     el.scrollBy({ left: dir * delta, behavior: 'smooth' });
   };
 
-  const formatDateLabel = (key) => {
-    const [y, m, d] = key.split('-').map(Number);
-    const date = new Date(y, m - 1, d);
-    const day = date.toLocaleDateString('it-IT', { weekday: 'short' });
-    const dayNum = String(d).padStart(2, '0');
-    const month = date.toLocaleDateString('it-IT', { month: 'short' });
-    return `${day} ${dayNum} ${month}`;
+  // Utilità per formattare data/ora su ogni card
+  const formatDateTime = (date) => {
+    const shortDate = date
+      ? date.toLocaleDateString('it-IT', { day: '2-digit', month: 'short', year: 'numeric' })
+      : '';
+    const time = date
+      ? date.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' })
+      : '';
+    return { shortDate, time };
   };
 
   const visibleItems = useMemo(() => {
-    const list = selectedDay ? (groups.byDay[selectedDay] || []) : matches;
-    return list.map((m) => {
+    return sortedMatches.map((m) => {
       const date = m.date ? new Date(m.date) : null;
-      const shortDate = date
-        ? date.toLocaleDateString('it-IT', { day: '2-digit', month: 'short', year: 'numeric' })
-        : '';
-      const time = date
-        ? date.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' })
-        : '';
-
+      const { shortDate, time } = formatDateTime(date);
       const liveText = m.isLive ? (typeof m.minute === 'number' ? `${m.minute}' LIVE` : 'LIVE') : null;
 
       return (
@@ -167,28 +180,10 @@ export default function MatchesSlider({ matches = [] }) {
         </div>
       );
     });
-  }, [selectedDay, groups.byDay, matches]);
+  }, [sortedMatches]);
 
   return (
     <section className="matches-section">
-      {/* Date tabs */}
-      {groups.orderedKeys.length > 1 && (
-        <div className="date-tabs" role="tablist" aria-label="Filtra per data">
-          {groups.orderedKeys.map((key) => (
-            <button
-              key={key}
-              role="tab"
-              aria-selected={selectedDay === key}
-              className={`date-tab${selectedDay === key ? ' active' : ''}`}
-              onClick={() => setSelectedDay(key)}
-              type="button"
-            >
-              {formatDateLabel(key)}
-            </button>
-          ))}
-        </div>
-      )}
-
       <div className="matches-controls">
         <button type="button" className="nav-btn prev" aria-label="Scorri a sinistra" onClick={() => scrollByAmount(-1)}>‹</button>
         <button type="button" className="nav-btn next" aria-label="Scorri a destra" onClick={() => scrollByAmount(1)}>›</button>

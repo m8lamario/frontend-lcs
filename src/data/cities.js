@@ -85,7 +85,7 @@ const cities = {
                 away: { name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
                 score: '0 - 0',
                 status: 'LIVE',
-                isLive: true,
+                isLive: false,
                 minute: 38
             },
             {
