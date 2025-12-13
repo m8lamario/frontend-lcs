@@ -16,9 +16,10 @@ const cities = {
             { id: 'itis-a-6', name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
         ],
         matches: [
+            // Completed matches (FT)
             {
                 id: 'm1',
-                date: '2025-10-12T15:00:00+02:00',
+                date: '2025-11-02T16:00:00+01:00',
                 stage: 'Girone A',
                 home: { name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
                 away: { name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
@@ -28,18 +29,17 @@ const cities = {
             },
             {
                 id: 'm2',
-                date: '2025-10-18T17:30:00+02:00',
+                date: '2025-11-05T18:00:00+01:00',
                 stage: 'Girone A',
                 home: { name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
                 away: { name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
                 score: '1 - 0',
-                status: 'LIVE',
-                isLive: true,
-                minute: 65
+                status: 'FT',
+                isLive: false
             },
             {
                 id: 'm3',
-                date: '2025-11-02T16:00:00+01:00',
+                date: '2025-11-10T16:00:00+01:00',
                 stage: 'Quarti',
                 home: { name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
                 away: { name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
@@ -47,30 +47,23 @@ const cities = {
                 status: 'FT',
                 isLive: false
             },
+            // Single live match (current day) - only this has isLive: true
             {
                 id: 'm4',
-                date: '2025-11-02T16:00:00+01:00',
-                stage: 'Quarti',
-                home: { name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
-                away: { name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
-                score: '1 - 1',
-                status: 'FT',
-                isLive: false
+                date: '2025-12-13T15:30:00+01:00',
+                stage: 'Semifinali',
+                home: { name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
+                away: { name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
+                score: '0 - 1',
+                status: 'LIVE',
+                isLive: true,
+                minute: 43
             },
+            // More completed matches
             {
                 id: 'm5',
-                date: '2025-11-02T16:00:00+01:00',
-                stage: 'Quarti',
-                home: { name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
-                away: { name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
-                score: '1 - 1',
-                status: 'FT',
-                isLive: false
-            },
-            {
-                id: 'm6',
-                date: '2025-11-05T18:00:00+01:00',
-                stage: 'Semifinali',
+                date: '2025-11-14T14:00:00+01:00',
+                stage: 'Amichevole',
                 home: { name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
                 away: { name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
                 score: '3 - 2',
@@ -78,29 +71,8 @@ const cities = {
                 isLive: false
             },
             {
-                id: 'm7',
+                id: 'm6',
                 date: '2025-11-06T20:30:00+01:00',
-                stage: 'Semifinali',
-                home: { name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
-                away: { name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
-                score: '0 - 0',
-                status: 'LIVE',
-                isLive: false,
-                minute: 38
-            },
-            {
-                id: 'm8',
-                date: '2025-11-10T16:00:00+01:00',
-                stage: 'Finale',
-                home: { name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
-                away: { name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
-                score: '2 - 0',
-                status: 'FT',
-                isLive: false
-            },
-            {
-                id: 'm9',
-                date: '2025-11-12T10:00:00+01:00',
                 stage: 'Finale',
                 home: { name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
                 away: { name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
@@ -108,10 +80,31 @@ const cities = {
                 status: 'FT',
                 isLive: false
             },
+            // Future scheduled matches
             {
-                id: 'm10',
-                date: '2025-11-14T14:00:00+01:00',
-                stage: 'Amichevole',
+                id: 'm7',
+                date: '2025-12-20T18:00:00+01:00',
+                stage: 'Torneo Amichevole',
+                home: { name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
+                away: { name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
+                score: '-',
+                status: 'SCHEDULED',
+                isLive: false
+            },
+            {
+                id: 'm8',
+                date: '2026-01-10T16:00:00+01:00',
+                stage: 'Girone C',
+                home: { name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
+                away: { name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
+                score: '-',
+                status: 'SCHEDULED',
+                isLive: false
+            },
+            {
+                id: 'm9',
+                date: '2026-02-14T14:00:00+01:00',
+                stage: 'Girone B',
                 home: { name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
                 away: { name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
                 score: '-',

@@ -39,7 +39,7 @@
 }
 /* src/app/competitions/[city]/section.css */
 /* src/app/competitions/[city]/section.css */
-.city-info{
+.city-section {
     padding: 0 10vw;
 }
 .city-page .titleScrollers {
@@ -244,6 +244,9 @@
     .city-page .school-card{
         flex: 0 0 120px;
     }
+    .city-section {
+        padding: 0 2vw;
+    }
 }
 
 /* --- Standings (Classifica) --- */
@@ -354,7 +357,7 @@
     .city-page .news-grid { grid-template-columns: repeat(6, 1fr); }
     .city-page .news-card { grid-column: span 6; }
     .city-page .news-intro { margin: 0 1rem .5rem 1rem; }
-    .city-info{
+    .city-section{
         padding: 0 2vw;
     }
 }

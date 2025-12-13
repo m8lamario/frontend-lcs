@@ -49,6 +49,40 @@ export default async function SectionPage({ params }) {
         return redirect(`/competitions/${city}`);
     }
 
+    const sectionContent = {
+        squadre: (
+            <>
+                <AnimatedSectionTitle className={"CityTitleInfo"}>Scuole</AnimatedSectionTitle>
+                <SchoolsScroller schools={data.schools} />
+            </>
+        ),
+        partite: (
+            <>
+                <AnimatedSectionTitle className={"CityTitleInfo"}>Partite</AnimatedSectionTitle>
+                <MatchesSlider matches={data.matches || []} />
+            </>
+        ),
+        classifica: Array.isArray(data.groups) && data.groups.length > 0 ? (
+            <>
+                <AnimatedSectionTitle className={"CityTitleInfo"}>Classifica</AnimatedSectionTitle>
+                <Standings groups={data.groups} />
+            </>
+        ) : null,
+        notizie: Array.isArray(data.news) && data.news.length > 0 ? (
+            <>
+                <AnimatedSectionTitle className={"CityTitleInfo"}>Notizie</AnimatedSectionTitle>
+                <p className="news-intro">Ultimi aggiornamenti, comunicati e curiosità dal torneo.</p>
+                <NewsSection news={data.news} />
+            </>
+        ) : null,
+    }[sectionKey];
+
+    if (!sectionContent) {
+        return notFound();
+    }
+
+    const sectionContainerClass = `city-section city-${sectionKey}`;
+
     return (
         <div className="city-page">
             <div className="banner">
@@ -57,34 +91,8 @@ export default async function SectionPage({ params }) {
                 </div>
             </div>
 
-            <div className="city-info">
-                {sectionKey === 'squadre' && (
-                    <>
-                        <AnimatedSectionTitle className={"CityTitleInfo"}>Scuole</AnimatedSectionTitle>
-                        <SchoolsScroller schools={data.schools} />
-                    </>
-                )}
-
-                {sectionKey === 'partite' && (
-                    <>
-                        <MatchesSlider matches={data.matches || []} />
-                    </>
-                )}
-
-                {sectionKey === 'classifica' && Array.isArray(data.groups) && data.groups.length > 0 && (
-                    <>
-                        <AnimatedSectionTitle className={"CityTitleInfo"}>Classifica</AnimatedSectionTitle>
-                        <Standings groups={data.groups} />
-                    </>
-                )}
-
-                {sectionKey === 'notizie' && Array.isArray(data.news) && data.news.length > 0 && (
-                    <>
-                        <AnimatedSectionTitle className={"CityTitleInfo"}>Notizie</AnimatedSectionTitle>
-                        <p className="news-intro">Ultimi aggiornamenti, comunicati e curiosità dal torneo.</p>
-                        <NewsSection news={data.news} />
-                    </>
-                )}
+            <div className={sectionContainerClass}>
+                {sectionContent}
             </div>
         </div>
     );
