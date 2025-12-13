@@ -4,6 +4,7 @@ import cities from '@/data/cities';
 import AnimatedTitle from '@/components/AnimatedTitle';
 import SchoolsScroller from '@/components/SchoolsScroller';
 import MatchesSlider from '@/components/MatchesSlider';
+import LiveMatchTimeline from '@/components/LiveMatchTimeline';
 import AnimatedSectionTitle from '@/components/AnimatedSectionTitle';
 import Standings from '@/components/Standings';
 import NewsSection from '@/components/NewsSection';
@@ -49,6 +50,19 @@ export default async function SectionPage({ params }) {
         return redirect(`/competitions/${city}`);
     }
 
+    // Trova l'eventuale partita LIVE corrente (in base all'orario)
+    const MATCH_DURATION = 50;
+    const nowTs = Date.now();
+    const isLiveNow = (m) => {
+        const start = m?.date ? new Date(m.date).getTime() : null;
+        if (!start) return false;
+        const diffMin = Math.floor((nowTs - start) / 60000);
+        return diffMin >= 0 && diffMin < MATCH_DURATION;
+    };
+    const liveMatch = Array.isArray(data.matches)
+        ? data.matches.find(isLiveNow)
+        : null;
+
     const sectionContent = {
         squadre: (
             <>
@@ -58,7 +72,9 @@ export default async function SectionPage({ params }) {
         ),
         partite: (
             <>
-                <AnimatedSectionTitle className={"CityTitleInfo"}>Partite</AnimatedSectionTitle>
+                {liveMatch && (
+                    <LiveMatchTimeline match={liveMatch} />
+                )}
                 <MatchesSlider matches={data.matches || []} />
             </>
         ),

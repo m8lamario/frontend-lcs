@@ -1,3 +1,8 @@
+// Helper date strings for testing scenarios
+const __now = new Date();
+const __nowISO = __now.toISOString(); // partita che inizia ora
+const __past70ISO = new Date(__now.getTime() - 70 * 60000).toISOString(); // partita finita (70' fa)
+
 const cities = {
     torino: {
         title: 'Mole cup',
@@ -25,7 +30,30 @@ const cities = {
                 away: { name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
                 score: '2 - 1',
                 status: 'FT',
-                isLive: false
+                isLive: false,
+                events: [
+                    { minute: 11, type: 'goal', team: 'Liceo Leonardo', player: 'M. Rossi' },
+                    { minute: 33, type: 'yellow', team: 'ITIS A.', player: 'F. Bianchi' },
+                    { minute: 52, type: 'goal', team: 'ITIS A.', player: 'L. Moretti' },
+                    { minute: 74, type: 'goal', team: 'Liceo Leonardo', player: 'D. Sala' }
+                ]
+            },
+            // Partita finita (tempo basato sull'orario) con eventi oltre il 50' per test supplementare
+            {
+                id: 'm_supp_ft',
+                date: __past70ISO,
+                stage: 'Test Supplementare',
+                home: { name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
+                away: { name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
+                score: '2 - 2',
+                status: 'FT',
+                isLive: false,
+                events: [
+                    { minute: 12, type: 'goal', team: 'Liceo Leonardo', player: 'A. Neri' },
+                    { minute: 38, type: 'yellow', team: 'ITIS A.', player: 'B. Riva' },
+                    { minute: 55, type: 'goal', team: 'ITIS A.', player: 'C. Serra' },
+                    { minute: 63, type: 'goal', team: 'Liceo Leonardo', player: 'D. Pini' }
+                ]
             },
             {
                 id: 'm2',
@@ -35,7 +63,12 @@ const cities = {
                 away: { name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
                 score: '1 - 0',
                 status: 'FT',
-                isLive: false
+                isLive: false,
+                events: [
+                    { minute: 4, type: 'yellow', team: 'Liceo Leonardo', player: 'G. Valli' },
+                    { minute: 19, type: 'goal', team: 'ITIS A.', player: 'S. Rossi' },
+                    { minute: 65, type: 'red', team: 'Liceo Leonardo', player: 'M. Gallo' }
+                ]
             },
             {
                 id: 'm3',
@@ -45,7 +78,12 @@ const cities = {
                 away: { name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
                 score: '1 - 1',
                 status: 'FT',
-                isLive: false
+                isLive: false,
+                events: [
+                    { minute: 28, type: 'goal', team: 'Liceo Leonardo', player: 'D. Sala' },
+                    { minute: 40, type: 'yellow', team: 'ITIS A.', player: 'A. Conti' },
+                    { minute: 78, type: 'goal', team: 'ITIS A.', player: 'L. Moretti' }
+                ]
             },
             // Single live match (current day) - only this has isLive: true
             {
@@ -57,7 +95,28 @@ const cities = {
                 score: '0 - 1',
                 status: 'LIVE',
                 isLive: true,
-                minute: 43
+                minute: 43,
+                events: [
+                    { minute: 5, type: 'goal', team: 'Liceo Leonardo', player: 'E. Ferro' },
+                    { minute: 12, type: 'yellow', team: 'ITIS A.', player: 'F. Bianchi' },
+                    { minute: 31, type: 'yellow', team: 'Liceo Leonardo', player: 'G. Valli' },
+                    { minute: 42, type: 'yellow', team: 'ITIS A.', player: 'L. Conti' }
+                ]
+            },
+            // Partita che inizia adesso (per test minuto live su base oraria)
+            {
+                id: 'm_now',
+                date: __nowISO,
+                stage: 'Amichevole Test Orario',
+                home: { name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
+                away: { name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
+                score: '0 - 0',
+                status: 'SCHEDULED',
+                isLive: false,
+                events: [
+                    { minute: 2, type: 'yellow', team: 'ITIS A.', player: 'M. Testa' },
+                    { minute: 10, type: 'yellow', team: 'Liceo Leonardo', player: 'M. Testa' }
+                ]
             },
             // More completed matches
             {
@@ -68,7 +127,8 @@ const cities = {
                 away: { name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
                 score: '3 - 2',
                 status: 'FT',
-                isLive: false
+                isLive: false,
+                events: []
             },
             {
                 id: 'm6',
@@ -78,7 +138,8 @@ const cities = {
                 away: { name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
                 score: '1 - 2',
                 status: 'FT',
-                isLive: false
+                isLive: false,
+                events: []
             },
             // Future scheduled matches
             {
@@ -89,7 +150,8 @@ const cities = {
                 away: { name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
                 score: '-',
                 status: 'SCHEDULED',
-                isLive: false
+                isLive: false,
+                events: []
             },
             {
                 id: 'm8',
@@ -99,7 +161,8 @@ const cities = {
                 away: { name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
                 score: '-',
                 status: 'SCHEDULED',
-                isLive: false
+                isLive: false,
+                events: []
             },
             {
                 id: 'm9',
@@ -109,7 +172,8 @@ const cities = {
                 away: { name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
                 score: '-',
                 status: 'SCHEDULED',
-                isLive: false
+                isLive: false,
+                events: []
             }
         ],
         groups: [

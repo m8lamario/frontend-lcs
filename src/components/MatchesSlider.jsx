@@ -32,17 +32,23 @@ export default function MatchesSlider({ matches = [] }) {
     return [...matches].sort((a, b) => toTs(a) - toTs(b));
   }, [matches]);
 
+  const MATCH_DURATION = 50; // durata regolamentare
+
+  const isLiveNow = (m, now = Date.now()) => {
+    const start = m?.date ? new Date(m.date).getTime() : null;
+    if (!start) return false;
+    const diffMin = Math.floor((now - start) / 60000);
+    return diffMin >= 0 && diffMin < MATCH_DURATION;
+  };
+
   // Trova l'indice pivot rispettando le regole:
-  // 1) Se esiste una partita LIVE → è la prima visibile (anche se ci sono concluse prima, che restano a sinistra)
+  // 1) Se esiste una partita LIVE (in base all'orario) → è la prima visibile (anche se ci sono concluse prima, che restano a sinistra)
   // 2) Altrimenti, se nessuna è stata ancora raggiunta (tutte future) → prima card (indice 0)
   // 3) Altrimenti, la prima futura (>= adesso); se tutte passate → l'ultima
   const pivotIndex = useMemo(() => {
     if (!sortedMatches.length) return 0;
     const now = Date.now();
-    const isLive = (m) =>
-      m?.isLive === true ||
-      (typeof m?.status === 'string' && m.status.toUpperCase() === 'LIVE');
-    const liveIdx = sortedMatches.findIndex(isLive);
+    const liveIdx = sortedMatches.findIndex((m) => isLiveNow(m, now));
     if (liveIdx !== -1) return liveIdx;
     const futureIdx = sortedMatches.findIndex((m) => {
       const d = m?.date ? new Date(m.date).getTime() : null;
@@ -138,7 +144,12 @@ export default function MatchesSlider({ matches = [] }) {
     return sortedMatches.map((m) => {
       const date = m.date ? new Date(m.date) : null;
       const { shortDate, time } = formatDateTime(date);
-      const liveText = m.isLive ? (typeof m.minute === 'number' ? `${m.minute}' LIVE` : 'LIVE') : null;
+      const start = date ? date.getTime() : null;
+      const now = Date.now();
+      const diffMin = start != null ? Math.floor((now - start) / 60000) : null;
+      const liveNow = start != null && diffMin >= 0 && diffMin < MATCH_DURATION;
+      const finished = start != null && diffMin >= MATCH_DURATION;
+      const liveText = liveNow ? `${diffMin}' LIVE` : null;
 
       return (
         <div key={m.id} className="match-card" ref={setCardRef}>
@@ -146,7 +157,7 @@ export default function MatchesSlider({ matches = [] }) {
             <span className="match-date" aria-label="Data partita">{shortDate}{time ? ` • ${time}` : ''}</span>
             <div className="match-meta-right">
               {m.stage && <span className="match-stage">{m.stage}</span>}
-              {m.isLive && (
+              {liveNow && (
                 <span className="live-badge" aria-label="Partita in corso">
                   <span className="live-dot" />{liveText}
                 </span>
@@ -165,7 +176,9 @@ export default function MatchesSlider({ matches = [] }) {
 
             <div className="score-wrap" aria-label="Risultato">
               <span className="score">{m.score || '-'}</span>
-              {m.status && !m.isLive && <span className="status">{m.status}</span>}
+              {(finished ? 'FT' : m.status) && !liveNow && (
+                <span className="status">{finished ? 'FT' : m.status}</span>
+              )}
             </div>
 
             <div className="team">
