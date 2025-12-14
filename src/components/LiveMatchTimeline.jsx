@@ -26,13 +26,34 @@ export default function LiveMatchTimeline({ match }) {
   const isPast = typeof elapsedMin === 'number' && elapsedMin >= MATCH_DURATION;
 
   // Eventi ordinati e massimo minuto per determinare eventuale supplementare
-  
   const events = Array.isArray(match.events)
     ? [...match.events].sort((a, b) => (a?.minute ?? 0) - (b?.minute ?? 0))
     : [];
 
-  const maxEventMinute = events.length ? Math.max(...events.map(e => e?.minute ?? 0)) : 0;
-  const effectiveMax = Math.max(MATCH_DURATION, maxEventMinute);
+  // Calcolo una versione degli eventi con "displayMinute" solo per la posizione grafica
+  const timelineEvents = events.map((event) => {
+    const minute = event?.minute ?? 0;
+    return { ...event, minute, displayMinute: minute };
+  });
+
+  const MIN_TIMELINE_GAP = 6;
+  for (let i = 0; i < timelineEvents.length - 2; i += 1) {
+    const baseEvent = timelineEvents[i];
+    const futureEvent = timelineEvents[i + 2];
+    if ((futureEvent.minute - baseEvent.minute) < MIN_TIMELINE_GAP) {
+      const bumpedMinute = (baseEvent.displayMinute ?? baseEvent.minute) + MIN_TIMELINE_GAP;
+      if (bumpedMinute > (futureEvent.displayMinute ?? futureEvent.minute)) {
+        futureEvent.displayMinute = bumpedMinute;
+      }
+    }
+  }
+
+  const maxActualMinute = events.length ? Math.max(...events.map((e) => e?.minute ?? 0)) : 0;
+  const maxDisplayMinute = timelineEvents.length
+    ? Math.max(...timelineEvents.map((e) => e.displayMinute ?? e.minute ?? 0))
+    : 0;
+  const effectiveMax = Math.max(MATCH_DURATION, maxDisplayMinute);
+  const showExtraTimeLabel = maxActualMinute > MATCH_DURATION;
 
   const toPct = (min) => `${Math.round(clamp01((min ?? 0) / effectiveMax) * 100)}%`;
 
@@ -95,7 +116,7 @@ export default function LiveMatchTimeline({ match }) {
         <div className="lt-timeline" aria-label="Timeline eventi">
           <div className="lt-scale">
             <span className="lt-mark lt-start">0'</span>
-            <span className="lt-mark lt-end">50'{effectiveMax > MATCH_DURATION ? ' + Supp.' : ''}</span>
+            <span className="lt-mark lt-end">50'{showExtraTimeLabel ? ' + Supp.' : ''}</span>
           </div>
           <div className="lt-track">
             {/* Indicatore minuto corrente */}
@@ -104,9 +125,10 @@ export default function LiveMatchTimeline({ match }) {
             )}
 
             {/* Eventi */}
-            {events.map((e, idx) => {
+            {timelineEvents.map((e, idx) => {
               const minute = e?.minute ?? 0;
-              const left = toPct(minute);
+              const displayMinute = typeof e.displayMinute === 'number' ? e.displayMinute : minute;
+              const left = toPct(displayMinute);
               const side = sideFor(e?.team);
               const icon = iconFor(e?.type);
               const extra = minute > MATCH_DURATION ? minute - MATCH_DURATION : 0;

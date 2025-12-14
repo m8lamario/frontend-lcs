@@ -2,7 +2,7 @@
     margin-top: 4rem;
     padding: 3rem 2rem;
     border-radius: 32px;
-    background: radial-gradient(circle at top, rgba(76, 92, 255, 0.18), rgba(8, 9, 15, 0.95));
+    background: radial-gradient(circle at top, var(--secondary), var(--primary));
     border: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
 }

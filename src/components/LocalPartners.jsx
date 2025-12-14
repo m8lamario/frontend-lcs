@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import './Styles/LocalPartners.css';
 
-const fallbackLogo = '/logo/PNG-lcs_logo_white_t.png';
+const fallbackLogo = '/logo/lcs-colorato-trasparente.png';
 
 export default function LocalPartners({ partners = [] }) {
     if (!Array.isArray(partners) || partners.length === 0) return null;

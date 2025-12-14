@@ -30,7 +30,7 @@ body{
     --fs-p-mobile: 14px;
     --fs-p-desktop: 16px;
     --fs-h4-mobile: 16px;
-    /* altri colori */
+    --lt-row-gap: 18px;
 }
 .logo{font-weight:700}
 .main{

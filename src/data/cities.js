@@ -107,15 +107,15 @@ const cities = {
             {
                 id: 'm_now',
                 date: __nowISO,
-                stage: 'Amichevole Test Orario',
+                stage: 'Amichevole',
                 home: { name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
                 away: { name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
                 score: '0 - 0',
                 status: 'SCHEDULED',
                 isLive: false,
                 events: [
-                    { minute: 2, type: 'yellow', team: 'ITIS A.', player: 'M. Testa' },
-                    { minute: 10, type: 'yellow', team: 'Liceo Leonardo', player: 'M. Testa' }
+                    { minute: 0, type: 'yellow', team: 'ITIS A.', player: 'M. Testa' },
+                    { minute: 7, type: 'yellow', team: 'Liceo Leonardo', player: 'R. Galli' }
                 ]
             },
             // More completed matches
