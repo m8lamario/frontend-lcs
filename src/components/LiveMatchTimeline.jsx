@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import Image from 'next/image';
 
 /**
@@ -16,9 +16,33 @@ import Image from 'next/image';
  * - Visual connectors (dot + line).
  */
 export default function LiveMatchTimeline({ match }) {
-  if (!match) return null;
-
   const MATCH_DURATION = 50;
+
+  const [currentMinute, setCurrentMinute] = useState(null);
+
+  useEffect(() => {
+    // Se la partita non è live, non mostriamo l'indicatore
+    if (match?.status !== 'LIVE' && !match?.isLive) {
+      setCurrentMinute(null);
+      return;
+    }
+
+    const calculateMinute = () => {
+      if (!match?.date) return;
+      const start = new Date(match.date).getTime();
+      const now = Date.now();
+      const diff = Math.floor((now - start) / 60000);
+      // Limitiamo il minuto tra 0 e MATCH_DURATION
+      const min = Math.min(Math.max(0, diff), MATCH_DURATION);
+      setCurrentMinute(min);
+    };
+
+    calculateMinute();
+    const interval = setInterval(calculateMinute, 30000); // Aggiorna ogni 30s
+    return () => clearInterval(interval);
+  }, [match?.date, match?.status, match?.isLive, MATCH_DURATION]);
+
+  if (!match) return null;
 
   // Group events by minute
   const eventsByMinute = useMemo(() => {
@@ -98,6 +122,21 @@ export default function LiveMatchTimeline({ match }) {
       <div className="lt-v-body">
         <div className="lt-v-axis" />
         
+        {/* Live Progress Indicator */}
+        {currentMinute !== null && currentMinute >= 0 && currentMinute <= MATCH_DURATION && (
+          <div 
+            className="lt-v-live-progress"
+            style={{ 
+              top: `calc(${currentMinute} * (100vh / ${MATCH_DURATION}))`,
+              marginTop: '2rem' 
+            }}
+          >
+            <div className="lt-v-live-progress-dot" />
+            <div className="lt-v-live-progress-line" />
+            <span className="lt-v-live-progress-text">{currentMinute}'</span>
+          </div>
+        )}
+
         {Array.from({ length: MATCH_DURATION + 1 }).map((_, minute) => {
           const events = eventsByMinute[minute] || [];
           const isMark = minute % 10 === 0 || minute === 0 || minute === MATCH_DURATION;
