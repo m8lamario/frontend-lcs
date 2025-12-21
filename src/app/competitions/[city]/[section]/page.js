@@ -72,10 +72,11 @@ export default async function SectionPage({ params }) {
         ),
         partite: (
             <>
+                <MatchesSlider matches={data.matches || []} />
                 {liveMatch && (
                     <LiveMatchTimeline match={liveMatch} />
                 )}
-                <MatchesSlider matches={data.matches || []} />
+
             </>
         ),
         classifica: Array.isArray(data.groups) && data.groups.length > 0 ? (

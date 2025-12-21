@@ -110,12 +110,15 @@ const cities = {
                 stage: 'Amichevole',
                 home: { name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
                 away: { name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
-                score: '0 - 0',
+                score: '2 - 1',
                 status: 'SCHEDULED',
-                isLive: false,
+                isLive: true,
                 events: [
-                    { minute: 0, type: 'yellow', team: 'ITIS A.', player: 'M. Testa' },
-                    { minute: 7, type: 'yellow', team: 'Liceo Leonardo', player: 'R. Galli' }
+                    { minute: 2, type: 'yellow', team: 'ITIS A.', player: 'M. Testa' },
+                    { minute: 5, type: 'yellow', team: 'Liceo Leonardo', player: 'M. Testa' },
+                    { minute: 12, type: 'Goal', team: 'ITIS A.', player: 'M. Testa' },
+                    { minute: 26, type: 'Goal', team: 'Liceo Leonardo', player: 'M. Testa' },
+                    { minute: 31, type: 'Goal', team: 'ITIS A.', player: 'M. Testa' },
                 ]
             },
             // More completed matches
@@ -174,6 +177,24 @@ const cities = {
                 status: 'SCHEDULED',
                 isLive: false,
                 events: []
+            },
+            {
+                id: 'm10',
+                date: '2026-03-18T18:00:00+01:00',
+                stage: 'Girone A',
+                home: { name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
+                away: { name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
+                score: '-',
+                status: 'SCHEDULED',
+            },
+            {
+                id: 'm11',
+                date: '2026-03-19T18:00:00+01:00',
+                stage: 'Girone A',
+                home: { name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
+                away: { name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
+                score: '-',
+                status: 'SCHEDULED',
             }
         ],
         groups: [
