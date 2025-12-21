@@ -170,6 +170,8 @@
     display: flex;
     flex-direction: column;
     gap: .75rem;
+    text-decoration: none;
+    color: var(--text);
     transition: transform .25s ease, box-shadow .25s ease;
 }
 

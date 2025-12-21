@@ -1,10 +1,15 @@
 'use client';
 
 import Image from 'next/image';
-import { useMemo, useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
+import Link from 'next/link';
+import { useMemo, useRef, useEffect } from 'react';
+import { useParams } from 'next/navigation';
 
-export default function MatchesSlider({ matches = [] }) {
+export default function MatchesSlider({ matches = [], citySlug }) {
+  const params = useParams?.() || {};
+  const normalizedCity = (citySlug || params.city || '').toString().toLowerCase();
+
   if (!matches || !matches.length) return null;
 
   const scrollerRef = useRef(null);
@@ -150,9 +155,10 @@ export default function MatchesSlider({ matches = [] }) {
       const liveNow = start != null && diffMin >= 0 && diffMin < MATCH_DURATION;
       const finished = start != null && diffMin >= MATCH_DURATION;
       const liveText = liveNow ? `${diffMin}' LIVE` : null;
+      const matchHref = normalizedCity && m.id ? `/competitions/${normalizedCity}/partite/${m.id}` : undefined;
 
       return (
-        <div key={m.id} className="match-card" ref={setCardRef}>
+        <Link key={m.id || `${shortDate}-${time}`} href={matchHref || '#'} className="match-card" ref={setCardRef} aria-label={`Dettaglio partita ${m.home?.name || ''} contro ${m.away?.name || ''}`}>
           <div className="match-header">
             <span className="match-date" aria-label="Data partita">{shortDate}{time ? ` • ${time}` : ''}</span>
             <div className="match-meta-right">
@@ -190,10 +196,10 @@ export default function MatchesSlider({ matches = [] }) {
               {m.away?.name && <div className="team-name" title={m.away.name}>{m.away.name}</div>}
             </div>
           </div>
-        </div>
+        </Link>
       );
     });
-  }, [sortedMatches]);
+  }, [sortedMatches, normalizedCity]);
 
   return (
     <section className="matches-section">

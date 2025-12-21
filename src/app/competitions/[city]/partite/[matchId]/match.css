@@ -1,0 +1,135 @@
+.match-detail-page {
+    padding: 2rem 10vw 4rem;
+    display: flex;
+    margin-top: 90px;
+    flex-direction: column;
+    gap: 2rem;
+    color: var(--text);
+}
+
+.match-detail-header h1 {
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    margin-bottom: .5rem;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    color: var(--text);
+    text-decoration: none;
+    font-size: .95rem;
+    opacity: .8;
+    transition: opacity .2s ease;
+}
+
+.back-link:hover {
+    opacity: 1;
+}
+
+.match-meta {
+    display: flex;
+    gap: .5rem;
+    flex-wrap: wrap;
+    opacity: .8;
+    font-size: .95rem;
+}
+
+.match-detail-card {
+    background: color-mix(in srgb, var(--text) 8%, var(--secondary));
+    border: 1px solid var(--zero);
+    border-radius: 20px;
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1.5rem;
+    text-align: center;
+    align-items: center;
+}
+
+.team-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .75rem;
+}
+
+.team-logo {
+    position: relative;
+    width: 140px;
+    aspect-ratio: 1 / 1;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.team-name {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.score-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+}
+
+.score {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+}
+
+.status {
+    font-size: 1rem;
+    opacity: .85;
+}
+
+.events-section, .timeline-section {
+    background: color-mix(in srgb, var(--text) 4%, var(--secondary));
+    border: 1px solid var(--zero);
+    border-radius: 14px;
+    padding: 1.5rem;
+}
+
+.events-section h2,
+.timeline-section h2 {
+    margin-bottom: 1rem;
+}
+
+.events-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+}
+
+.events-section li {
+    display: flex;
+    gap: .75rem;
+    flex-wrap: wrap;
+    font-size: .95rem;
+}
+
+.events-section .minute {
+    font-weight: 600;
+}
+
+.events-section .type {
+    text-transform: uppercase;
+    font-size: .75rem;
+    letter-spacing: .5px;
+    color: var(--aux);
+}
+
+@media (max-width: 768px) {
+    .match-detail-page {
+        padding: 1.5rem;
+    }
+
+    .match-detail-card {
+        grid-template-columns: 1fr;
+    }
+}
+

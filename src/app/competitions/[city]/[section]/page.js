@@ -72,7 +72,7 @@ export default async function SectionPage({ params }) {
         ),
         partite: (
             <>
-                <MatchesSlider matches={data.matches || []} />
+                <MatchesSlider matches={data.matches || []} citySlug={city} />
                 {liveMatch && (
                     <LiveMatchTimeline match={liveMatch} />
                 )}
