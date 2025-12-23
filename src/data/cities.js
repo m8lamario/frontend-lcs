@@ -7,18 +7,18 @@ const cities = {
     torino: {
         title: 'Mole cup',
         schools: [
-            { id: 'liceo-leonardo-1', name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
-            { id: 'itis-a-1', name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
-            { id: 'liceo-leonardo-2', name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
-            { id: 'itis-a-2', name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
-            { id: 'liceo-leonardo-3', name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
-            { id: 'itis-a-3', name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
-            { id: 'liceo-leonardo-4', name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
-            { id: 'itis-a-4', name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
-            { id: 'liceo-leonardo-5', name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
-            { id: 'itis-a-5', name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
-            { id: 'liceo-leonardo-6', name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png' },
-            { id: 'itis-a-6', name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png' },
+            { id: 'liceo-leonardo-1', name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png', city: 'Torino', coach: 'M. Rossi', founded: 1965, colors: 'Bianco / Blu', record: '6V - 2P', achievements: ['Campioni 2023', 'Fair Play 2024'], contact: 'prof.sport@leonardo.edu' },
+            { id: 'itis-a-1', name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png', city: 'Torino', coach: 'F. Bianchi', founded: 1971, colors: 'Nero / Oro', record: '5V - 3P', achievements: ['Finalisti 2023'], contact: 'coach.itis@itis-a.edu' },
+            { id: 'liceo-leonardo-2', name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png', city: 'Torino', coach: 'M. Rossi', founded: 1965, colors: 'Bianco / Blu' },
+            { id: 'itis-a-2', name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png', city: 'Torino', coach: 'F. Bianchi', founded: 1971, colors: 'Nero / Oro' },
+            { id: 'liceo-leonardo-3', name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png', city: 'Torino', coach: 'M. Rossi', founded: 1965, colors: 'Bianco / Blu' },
+            { id: 'itis-a-3', name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png', city: 'Torino', coach: 'F. Bianchi', founded: 1971, colors: 'Nero / Oro' },
+            { id: 'liceo-leonardo-4', name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png', city: 'Torino', coach: 'M. Rossi', founded: 1965, colors: 'Bianco / Blu' },
+            { id: 'itis-a-4', name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png', city: 'Torino', coach: 'F. Bianchi', founded: 1971, colors: 'Nero / Oro' },
+            { id: 'liceo-leonardo-5', name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png', city: 'Torino', coach: 'M. Rossi', founded: 1965, colors: 'Bianco / Blu' },
+            { id: 'itis-a-5', name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png', city: 'Torino', coach: 'F. Bianchi', founded: 1971, colors: 'Nero / Oro' },
+            { id: 'liceo-leonardo-6', name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png', city: 'Torino', coach: 'M. Rossi', founded: 1965, colors: 'Bianco / Blu' },
+            { id: 'itis-a-6', name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png', city: 'Torino', coach: 'F. Bianchi', founded: 1971, colors: 'Nero / Oro' },
         ],
         matches: [
             // Completed matches (FT)
@@ -250,9 +250,10 @@ const cities = {
         ],
         partners: [
             { id: 'partner-uno', name: 'Comune di Torino', type: 'Istituzionale', logo: '/logo/PNG-lcs_logo_white_t.png', url: 'https://www.comune.torino.it/' },
-            { id: 'partner-due', name: 'Torino Sport', type: 'Community', logo: '/logo/PNG-lcs_logo_white_t.png', url: 'https://www.torinosport.it/' },
+            { id: 'partner-due', name: 'Torino Sport', type: 'Community', logo: '/logo/PNG-lcs_logo_white_t.png' },
             { id: 'partner-tre', name: 'LCS Official Store', type: 'Merch', logo: '/logo/PNG-lcs_logo_white_t.png', url: 'https://www.example.com/' }
         ]
-    },
+    }
 };
+
 export default cities;

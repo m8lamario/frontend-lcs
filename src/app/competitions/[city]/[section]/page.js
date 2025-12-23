@@ -2,7 +2,7 @@
 import { notFound, redirect } from 'next/navigation';
 import cities from '@/data/cities';
 import AnimatedTitle from '@/components/AnimatedTitle';
-import SchoolsScroller from '@/components/SchoolsScroller';
+import TeamsRoster from '@/components/TeamsRoster';
 import MatchesSlider from '@/components/MatchesSlider';
 import LiveMatchTimeline from '@/components/LiveMatchTimeline';
 import AnimatedSectionTitle from '@/components/AnimatedSectionTitle';
@@ -66,8 +66,7 @@ export default async function SectionPage({ params }) {
     const sectionContent = {
         squadre: (
             <>
-                <AnimatedSectionTitle className={"CityTitleInfo"}>Scuole</AnimatedSectionTitle>
-                <SchoolsScroller schools={data.schools} />
+                <TeamsRoster teams={data.schools} />
             </>
         ),
         partite: (
@@ -81,7 +80,6 @@ export default async function SectionPage({ params }) {
         ),
         classifica: Array.isArray(data.groups) && data.groups.length > 0 ? (
             <>
-                <AnimatedSectionTitle className={"CityTitleInfo"}>Classifica</AnimatedSectionTitle>
                 <Standings groups={data.groups} />
             </>
         ) : null,
