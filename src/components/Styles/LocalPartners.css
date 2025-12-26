@@ -112,7 +112,11 @@
     }
 
     .local-partner-card {
-        padding: 1.25rem;
+        text-align: center;
     }
+    .local-partner-card {
+        align-items: center;
+    }
+
 }
 

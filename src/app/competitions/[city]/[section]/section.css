@@ -1101,4 +1101,23 @@
     .teams-roster {
         grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     }
+    .city-page .match-card{
+        aspect-ratio: 12 !important;
+    }
+    .city-page .standings-stack{
+        margin: 0;
+    }
+    .city-page .standings-row .team-info .name{
+        display: none; /*ricordarsi di toglierlo quando abbiamo le abbreviazioni squadra*/
+    }
+}
+@media (max-width: 1200px) {
+    .city-page .banner .banner-content h1{
+        color: var(--text);
+        margin-top: 0 !important;
+        font-size: max(2rem,min(5vw,5rem));
+        font-weight: 500;
+        position: fixed !important;
+        z-index: 9999 !important;
+    }
 }
