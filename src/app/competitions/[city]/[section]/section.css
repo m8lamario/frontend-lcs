@@ -318,7 +318,10 @@
 
 @media (max-width: 640px) {
     .city-page .banner {
-        height: 130px;
+        height: 120px;
+    }
+    .city-page .banner .banner-content h1{
+        margin-top: 0 !important;
     }
 
     .city-page .nav-btn {
@@ -1114,7 +1117,7 @@
 @media (max-width: 1200px) {
     .city-page .banner .banner-content h1{
         color: var(--text);
-        margin-top: 0 !important;
+        margin-top: -89px;
         font-size: max(2rem,min(5vw,5rem));
         font-weight: 500;
         position: fixed !important;
