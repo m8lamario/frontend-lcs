@@ -9,7 +9,14 @@ import { useCitiesNav } from "./nav/useCitiesNav.js";
 
 export default function Nav() {
   const pathname = usePathname();
-  const { cities, mobileCities, mounted, persistCitiesOrder } = useCitiesNav(pathname);
+  const {
+    cities,
+    mobileCities,
+    mounted,
+    persistCitiesOrder,
+    sectionLinks,
+    persistSectionLinksOrder,
+  } = useCitiesNav(pathname);
 
   return (
     <nav>
@@ -25,9 +32,11 @@ export default function Nav() {
         cities={cities}
         mounted={mounted}
         persistCitiesOrder={persistCitiesOrder}
+        sectionLinks={sectionLinks}
+        persistSectionLinksOrder={persistSectionLinksOrder}
       />
       {/* Mobile: visibile via CSS su viewport < 1200px */}
-      <NavMobile mobileCities={mobileCities} />
+      <NavMobile mobileCities={mobileCities} sectionLinks={sectionLinks} />
     </nav>
   );
 }

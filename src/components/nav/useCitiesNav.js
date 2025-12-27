@@ -15,11 +15,22 @@ const defaultCities = [
   { name: "Palermo", href: "/competitions/palermo" },
   { name: "Catania", href: "/competitions/catania" },
   { name: "Venezia", href: "/competitions/venezia" },
+  { name: "", href: ""} //elemento vuoto per spacing
+];
+
+const SECTION_LINKS = [
+  { name: "Home", href: "/" },
+  { name: "Squadre", href: "/squadre" },
+  { name: "Classifica", href: "/classifica" },
+  { name: "Partite", href: "/partite" },
+  { name: "", href: ""} //elemento vuoto per spacing
 ];
 
 export function useCitiesNav(pathname) {
   const [cities, setCities] = useState(defaultCities);
   const [mounted, setMounted] = useState(false);
+  const [sectionLinks, setSectionLinks] = useState(SECTION_LINKS);
+  const [currentCitySlug, setCurrentCitySlug] = useState("");
 
   useEffect(() => {
     setMounted(true);
@@ -86,12 +97,28 @@ export function useCitiesNav(pathname) {
       baseOrder.length !== cities.length ||
       baseOrder.some((c, i) => c.href !== cities[i]?.href);
     if (changed) setCities(baseOrder);
+    setCurrentCitySlug(currentCitySlug);
   }, [pathname, mounted]);
 
-  const mobileCities = useMemo(
-    () => cities.filter((c) => c.name !== "LCS" && !/\/home$/i.test(c.href)),
-    [cities]
-  );
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      const raw = localStorage.getItem("navSectionLinksOrder");
+      if (!raw) return;
+      const saved = JSON.parse(raw);
+      if (!Array.isArray(saved) || !saved.length) return;
+      const hrefOrder = saved.map((l) => l.href);
+      const merged = [
+        ...hrefOrder
+          .map((h) => SECTION_LINKS.find((l) => l.href === h))
+          .filter(Boolean),
+        ...SECTION_LINKS.filter((l) => !hrefOrder.includes(l.href)),
+      ];
+      setSectionLinks(merged);
+    } catch {}
+  }, []);
+
+  const mobileCities = defaultCities;
 
   const persistCitiesOrder = (newOrder) => {
     setCities(newOrder);
@@ -100,5 +127,20 @@ export function useCitiesNav(pathname) {
     } catch {}
   };
 
-  return { cities, mobileCities, mounted, persistCitiesOrder };
+  const persistSectionLinksOrder = (newOrder) => {
+    setSectionLinks(newOrder);
+    try {
+      localStorage.setItem("navSectionLinksOrder", JSON.stringify(newOrder));
+    } catch {}
+  };
+
+  return {
+    cities,
+    mobileCities,
+    mounted,
+    persistCitiesOrder,
+    sectionLinks,
+    persistSectionLinksOrder,
+    currentCitySlug,
+  };
 }

@@ -207,6 +207,9 @@
     .scroll-news__content{
         gap: 5px !important;
     }
+    .scroll-news__card{
+        aspect-ratio: 9/16;
+    }
 }
 @media (max-width: 640px) {
     .city-page .banner {

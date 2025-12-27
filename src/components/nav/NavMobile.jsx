@@ -1,25 +1,71 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import gsap from "gsap";
 import { useRouter, usePathname } from "next/navigation";
 
-export default function NavMobile({ mobileCities }) {
+export default function NavMobile({ mobileCities, sectionLinks }) {
   const [open, setOpen] = useState(false);
-  const mobileMenuListRef = useRef(null); // lista sinistra mobile (orizzontale)
-  const mobileCitiesPanelRef = useRef(null); // contenitore (solo fade)
-  const mobileCitiesListRef = useRef(null); // lista destra scrollabile
+  const mobileMenuListRef = useRef(null);
+  const mobileCitiesPanelRef = useRef(null);
+  const mobileCitiesListRef = useRef(null);
+  const mobileSectionsListRef = useRef(null);
   const router = useRouter();
   const pathname = usePathname();
 
+  const extractCitySlug = (value = "") => {
+    const normalized = value.startsWith("/") ? value : `/${value}`;
+    const match = normalized.match(/\/competitions\/([^/]+)/i);
+    return match ? match[1] : "";
+  };
+
+  const getSlugFromPathname = (path = "") => {
+    const match = path.match(/\/competitions\/([^/]+)/i);
+    return match ? match[1] : "";
+  };
+
+  const scrollItemIntoCenter = (container, index) => {
+    if (!container || index < 0) return;
+    const items = container.querySelectorAll("li");
+    const target = items[index];
+    if (!target) return;
+    const offset =
+      target.offsetLeft - container.clientWidth / 2 + target.clientWidth / 2;
+    container.scrollLeft = Math.max(0, offset);
+  };
+
+  const [focusedCityIndex, setFocusedCityIndex] = useState(() => {
+    const slugFromPath = getSlugFromPathname(pathname || "");
+    const matchIndex = mobileCities.findIndex(
+      (city) => extractCitySlug(city.href) === slugFromPath
+    );
+    return matchIndex >= 0 ? matchIndex : 0;
+  });
+
+  useEffect(() => {
+    const slugFromPath = getSlugFromPathname(pathname || "");
+    if (!slugFromPath) return;
+    const matchIndex = mobileCities.findIndex(
+      (city) => extractCitySlug(city.href) === slugFromPath
+    );
+    if (matchIndex >= 0) {
+      setFocusedCityIndex((prev) => (prev === matchIndex ? prev : matchIndex));
+    }
+  }, [pathname, mobileCities]);
+
+  const focusedCitySlug = useMemo(() => {
+    const city = mobileCities[focusedCityIndex];
+    const slug = city ? extractCitySlug(city.href) : "";
+    if (slug) return slug;
+    return getSlugFromPathname(pathname || "");
+  }, [focusedCityIndex, mobileCities, pathname]);
+
   const buildContextHref = (href) => {
-    const path = pathname || "/";
-    const isCity = /^\/competitions\//i.test(path);
-    if (!isCity) return href;
-    // se un giorno aggiungi "Classifica" / "Squadre" / "Partite" nel menu mobile sinistro, usa questa funzione
     const baseSeg = (href || "/").replace(/^\//, "");
-    if (!baseSeg) return "/";
-    const citySegment = path.split("/")[2] || "";
-    return `/competitions/${citySegment}/${baseSeg}`;
+    if (!focusedCitySlug) return href;
+    if (!baseSeg) {
+      return `/competitions/${focusedCitySlug}`;
+    }
+    return `/competitions/${focusedCitySlug}/${baseSeg}`;
   };
 
   const updateFocus = (container, axis = "y") => {
@@ -77,24 +123,30 @@ export default function NavMobile({ mobileCities }) {
     return closestIndex;
   };
 
-  const attachFocusHandlers = (container, axis = "y") => {
+  const attachFocusHandlers = (container, axis = "y", onFocusIndex) => {
     if (!container) return () => {};
     let ticking = false;
+    const runUpdate = () => {
+      const index = updateFocus(container, axis);
+      if (typeof onFocusIndex === "function" && index !== -1) {
+        onFocusIndex(index);
+      }
+    };
     const onScroll = () => {
       if (!ticking) {
         ticking = true;
         requestAnimationFrame(() => {
-          updateFocus(container, axis);
+          runUpdate();
           ticking = false;
         });
       }
     };
     const onResize = () => {
-      updateFocus(container, axis);
+      runUpdate();
     };
     container.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onResize);
-    updateFocus(container, axis);
+    runUpdate();
     return () => {
       container.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
@@ -106,26 +158,37 @@ export default function NavMobile({ mobileCities }) {
     if (!open) return;
     const left = mobileMenuListRef.current;
     const right = mobileCitiesListRef.current;
-    [left, right].forEach((list) => {
+    const sections = mobileSectionsListRef.current;
+    [left, right, sections].forEach((list) => {
       if (list) {
         list.style.paddingLeft = "12px";
         list.style.paddingRight = "12px";
       }
     });
     if (left) left.scrollLeft = 0;
-    if (right) right.scrollLeft = 0;
+    if (sections) sections.scrollLeft = 0;
+    scrollItemIntoCenter(right, focusedCityIndex);
     const cleanLeft = attachFocusHandlers(left, "x");
-    const cleanRight = attachFocusHandlers(right, "x");
-    [left, right].forEach((list) => {
+    const cleanRight = attachFocusHandlers(right, "x", setFocusedCityIndex);
+    const cleanSections = attachFocusHandlers(sections, "x");
+    [left, right, sections].forEach((list) => {
       if (!list) return;
       const lis = list.querySelectorAll("li");
-      lis.forEach((li, i) => li.classList.toggle("focused", i === 0));
+      const focusIndex = list === right ? focusedCityIndex : 0;
+      lis.forEach((li, i) => li.classList.toggle("focused", i === focusIndex));
     });
     return () => {
       cleanLeft();
       cleanRight();
+      cleanSections();
     };
-  }, [open]);
+  }, [open, focusedCityIndex]);
+
+  useEffect(() => {
+    if (!open) return;
+    const right = mobileCitiesListRef.current;
+    scrollItemIntoCenter(right, focusedCityIndex);
+  }, [open, focusedCityIndex]);
 
   // fade pannello destro
   useEffect(() => {
@@ -148,10 +211,17 @@ export default function NavMobile({ mobileCities }) {
     };
   }, [open]);
 
-  const handleMobileCityClick = (e, city) => {
+  const handleMobileCityClick = (e, city, index) => {
     e.preventDefault();
+    setFocusedCityIndex(index);
     setOpen(false);
     router.push(city.href);
+  };
+
+  const handleMobileSectionClick = (e, link) => {
+    e.preventDefault();
+    setOpen(false);
+    router.push(buildContextHref(link.href));
   };
 
   return (
@@ -171,23 +241,35 @@ export default function NavMobile({ mobileCities }) {
       </div>
       <div className={`menu${open ? " open" : ""}`}>
         <div className="menu-content">
-          <ul className="menu-left" ref={mobileMenuListRef}>
-            <li>
-              <a href="/CompetizioneLSC">Competizione LSC</a>
-            </li>
-            <li>
-              <a href="/Competizione">Competizioni</a>
-            </li>
-            <li>
-              <a href="/Home">Chi siamo</a>
-            </li>
-          </ul>
+          {/*<ul className="menu-left" ref={mobileMenuListRef}>*/}
+          {/*  <li>*/}
+          {/*    <a href="/CompetizioneLSC">Competizione LSC</a>*/}
+          {/*  </li>*/}
+          {/*  <li>*/}
+          {/*    <a href="/Competizione">Competizioni</a>*/}
+          {/*  </li>*/}
+          {/*  <li>*/}
+          {/*    <a href="/Home">Chi siamo</a>*/}
+          {/*  </li>*/}
+          {/*  <li>*/}
+          {/*    <a href="/Home"></a> /!*elemento vuoto per spacing*!/*/}
+          {/*  </li>*/}
+          {/*</ul>*/}
           <div className={`menu-right visible`} ref={mobileCitiesPanelRef}>
             <ul className="menu-right-list" ref={mobileCitiesListRef}>
-              {mobileCities.map((city) => (
+              {mobileCities.map((city, index) => (
                 <li key={city.href}>
-                  <a href={city.href} onClick={(e) => handleMobileCityClick(e, city)}>
+                  <a href={city.href} onClick={(e) => handleMobileCityClick(e, city, index)}>
                     {city.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <ul className="menu-right-list sections" ref={mobileSectionsListRef}>
+              {sectionLinks.map((link) => (
+                <li key={link.href}>
+                  <a href={buildContextHref(link.href)} onClick={(e) => handleMobileSectionClick(e, link)}>
+                    {link.name}
                   </a>
                 </li>
               ))}
