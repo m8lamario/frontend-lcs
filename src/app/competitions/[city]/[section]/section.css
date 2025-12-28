@@ -83,6 +83,10 @@
     border-radius: 4px;
 }
 
+.city-page .matches-section {
+    position: relative;
+}
+
 .city-page .match-card {
     flex: 0 0 clamp(280px, 42vw, 420px);
     /* fallback + tokenized */
@@ -278,15 +282,21 @@
 /* Pulsanti navigazione (nascosti su mobile) */
 .city-page .matches-controls {
     position: absolute;
-    inset: 0;
+    top: 50%;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transform: translateY(-50%);
     pointer-events: none;
+    padding: 0 1rem;
+    z-index: 2;
 }
 
 .city-page .nav-btn {
     pointer-events: auto;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+    position: static;
     width: 36px;
     height: 36px;
     border-radius: 50%;
@@ -301,18 +311,10 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, .25);
 }
 
-.city-page .nav-btn:hover {
-    transition: 0.7s;
-    background: color-mix(in srgb, var(--text) 8%, var(--secondary));
-}
-
-.city-page .nav-btn.prev {
-    left: -40px;
-    z-index: 1;
-}
-
+.city-page .nav-btn.prev,
 .city-page .nav-btn.next {
-    right: -40px;
+    left: auto;
+    right: auto;
     z-index: 1;
 }
 
@@ -968,6 +970,8 @@
 }
 
 .team-card {
+    text-decoration: none;
+    color: var(--text);
     display: flex;
     flex-direction: column;
     gap: 1rem;

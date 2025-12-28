@@ -66,7 +66,7 @@ export default async function SectionPage({ params }) {
     const sectionContent = {
         squadre: (
             <>
-                <TeamsRoster teams={data.schools} />
+                <TeamsRoster teams={data.schools} citySlug={city} />
             </>
         ),
         partite: (

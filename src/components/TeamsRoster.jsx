@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 const META_FIELDS = [
     { key: 'city', label: 'Città' },
@@ -8,7 +9,7 @@ const META_FIELDS = [
     { key: 'record', label: 'Record' },
 ];
 
-export default function TeamsRoster({ teams = [] }) {
+export default function TeamsRoster({ teams = [], citySlug = '' }) {
     if (!teams.length) {
         return (
             <section className="teams-roster teams-roster-empty">
@@ -17,15 +18,26 @@ export default function TeamsRoster({ teams = [] }) {
         );
     }
 
+    const buildHref = (teamId) => {
+        if (!citySlug || !teamId) return null;
+        return `/competitions/${citySlug}/squadre/${teamId}`;
+    };
+
     return (
         <section className="teams-roster">
             {teams.map((team) => {
                 const meta = META_FIELDS
                     .map((field) => ({ label: field.label, value: team[field.key] }))
                     .filter((entry) => !!entry.value);
-
-                return (
-                    <article key={team.id} className="team-card">
+                const teamHref = buildHref(team.id);
+                const CardWrapper = teamHref ? Link : 'article';
+                const wrapperProps = {
+                    key: team.id || team.name,
+                    className: 'team-card',
+                    ...(teamHref ? { href: teamHref, 'aria-label': `Vai alla scheda di ${team.name}` } : {})
+                };
+                const cardBody = (
+                    <>
                         <div className="team-card-header">
                             <div className="team-logo">
                                 {team.logo ? (
@@ -75,10 +87,15 @@ export default function TeamsRoster({ teams = [] }) {
                                 <strong>{team.contact}</strong>
                             </div>
                         )}
-                    </article>
+                    </>
+                );
+
+                return (
+                    <CardWrapper {...wrapperProps}>
+                        {cardBody}
+                    </CardWrapper>
                 );
             })}
         </section>
     );
 }
-

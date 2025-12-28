@@ -3,10 +3,46 @@ const __now = new Date();
 const __nowISO = __now.toISOString(); // partita che inizia ora
 const __past70ISO = new Date(__now.getTime() - 70 * 60000).toISOString(); // partita finita (70' fa)
 
+const slugify = (value = '') => value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || 'team';
+
+const baseRoster = [
+    { number: 1, role: 'Portiere', name: 'Alessio Guardiani', year: '5A' },
+    { number: 2, role: 'Difensore', name: 'Matteo Serra', year: '4B' },
+    { number: 4, role: 'Difensore', name: 'Diego Ferri', year: '5C' },
+    { number: 6, role: 'Centrocampista', name: 'Luca Parodi', year: '5B' },
+    { number: 8, role: 'Centrocampista', name: 'Riccardo Gori', year: '4C' },
+    { number: 9, role: 'Attaccante', name: 'Filippo Greco', year: '5D' },
+    { number: 10, role: 'Attaccante', name: 'Emiliano Costa', year: '5A' },
+    { number: 11, role: 'Attaccante', name: 'Gabriele Sanna', year: '4A' }
+];
+
+const baseStaff = [
+    { role: 'Head Coach', name: 'Mauro Testa' },
+    { role: 'Vice Allenatore', name: 'Simone Lodi' },
+    { role: 'Prep. Atletico', name: 'Giulia Ferrante' },
+    { role: 'Team Manager', name: 'Chiara Volpi' }
+];
+
+const createRoster = (teamName = '') => {
+    const slug = slugify(teamName);
+    return baseRoster.map((player, idx) => ({ ...player, id: `${slug}-player-${idx + 1}` }));
+};
+
+const createStaff = (teamName = '') => {
+    const slug = slugify(teamName);
+    return baseStaff.map((member, idx) => ({ ...member, id: `${slug}-staff-${idx + 1}` }));
+};
+
+const attachTeamExtras = (teams = []) => teams.map((team) => ({
+    ...team,
+    roster: team.roster ?? createRoster(team.name),
+    staff: team.staff ?? createStaff(team.name)
+}));
+
 const cities = {
     torino: {
         title: 'Mole cup',
-        schools: [
+        schools: attachTeamExtras([
             { id: 'liceo-leonardo-1', name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png', city: 'Torino', coach: 'M. Rossi', founded: 1965, colors: 'Bianco / Blu', record: '6V - 2P', achievements: ['Campioni 2023', 'Fair Play 2024'], contact: 'prof.sport@leonardo.edu' },
             { id: 'itis-a-1', name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png', city: 'Torino', coach: 'F. Bianchi', founded: 1971, colors: 'Nero / Oro', record: '5V - 3P', achievements: ['Finalisti 2023'], contact: 'coach.itis@itis-a.edu' },
             { id: 'liceo-leonardo-2', name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png', city: 'Torino', coach: 'M. Rossi', founded: 1965, colors: 'Bianco / Blu' },
@@ -19,7 +55,7 @@ const cities = {
             { id: 'itis-a-5', name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png', city: 'Torino', coach: 'F. Bianchi', founded: 1971, colors: 'Nero / Oro' },
             { id: 'liceo-leonardo-6', name: 'Liceo Leonardo', logo: '/logo/PNG-lcs_logo_white_t.png', city: 'Torino', coach: 'M. Rossi', founded: 1965, colors: 'Bianco / Blu' },
             { id: 'itis-a-6', name: 'ITIS A.', logo: '/logo/PNG-lcs_logo_white_t.png', city: 'Torino', coach: 'F. Bianchi', founded: 1971, colors: 'Nero / Oro' },
-        ],
+        ]),
         matches: [
             // Completed matches (FT)
             {
