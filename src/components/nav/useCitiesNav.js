@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useState } from "react";
 
 const defaultCities = [
-  { name: "LCS", href: "/" },
+  { name: "ESL", href: "/" },
   { name: "Brescia", href: "/competitions/brescia" },
   { name: "Roma", href: "/competitions/roma" },
   { name: "Milano", href: "/competitions/milano" },
@@ -83,7 +83,7 @@ export function useCitiesNav(pathname) {
     // FORZA LSC PRIMA SE SIAMO SU ROOT "/" ANCHE SE L'ORDINE SALVATO AVEVA ALTRO AL PRIMO POSTO
     if (path === "/") {
       const idxLSC = baseOrder.findIndex(
-        (c) => c.href === "/" || c.name.toLowerCase() === "lcs"
+        (c) => c.href === "/" || c.name.toLowerCase() === "esl"
       );
       if (idxLSC > 0) {
         const arr = [...baseOrder];

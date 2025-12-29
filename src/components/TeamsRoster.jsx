@@ -30,12 +30,6 @@ export default function TeamsRoster({ teams = [], citySlug = '' }) {
                     .map((field) => ({ label: field.label, value: team[field.key] }))
                     .filter((entry) => !!entry.value);
                 const teamHref = buildHref(team.id);
-                const CardWrapper = teamHref ? Link : 'article';
-                const wrapperProps = {
-                    key: team.id || team.name,
-                    className: 'team-card',
-                    ...(teamHref ? { href: teamHref, 'aria-label': `Vai alla scheda di ${team.name}` } : {})
-                };
                 const cardBody = (
                     <>
                         <div className="team-card-header">
@@ -90,10 +84,23 @@ export default function TeamsRoster({ teams = [], citySlug = '' }) {
                     </>
                 );
 
+                if (teamHref) {
+                    return (
+                        <Link
+                            key={team.id || team.name}
+                            href={teamHref}
+                            className="team-card"
+                            aria-label={`Vai alla scheda di ${team.name}`}
+                        >
+                            {cardBody}
+                        </Link>
+                    );
+                }
+
                 return (
-                    <CardWrapper {...wrapperProps}>
+                    <article key={team.id || team.name} className="team-card" role="group">
                         {cardBody}
-                    </CardWrapper>
+                    </article>
                 );
             })}
         </section>

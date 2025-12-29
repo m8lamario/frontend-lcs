@@ -15,16 +15,6 @@ footer {
     color: #f9f9f9;
 }
 
-footer::after {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 68px;
-    background: rgb(0 0 0 / 10%);
-}
 .logo-wrap{
     grid-area: logo;
     display: flex;

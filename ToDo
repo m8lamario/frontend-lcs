@@ -1,9 +1,9 @@
-Sistemare struttura città:
-  - Home città: News e partnership locali
-  - Classifica: Mostra classifiche della città
-  - Squadre: Mostra squadre della città
-  - Partite: Slider con tutte le partite
 Problemi:
   - Sistemare il nav responsive con le corrette voci
   - Sistemare voci footer e renderle cliccabili
   - Sistemare palette
+LCS struttura:
+  - Squadre: Spiegare il format e fare slot in cui si inseriranno le squadre vincitrici di ogni città
+  - Eventi: Aggiungere gli eventi futuri (eventi in extremis)
+  - Partite: Spiegare il format e come le partite vengono inserire e poi mostrare lo slider con partite da definire ancora
+  - Classifica: Mostrare come le squadre raggiungono la finale dagli ottavi (fare un grafico)

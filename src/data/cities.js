@@ -39,6 +39,89 @@ const attachTeamExtras = (teams = []) => teams.map((team) => ({
     staff: team.staff ?? createStaff(team.name)
 }));
 
+const DEFAULT_CITY_LOGO = "/logo/PNG-lcs_logo_white_t.png";
+
+const buildStandingTeam = (slug, name, rank) => {
+    const pts = Math.max(3, 14 - rank * 2);
+    const gf = Math.max(3, 12 - rank);
+    const ga = Math.max(1, 3 + rank);
+    const w = Math.max(0, 3 - rank + 1);
+    const l = Math.max(0, rank - 1);
+    const d = Math.max(0, 3 - w - l);
+    return {
+        id: `${slug}-${slugify(name)}`,
+        name,
+        logo: DEFAULT_CITY_LOGO,
+        p: 3,
+        w,
+        d,
+        l,
+        gf,
+        ga,
+        gd: gf - ga,
+        pts
+    };
+};
+
+const createSyntheticCity = ({ slug, title, primaryTeam, secondaryTeam }) => {
+    const teamNames = [
+        primaryTeam,
+        secondaryTeam ?? `${primaryTeam} Academy`,
+        `${title} Select`,
+        `${title} Youth`
+    ];
+    const standings = teamNames.map((name, index) => buildStandingTeam(slug, name, index + 1));
+    const schoolCards = standings.slice(0, 2).map((team, index) => ({
+        id: team.id,
+        name: team.name,
+        logo: DEFAULT_CITY_LOGO,
+        city: title,
+        coach: `Coach ${team.name.split(" ")[0]}`,
+        founded: 1970 + index,
+        colors: index === 0 ? "Blu / Oro" : "Rosso / Nero",
+        record: `${6 - index}V - ${index}P`
+    }));
+    return {
+        title,
+        schools: attachTeamExtras(schoolCards),
+        matches: [],
+        groups: [
+            {
+                name: "Girone Unico",
+                teams: standings
+            }
+        ],
+        news: [],
+        partners: []
+    };
+};
+
+const createSyntheticCities = (configs = []) => configs.reduce((acc, cfg) => {
+    if (!cfg?.slug || acc[cfg.slug]) {
+        return acc;
+    }
+    acc[cfg.slug] = createSyntheticCity(cfg);
+    return acc;
+}, {});
+
+const syntheticCities = createSyntheticCities([
+    { slug: "milano", title: "Milano Cup", primaryTeam: "Liceo Manzoni", secondaryTeam: "ITIS Milano" },
+    { slug: "roma", title: "Roma Capitale", primaryTeam: "Liceo Giulio Cesare", secondaryTeam: "Istituto Roma" },
+    { slug: "napoli", title: "Vesuvio League", primaryTeam: "Liceo Sannazaro", secondaryTeam: "ITIS Vesuvio" },
+    { slug: "firenze", title: "Firenze Rinascimento", primaryTeam: "Liceo Dante", secondaryTeam: "ITIS Arno" },
+    { slug: "bologna", title: "Bologna Classic", primaryTeam: "Liceo Galvani", secondaryTeam: "ITIS Nettuno" },
+    { slug: "genova", title: "Genova Wave", primaryTeam: "Liceo Colombo", secondaryTeam: "ITIS Lanterna" },
+    { slug: "venezia", title: "Laguna Trophy", primaryTeam: "Liceo Foscarini", secondaryTeam: "ITIS Laguna" },
+    { slug: "bari", title: "Bari Sud", primaryTeam: "Liceo Flacco", secondaryTeam: "ITIS Apulia" },
+    { slug: "palermo", title: "Palermo Cup", primaryTeam: "Liceo Garibaldi", secondaryTeam: "ITIS Trinacria" },
+    { slug: "cagliari", title: "Cagliari Island", primaryTeam: "Liceo Pacinotti", secondaryTeam: "ITIS Nuraghe" },
+    { slug: "verona", title: "Verona Arena", primaryTeam: "Liceo Fracastoro", secondaryTeam: "ITIS Arena" },
+    { slug: "parma", title: "Parma Food", primaryTeam: "Liceo Toschi", secondaryTeam: "ITIS Parma" },
+    { slug: "perugia", title: "Perugia Green", primaryTeam: "Liceo Alessi", secondaryTeam: "ITIS Perugia" },
+    { slug: "catania", title: "Catania Etna", primaryTeam: "Liceo Cutelli", secondaryTeam: "ITIS Etna" },
+    { slug: "lecce", title: "Lecce Salento", primaryTeam: "Liceo Banzi", secondaryTeam: "ITIS Salento" }
+]);
+
 const cities = {
     torino: {
         title: 'Mole cup',
@@ -289,7 +372,8 @@ const cities = {
             { id: 'partner-due', name: 'Torino Sport', type: 'Community', logo: '/logo/PNG-lcs_logo_white_t.png' },
             { id: 'partner-tre', name: 'LCS Official Store', type: 'Merch', logo: '/logo/PNG-lcs_logo_white_t.png', url: 'https://www.example.com/' }
         ]
-    }
+    },
+    ...syntheticCities
 };
 
 export default cities;

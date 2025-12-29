@@ -283,12 +283,13 @@
 .city-page .matches-controls {
     position: absolute;
     top: 50%;
-    left: 0;
-    right: 0;
+    left: 50%;
+    right: auto;
+    transform: translate(-50%, -50%);
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    transform: translateY(-50%);
+    gap: 0.75rem;
     pointer-events: none;
     padding: 0 1rem;
     z-index: 2;

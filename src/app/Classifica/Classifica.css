@@ -1,0 +1,142 @@
+.classifica {
+    margin: 0 auto;
+    padding: clamp(40px, 6vw, 80px);
+    color: var(--text);
+    font-family: var(--font-secondary);
+}
+
+.classifica__intro {
+    text-align: center;
+    margin-bottom: clamp(40px, 6vw, 80px);
+}
+
+.classifica__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.24em;
+    font-size: 12px;
+    padding: 6px 12px;
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 999px;
+    background: rgba(255,255,255,0.06);
+}
+
+.classifica h1 {
+    font-family: var(--font);
+    font-size: clamp(36px, 4vw, 56px);
+    margin: 18px 0 10px;
+}
+
+.classifica__intro p {
+    max-width: 820px;
+    margin: 0 auto;
+    font-size: clamp(16px, 2vw, 18px);
+    line-height: 1.7;
+    opacity: 0.9;
+}
+
+.classifica__empty {
+    margin-top: 40px;
+    text-align: center;
+    opacity: 0.7;
+}
+
+.bracket {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(24px, 4vw, 40px);
+}
+
+.bracket__round {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 18px;
+    padding: clamp(12px, 2vw, 18px);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.bracket__roundLabel {
+    font-family: var(--font);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 12px;
+    margin-bottom: 12px;
+    opacity: 0.8;
+}
+
+.bracket__matchList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: clamp(12px, 2vw, 18px);
+}
+
+.bracket__match {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 12px;
+    position: relative;
+}
+
+.bracket__match--champion {
+    min-height: 100%;
+    justify-content: center;
+}
+
+.bracket__team {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    background: rgba(0,0,0,0.25);
+    border: 1px solid transparent;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.bracket__team--highlight {
+    border-color: var(--third);
+    background: linear-gradient(135deg, rgba(69,202,17,0.16), rgba(255,203,5,0.10));
+}
+
+.bracket__team--bye,
+.bracket__team--placeholder {
+    opacity: 0.65;
+    border-style: dashed;
+}
+
+.bracket__teamSeed {
+    font-weight: 700;
+    color: var(--aux);
+}
+
+.bracket__teamMeta {
+    display: grid;
+    line-height: 1.2;
+}
+
+.bracket__teamName {
+    font-weight: 600;
+}
+
+.bracket__teamCity {
+    font-size: 13px;
+    opacity: 0.75;
+}
+
+.bracket__badge {
+    margin-left: auto;
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.24);
+}
