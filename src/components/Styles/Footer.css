@@ -14,7 +14,15 @@ footer {
     grid-template-columns: repeat(2, 1fr);
     color: #f9f9f9;
 }
-
+.copyright{
+    text-align: center;
+    font-size: 9px;
+    font-weight: 200;
+    width: 100%;
+    background: linear-gradient(90deg, #1b1b1b, #161616);
+    color: #f9f9f9;
+    padding: 5px;
+}
 .logo-wrap{
     grid-area: logo;
     display: flex;
