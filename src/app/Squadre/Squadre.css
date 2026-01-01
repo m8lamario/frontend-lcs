@@ -188,6 +188,11 @@
     opacity: 0.75;
 }
 
+.winner-card--placeholder {
+    border: 1px dashed rgba(255, 255, 255, 0.35);
+    background: rgba(0, 0, 0, 0.25);
+}
+
 .winner-card__header {
     display: flex;
     justify-content: space-between;
@@ -214,6 +219,31 @@
 .winner-card__body p {
     opacity: 0.85;
     font-size: 15px;
+}
+
+.winner-card__placeholder {
+    display: grid;
+    gap: 10px;
+}
+
+.winner-card__placeholder h3 {
+    font-size: 22px;
+    color: var(--third);
+}
+
+.winner-card__placeholder p {
+    opacity: 0.8;
+    font-size: 15px;
+}
+
+.winner-card__placeholder ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 4px;
+    font-size: 14px;
+    opacity: 0.85;
 }
 
 .winner-meta {

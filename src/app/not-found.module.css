@@ -1,0 +1,87 @@
+.wrapper {
+    min-height: calc(100vh - 160px);
+    padding: 120px 24px 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    background: radial-gradient(circle at top, rgba(46, 82, 255, 0.18), rgba(9, 10, 26, 0.95));
+}
+
+.hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    color: white;
+}
+
+.code {
+    font-size: clamp(4rem, 18vw, 9rem);
+    letter-spacing: 0.08em;
+}
+
+.city-title {
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.caption {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.panel {
+    max-width: 600px;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+}
+
+.linkPrimary,
+.linkGhost {
+    padding: 12px 24px;
+    border-radius: 999px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.linkPrimary {
+    background: linear-gradient(110deg, #f6f0ff, #cbe3ff);
+    color: #0a0f1f;
+}
+
+.linkGhost {
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.linkGhost:hover {
+    border-color: rgba(255, 255, 255, 0.75);
+}
+
+@media (max-width: 640px) {
+    .wrapper {
+        padding: 80px 16px;
+    }
+
+    .actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .linkPrimary,
+    .linkGhost {
+        width: 100%;
+        text-align: center;
+    }
+}

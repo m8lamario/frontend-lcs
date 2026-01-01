@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import EmptyState from './EmptyState';
 
 const META_FIELDS = [
     { key: 'city', label: 'Città' },
@@ -13,7 +14,12 @@ export default function TeamsRoster({ teams = [], citySlug = '' }) {
     if (!teams.length) {
         return (
             <section className="teams-roster teams-roster-empty">
-                <p className="team-empty-state">Nessuna squadra disponibile per questa città.</p>
+                <EmptyState
+                    title="Nessuna squadra registrata"
+                    description="Non ci sono ancora roster pubblicati per questa città. Torna presto per scoprire le formazioni partecipanti."
+                    action={{ label: 'Torna alle competizioni', href: '/competitions' }}
+                    align="left"
+                />
             </section>
         );
     }

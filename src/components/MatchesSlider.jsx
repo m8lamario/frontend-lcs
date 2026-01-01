@@ -5,12 +5,25 @@ import { gsap } from 'gsap';
 import Link from 'next/link';
 import { useMemo, useRef, useEffect } from 'react';
 import { useParams } from 'next/navigation';
+import EmptyState from './EmptyState';
 
 export default function MatchesSlider({ matches = [], citySlug }) {
   const params = useParams?.() || {};
   const normalizedCity = (citySlug || params.city || '').toString().toLowerCase();
 
-  if (!matches || !matches.length) return null;
+  const hasMatches = Array.isArray(matches) && matches.length > 0;
+
+  if (!hasMatches) {
+    return (
+      <section className="matches-section">
+        <EmptyState
+          title="Nessuna partita disponibile"
+          description="Appena saranno programmati nuovi incontri li troverai qui. Continua a seguirci per tutti gli aggiornamenti dal torneo."
+          action={{ label: 'Torna alla città', href: citySlug ? `/competitions/${citySlug}` : '/' }}
+        />
+      </section>
+    );
+  }
 
   const scrollerRef = useRef(null);
   const cardsRef = useRef([]);

@@ -1,10 +1,20 @@
 import Image from 'next/image';
+import EmptyState from './EmptyState';
 import './Styles/LocalPartners.css';
 
 const fallbackLogo = '/logo/lcs-colorato-trasparente.png';
 
 export default function LocalPartners({ partners = [] }) {
-    if (!Array.isArray(partners) || partners.length === 0) return null;
+    if (!Array.isArray(partners) || partners.length === 0) {
+        return (
+            <EmptyState
+                title="Nessun partner locale"
+                description="Stiamo lavorando per coinvolgere nuove realtà sul territorio. Torna presto per scoprire chi supporterà la competizione."
+                action={{ label: 'Richiedi informazioni', href: '/#contatti' }}
+                align="left"
+            />
+        );
+    }
 
     return (
         <section className="local-partners">
@@ -42,4 +52,3 @@ export default function LocalPartners({ partners = [] }) {
         </section>
     );
 }
-

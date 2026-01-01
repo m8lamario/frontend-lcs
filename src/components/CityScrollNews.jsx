@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
+import EmptyState from './EmptyState';
 const MAX_VISIBLE = 5;
 
 export default function CityScrollNews({ items = [], durationMs = 2000, fallbackImage = '/HomeFoto/19.jpg' }) {
@@ -55,7 +56,15 @@ export default function CityScrollNews({ items = [], durationMs = 2000, fallback
     }
   };
 
-  if (!slides.length) return null;
+  if (!slides.length) {
+    return (
+      <EmptyState
+        title="Nessuna notizia disponibile"
+        description="Stiamo preparando nuovi aggiornamenti per questa città. Riprova più tardi per scoprire tutte le novità."
+        action={{ label: 'Torna alla panoramica', href: '/' }}
+      />
+    );
+  }
   const current = slides[index];
   const imgSrc = current?.image || fallbackImage;
   const dateFormatted = current?.date

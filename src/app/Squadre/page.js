@@ -32,20 +32,28 @@ export default function Squadre() {
         }
     ];
 
-    const winners = Object.entries(cities).map(([slug, city]) => {
-        const champion = city.schools?.[0];
-        return {
+    const championSlots = Object.entries(cities).reduce((acc, [slug, city]) => {
+        const champion = city.champion;
+        if (!champion) {
+            return acc;
+        }
+
+        const schoolFallback = city.schools?.find((school) => school.name === champion.name) ?? city.schools?.[0];
+        acc.push({
             id: slug,
             cityName: city.title || slug,
-            championName: champion?.name,
-            record: champion?.record,
-            colors: champion?.colors,
-            coach: champion?.coach,
-            logo: champion?.logo,
-            slotLabel: champion ? "Campione in carica" : "Slot libero",
-            highlight: champion?.achievements?.[0] || "Highlight in arrivo"
-        };
-    });
+            championName: champion.name,
+            record: champion.record || schoolFallback?.record,
+            colors: champion.colors || schoolFallback?.colors,
+            coach: champion.coach || schoolFallback?.coach,
+            logo: champion.logo || schoolFallback?.logo,
+            highlight: champion.highlight || schoolFallback?.achievements?.[0] || "Highlight in arrivo",
+            slotLabel: "Campione in carica"
+        });
+        return acc;
+    }, []);
+
+    const hasChampions = championSlots.length > 0;
 
     const heroStats = [
         {
@@ -176,41 +184,47 @@ export default function Squadre() {
                     </p>
                 </div>
                 <div className="winners-grid">
-                    {winners.map((winner) => (
-                        <article
-                            key={winner.id}
-                            className={`winner-card glass-panel ${winner.championName ? "" : "winner-card--empty"}`.trim()}
-                        >
-                            <header className="winner-card__header">
-                                <span className="winner-badge">{winner.cityName}</span>
-                                <p>{winner.slotLabel}</p>
-                            </header>
-                            <div className="winner-card__body">
-                                <h3>{winner.championName || "Squadra in definizione"}</h3>
-                                <p>{winner.highlight}</p>
-                                <ul className="winner-meta">
-                                    <li>
-                                        <span>Coach</span>
-                                        <strong>{winner.coach || "TBD"}</strong>
-                                    </li>
-                                    <li>
-                                        <span>Record</span>
-                                        <strong>{winner.record || "0-0"}</strong>
-                                    </li>
-                                    <li>
-                                        <span>Colori</span>
-                                        <strong>{winner.colors || "Da annunciare"}</strong>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div className="winner-card__footer">
-                                <div className="winner-tags">
-                                    <span>Slot ESL</span>
-                                    <span>{winner.championName ? "Confirmed" : "Open"}</span>
+                    {hasChampions ? (
+                        championSlots.map((winner) => (
+                            <article key={winner.id} className="winner-card glass-panel">
+                                <header className="winner-card__header">
+                                    <span className="winner-badge">{winner.cityName}</span>
+                                    <p>{winner.slotLabel}</p>
+                                </header>
+                                <div className="winner-card__body">
+                                    <h3>{winner.championName}</h3>
+                                    <p>{winner.highlight}</p>
+                                    <ul className="winner-meta">
+                                        <li>
+                                            <span>Coach</span>
+                                            <strong>{winner.coach || "TBD"}</strong>
+                                        </li>
+                                        <li>
+                                            <span>Record</span>
+                                            <strong>{winner.record || "0-0"}</strong>
+                                        </li>
+                                        <li>
+                                            <span>Colori</span>
+                                            <strong>{winner.colors || "Da annunciare"}</strong>
+                                        </li>
+                                    </ul>
                                 </div>
+                                <div className="winner-card__footer">
+                                    <div className="winner-tags">
+                                        <span>Slot ESL</span>
+                                        <span>Confirmed</span>
+                                    </div>
+                                </div>
+                            </article>
+                        ))
+                    ) : (
+                        <article className="winner-card glass-panel winner-card--empty winner-card--placeholder">
+                            <div className="winner-card__body">
+                                <h3>Campionesse in definizione</h3>
+                                <p>Stiamo completando le finali locali: aggiorniamo qui appena proclamiamo le vincitrici.</p>
                             </div>
                         </article>
-                    ))}
+                    )}
                 </div>
             </section>
 

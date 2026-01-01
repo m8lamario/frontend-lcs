@@ -78,11 +78,11 @@ export default async function SectionPage({ params }) {
 
             </>
         ),
-        classifica: Array.isArray(data.groups) && data.groups.length > 0 ? (
+        classifica: (
             <>
-                <Standings groups={data.groups} />
+                <Standings groups={data.groups || []} />
             </>
-        ) : null,
+        ),
         notizie: Array.isArray(data.news) && data.news.length > 0 ? (
             <>
                 <AnimatedSectionTitle className={"CityTitleInfo"}>Notizie</AnimatedSectionTitle>

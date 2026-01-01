@@ -1,6 +1,6 @@
 .classifica {
     margin: 0 auto;
-    padding: clamp(40px, 6vw, 80px);
+    padding: 150px clamp(40px, 6vw, 80px) clamp(40px, 6vw, 80px) clamp(40px, 6vw, 80px);
     color: var(--text);
     font-family: var(--font-secondary);
 }
@@ -106,6 +106,12 @@
 .bracket__team--highlight {
     border-color: var(--third);
     background: linear-gradient(135deg, rgba(69,202,17,0.16), rgba(255,203,5,0.10));
+}
+
+.bracket__team--winner {
+    border-color: #f4c542;
+    background: linear-gradient(140deg, rgba(255,220,125,0.22), rgba(255,198,69,0.18));
+    box-shadow: 0 0 12px rgba(244,197,66,0.35);
 }
 
 .bracket__team--bye,

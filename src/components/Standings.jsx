@@ -1,5 +1,6 @@
 "use client";
 import React, { useMemo } from "react";
+import EmptyState from "./EmptyState";
 
 /**
  * Standings
@@ -7,7 +8,16 @@ import React, { useMemo } from "react";
  * - groups: Array<{ name: string, teams: Array<{ id:string, name:string, logo?:string, p?:number, w?:number, d?:number, l?:number, gf?:number, ga?:number, gd?:number, pts?:number }> }>
  */
 export default function Standings({ groups = [] }) {
-  if (!groups || groups.length === 0) return null;
+  if (!groups || groups.length === 0) {
+    return (
+      <EmptyState
+        title="Classifica non disponibile"
+        description="Non ci sono ancora risultati per questa competizione. Torna più tardi per consultare la graduatoria aggiornata."
+        action={{ label: "Vai alle competizioni", href: "/competitions" }}
+        align="left"
+      />
+    );
+  }
 
   const preparedGroups = useMemo(
     () =>
