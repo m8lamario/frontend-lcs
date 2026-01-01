@@ -418,6 +418,7 @@
 
 .lt-v-stage {
     font-size: 0.7rem;
+    text-align: center;
     opacity: 0.6;
     text-transform: uppercase;
 }
@@ -1128,4 +1129,9 @@
         position: fixed !important;
         z-index: 9999 !important;
     }
+}
+
+.banner-match-center {
+    background-image: linear-gradient(135deg, rgba(6, 10, 20, 0.85), rgba(24, 60, 92, 0.85));
+    background-blend-mode: overlay;
 }

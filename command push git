@@ -1,0 +1,4 @@
+git push origin main
+git rebase vercel/main
+git push vercel main
+git rebase origin/main

@@ -258,7 +258,7 @@ nav{
 
 /* Orizzontale (desktop, lista città) */
 .list-città {
-    overflow-x: auto;
+    overflow-x: hidden;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
     gap: 24px;
@@ -431,4 +431,9 @@ nav{
 .menu-right-list.sections{
     border-top: 1px solid rgba(255,255,255,0.1);
     padding-top: 16px;
+}
+@media (max-width: 1200px) {
+    .list-città{
+        overflow-x: auto;
+    }
 }
