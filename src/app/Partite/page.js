@@ -36,7 +36,7 @@ export default function PartitePage() {
 
     return (
         <div className="city-page">
-            <div className="city-section city-partite">
+            <div className="city-section city-partite pdt">
                 <div className="match-center-header">
                     <AnimatedTitle text={bannerTitle} />
                     {cityData.tagline && (

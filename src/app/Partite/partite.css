@@ -7,6 +7,9 @@
     text-align: center;
     box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
 }
+.pdt{
+    padding-top: 150px !important;
+}
 
 .match-center-header .city-title {
     margin: 0 0 0.75rem;
@@ -39,8 +42,4 @@
     .match-center-tagline {
         letter-spacing: 0.25rem;
     }
-}
-
-.city-section{
-    padding-top: 150px;
 }

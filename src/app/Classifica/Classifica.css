@@ -1,6 +1,6 @@
 .classifica {
+    padding: 150px 6vw;
     margin: 0 auto;
-    padding: 150px clamp(40px, 6vw, 80px) clamp(40px, 6vw, 80px) clamp(40px, 6vw, 80px);
     color: var(--text);
     font-family: var(--font-secondary);
 }
