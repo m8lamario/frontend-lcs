@@ -21,7 +21,7 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-image: url("/loghi/Milano/milano.png");
+    background-image: none;
 }
 .city-page .banner .banner-content{
     width: 100%;
@@ -44,6 +44,23 @@
     padding: 40px 6vw;
     display: grid;
     grid-template-columns: 1fr;
+    gap: 24px;
+}
+
+/* Sezione nuovo stadio */
+.city-page .stadium-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.city-page .stadium-section h2 {
+    margin: 0;
+}
+
+.city-page .stadium-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 24px;
 }
 
@@ -165,7 +182,7 @@
 }
 
 .scroll-news__indicators button.is-active {
-    background: var(--accent, #f7ce46);
+    background: #f7ce46;
     width: 48px;
 }
 

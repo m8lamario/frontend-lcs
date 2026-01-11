@@ -1,50 +1,97 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import cities from '@/data/cities';
+import { localleagues, teams as apiTeams, players as apiPlayers } from '@/data/CorrectDataStructure';
 import AnimatedTitle from '@/components/AnimatedTitle';
 import './team.css';
 
-const findTeamByCity = (cityKey, teamId) => {
-    const data = cities[cityKey];
-    if (!data || !Array.isArray(data.schools)) return null;
-    return data.schools.find((team) => team.id === teamId) || null;
+const TEAM_LOGO_FALLBACK = '/logo/PNG-lcs_logo_white_t.png';
+
+const normalizeSlug = (value = '') => value.toString().trim().toLowerCase();
+
+const findLeagueBySlug = (slug) => localleagues.find((league) => league.slug === slug);
+
+const findCombinedTeam = (leagueSlug, teamSlug) => {
+    const league = findLeagueBySlug(leagueSlug);
+    if (!league) return { league: null, team: null };
+
+    const leagueTeam = league.teams?.find((team) => team.slug === teamSlug);
+    const apiTeam = apiTeams.find((team) => team.slug === teamSlug && team.local_league === leagueSlug);
+    if (!leagueTeam && !apiTeam) {
+        return { league, team: null };
+    }
+
+    const combinedTeam = {
+        slug: teamSlug,
+        ...apiTeam,
+        ...leagueTeam
+    };
+
+    if (!combinedTeam.name) {
+        return { league, team: null };
+    }
+
+    return { league, team: combinedTeam };
 };
 
+const getPlayersForTeam = (teamSlug) => {
+    const inlineRoster = apiTeams.find((team) => team.slug === teamSlug)?.players;
+    if (Array.isArray(inlineRoster) && inlineRoster.length) {
+        return inlineRoster;
+    }
+    return apiPlayers.filter((player) => player.team === teamSlug);
+};
+
+const buildRoster = (teamSlug) => getPlayersForTeam(teamSlug).map((player, index) => {
+    const fullName = player.name || [player.first_name, player.last_name].filter(Boolean).join(' ').trim();
+    return {
+        id: player.id ?? `${teamSlug}-player-${index + 1}`,
+        number: player.shirt_number ?? player.number ?? '-'
+            ,
+        role: player.position ?? player.role ?? 'Giocatore',
+        name: fullName || 'Giocatore',
+        year: player.year ?? null
+    };
+}).filter((player) => Boolean(player.name));
+
 export async function generateStaticParams() {
-    return Object.entries(cities).flatMap(([cityKey, cityData]) => {
-        if (!Array.isArray(cityData.schools)) return [];
-        return cityData.schools.map((team) => ({ city: cityKey, teamId: team.id }));
-    });
+    return localleagues.flatMap((league) => (
+        Array.isArray(league.teams)
+            ? league.teams.map((team) => ({ city: league.slug, teamId: team.slug }))
+            : []
+    ));
 }
 
 export async function generateMetadata({ params }) {
-    const { city, teamId } = await params;
-    const key = city.toLowerCase();
-    const team = findTeamByCity(key, teamId);
-    const cityTitle = cities[key]?.title || 'Competitions';
-    const teamName = team?.name ? ` — ${team.name}` : '';
-    return { title: `${cityTitle}${teamName}` };
+    const { city, teamId } = params;
+    const citySlug = normalizeSlug(city);
+    const teamSlug = normalizeSlug(teamId);
+    const { league, team } = findCombinedTeam(citySlug, teamSlug);
+    if (!league || !team) {
+        return { title: 'Competitions' };
+    }
+
+    const leagueTitle = league.title || league.name || 'Competitions';
+    const teamName = team.name ? ` — ${team.name}` : '';
+    return { title: `${leagueTitle}${teamName}` };
 }
 
 export default async function TeamPage({ params }) {
-    const { city, teamId } = await params;
-    const key = city.toLowerCase();
-    const data = cities[key];
-    if (!data) notFound();
+    const { city, teamId } = params;
+    const citySlug = normalizeSlug(city);
+    const teamSlug = normalizeSlug(teamId);
+    const { league, team } = findCombinedTeam(citySlug, teamSlug);
 
-    const team = findTeamByCity(key, teamId);
-    if (!team) notFound();
+    if (!league || !team) notFound();
 
-    const roster = Array.isArray(team.roster) ? team.roster : [];
+    const roster = buildRoster(team.slug);
     const staff = Array.isArray(team.staff) ? team.staff : [];
 
     const pills = [
-        team.city && `Città: ${team.city}`,
+        league.title && `Competizione: ${league.title}`,
+        league.subtitle && `Stage: ${league.subtitle}`,
         team.coach && `Coach: ${team.coach}`,
-        team.founded && `Fondato: ${team.founded}`,
-        team.colors && `Colori: ${team.colors}`,
         team.record && `Record: ${team.record}`,
+        team.short_name && `Sigla: ${team.short_name}`
     ].filter(Boolean);
 
     return (
@@ -55,7 +102,7 @@ export default async function TeamPage({ params }) {
                         {team.logo ? (
                             <Image src={team.logo} alt={team.name} width={220} height={220} sizes="320px" />
                         ) : (
-                            <span className="team-logo-placeholder">{team.name?.[0]?.toUpperCase() ?? '?'}</span>
+                            <Image src={TEAM_LOGO_FALLBACK} alt={team.name} width={220} height={220} sizes="320px" />
                         )}
                     </div>
                     <div>

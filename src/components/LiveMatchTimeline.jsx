@@ -2,6 +2,7 @@
 
 import React, { useMemo, useState, useEffect } from 'react';
 import Image from 'next/image';
+import styles from './Styles/LiveMatchTimeline.module.css';
 
 /**
  * Reusable vertical timeline component for football match events.
@@ -20,29 +21,39 @@ export default function LiveMatchTimeline({ match }) {
 
   const [currentMinute, setCurrentMinute] = useState(null);
 
+  const matchDate = match?.date ? new Date(match.date) : null;
+  const now = useMemo(() => new Date(), []);
+  const hasStarted = matchDate ? matchDate.getTime() <= now.getTime() : false;
+  const isLive = match?.status === 'LIVE' || match?.isLive;
+  const isUpcoming = !hasStarted && !isLive;
+  const showTimeline = isLive || hasStarted;
+  const hasEvents = Array.isArray(match?.events) && match.events.length > 0;
+
   useEffect(() => {
-    // Se la partita non è live, non mostriamo l'indicatore
+    if (!match?.date || !showTimeline) {
+      setCurrentMinute(null);
+      return;
+    }
+
     if (match?.status !== 'LIVE' && !match?.isLive) {
       setCurrentMinute(null);
       return;
     }
 
     const calculateMinute = () => {
-      if (!match?.date) return;
       const start = new Date(match.date).getTime();
-      const now = Date.now();
-      const diff = Math.floor((now - start) / 60000);
-      // Limitiamo il minuto tra 0 e MATCH_DURATION
+      const nowTs = Date.now();
+      const diff = Math.floor((nowTs - start) / 60000);
       const min = Math.min(Math.max(0, diff), MATCH_DURATION);
       setCurrentMinute(min);
     };
 
     calculateMinute();
-    const interval = setInterval(calculateMinute, 30000); // Aggiorna ogni 30s
+    const interval = setInterval(calculateMinute, 30000);
     return () => clearInterval(interval);
-  }, [match?.date, match?.status, match?.isLive, MATCH_DURATION]);
+  }, [match?.date, match?.status, match?.isLive, MATCH_DURATION, showTimeline]);
 
-  if (!match) return null;
+  if (!match || (!showTimeline && !isUpcoming)) return null;
 
   // Group events by minute
   const eventsByMinute = useMemo(() => {
@@ -67,11 +78,11 @@ export default function LiveMatchTimeline({ match }) {
   };
 
   return (
-    <div className="live-timeline-vertical">
+    <div className={styles['live-timeline-vertical']}>
       {/* Match Header: Teams and Score */}
-      <div className="lt-v-header">
-        <div className="lt-v-team lt-v-left">
-          <div className="lt-v-logo">
+      <div className={styles['lt-v-header']}>
+        <div className={`${styles['lt-v-team']} ${styles['lt-v-left']}`}>
+          <div className={styles['lt-v-logo']}>
             {match.home?.logo && (
               <Image 
                 src={match.home.logo} 
@@ -82,28 +93,28 @@ export default function LiveMatchTimeline({ match }) {
               />
             )}
           </div>
-          <span className="lt-v-team-name">{match.home?.name}</span>
+          <span className={styles['lt-v-team-name']}>{match.home?.name}</span>
         </div>
 
-        <div className="lt-v-score-container">
-          <div className="lt-v-score-row">
-             <span className="lt-v-score-val">{match.score?.split('-')[0]?.trim() || 0}</span>
-             <span className="lt-v-score-divider">-</span>
-             <span className="lt-v-score-val">{match.score?.split('-')[1]?.trim() || 0}</span>
+        <div className={styles['lt-v-score-container']}>
+          <div className={styles['lt-v-score-row']}>
+             <span className={styles['lt-v-score-val']}>{match.score?.split('-')[0]?.trim() || 0}</span>
+             <span className={styles['lt-v-score-divider']}>-</span>
+             <span className={styles['lt-v-score-val']}>{match.score?.split('-')[1]?.trim() || 0}</span>
           </div>
-          <div className="lt-v-match-status">
-            <span className="lt-v-stage">{match.stage}</span>
+          <div className={styles['lt-v-match-status']}>
+            <span className={styles['lt-v-stage']}>{match.stage}</span>
             {match.status === 'LIVE' && (
-              <span className="lt-v-live-tag">
-                <span className="lt-v-live-dot" />
+              <span className={styles['lt-v-live-tag']}>
+                <span className={styles['lt-v-live-dot']} />
                 LIVE
               </span>
             )}
           </div>
         </div>
 
-        <div className="lt-v-team lt-v-right">
-          <div className="lt-v-logo">
+        <div className={`${styles['lt-v-team']} ${styles['lt-v-right']}`}>
+          <div className={styles['lt-v-logo']}>
             {match.away?.logo && (
               <Image 
                 src={match.away.logo} 
@@ -114,72 +125,69 @@ export default function LiveMatchTimeline({ match }) {
               />
             )}
           </div>
-          <span className="lt-v-team-name">{match.away?.name}</span>
+          <span className={styles['lt-v-team-name']}>{match.away?.name}</span>
         </div>
       </div>
 
       {/* Timeline Body */}
-      <div className="lt-v-body">
-        <div className="lt-v-axis" />
-        
-        {/* Live Progress Indicator */}
-        {currentMinute !== null && currentMinute >= 0 && currentMinute <= MATCH_DURATION && (
-          <div 
-            className="lt-v-live-progress"
-            style={{ 
+      <div className={styles['lt-v-body']}>
+        <div className={styles['lt-v-axis']} />
+
+        {showTimeline && currentMinute !== null && currentMinute >= 0 && currentMinute <= MATCH_DURATION && (
+          <div
+            className={styles['lt-v-live-progress']}
+            style={{
               top: `calc(${currentMinute} * (100vh / ${MATCH_DURATION}))`,
               marginTop: '2rem' 
             }}
           >
-            <div className="lt-v-live-progress-dot" />
-            <div className="lt-v-live-progress-line" />
-            <span className="lt-v-live-progress-text">{currentMinute}'</span>
+            <div className={styles['lt-v-live-progress-dot']} />
+            <div className={styles['lt-v-live-progress-line']} />
+            <span className={styles['lt-v-live-progress-text']}>{currentMinute}'</span>
           </div>
         )}
 
-        {Array.from({ length: MATCH_DURATION + 1 }).map((_, minute) => {
+        {showTimeline && Array.from({ length: MATCH_DURATION + 1 }).flatMap((_, minute) => {
           const events = eventsByMinute[minute] || [];
           const isMark = minute % 10 === 0 || minute === 0 || minute === MATCH_DURATION;
 
-          if (events.length === 0 && !isMark) return null;
+          if (events.length === 0 && !isMark && (isUpcoming || !hasEvents)) return [];
 
           return (
-            <div 
-              key={minute} 
-              className="lt-v-minute-slot"
-              style={{ 
+            <div
+              key={minute}
+              className={styles['lt-v-minute-slot']}
+              style={{
                 top: `calc(${minute} * (100vh / ${MATCH_DURATION}) - (100vh / ${MATCH_DURATION} / 2))`,
                 height: `calc(100vh / ${MATCH_DURATION})`
               }}
             >
-              {isMark && <span className="lt-v-time-mark" style={{ top: '50%' }}>{minute}'</span>}
-              
-              <div className="lt-v-events-stack">
-                {events.map((event, idx) => {
-                  const isHome = event.team === homeName;
-                  const sideClass = isHome ? 'left' : 'right';
-                  
-                  // Stacking logic within the minute slot
-                  // We use absolute positioning within the slot.
-                  // Center events vertically within the slot space.
-                  const verticalOffset = ((idx + 0.5) / events.length) * 100;
+              {isMark && <span className={styles['lt-v-time-mark']} style={{ top: '50%' }}>{minute}'</span>}
 
-                  return (
-                    <div 
-                      key={idx} 
-                      className={`lt-v-event-row lt-v-${sideClass}`}
-                      style={{ top: `${verticalOffset}%` }}
-                    >
-                      <div className="lt-v-marker-dot" />
-                      <div className="lt-v-connector-line" />
-                      <div className="lt-v-event-details">
-                        <span className="lt-v-type-icon">{iconFor(event.type)}</span>
-                        <span className="lt-v-player">{event.player}</span>
+              {!isUpcoming && (
+                <div className={styles['lt-v-events-stack']}>
+                  {events.map((event, idx) => {
+                    const isHome = event.team === homeName;
+                    const sideClass = isHome ? styles['lt-v-left'] : styles['lt-v-right'];
+                    const verticalOffset = ((idx + 0.5) / events.length) * 100;
+
+                    return (
+                      <div
+                        key={idx}
+                        className={`${styles['lt-v-event-row']} ${sideClass}`}
+                        style={{ top: `${verticalOffset}%` }}
+                      >
+                        <div className={styles['lt-v-marker-dot']} />
+                        <div className={styles['lt-v-connector-line']} />
+                        <div className={styles['lt-v-event-details']}>
+                          <span className={styles['lt-v-type-icon']}>{iconFor(event.type)}</span>
+                          <span className={styles['lt-v-player']}>{event.player}</span>
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
-              </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           );
         })}

@@ -1,5 +1,5 @@
 import bracketMock from "@/data/bracketMock";
-import "./Classifica.css";
+import styles from "./Classifica.module.css";
 
 const DEFAULT_LOGO = "/logo/PNG-lcs_logo_white_t.png";
 const STAGE_CONFIG = [
@@ -30,15 +30,15 @@ const buildBracketRounds = () => {
 };
 
 const Bracket = ({ rounds }) => (
-    <div className="bracket">
+    <div className={styles.bracket}>
         {rounds.map((round) => (
-            <div className="bracket__round" key={round.label}>
-                <p className="bracket__roundLabel">{round.label}</p>
-                <div className="bracket__matchList">
+            <div className={styles.bracket__round} key={round.label}>
+                <p className={styles.bracket__roundLabel}>{round.label}</p>
+                <div className={styles.bracket__matchList}>
                     {round.matches.map((match) => (
                         <article
                             key={match.id}
-                            className={`bracket__match ${match.isChampionCard ? "bracket__match--champion" : ""}`}
+                            className={`${styles.bracket__match}${match.isChampionCard ? ` ${styles["bracket__match--champion"]}` : ""}`}
                         >
                             {[match.FirstTeam, match.SecondTeam]
                                 .map((team, idx) => {
@@ -55,16 +55,16 @@ const Bracket = ({ rounds }) => (
                                     return (
                                         <div
                                             key={normalizedTeam.id}
-                                            className={`bracket__team${normalizedTeam.isPlaceholder ? " bracket__team--placeholder" : ""}${highlightChampion ? " bracket__team--highlight" : ""}`}
+                                            className={`${styles.bracket__team}${normalizedTeam.isPlaceholder ? ` ${styles["bracket__team--placeholder"]}` : ""}${highlightChampion ? ` ${styles["bracket__team--highlight"]}` : ""}`}
                                         >
-                                            <div className="bracket__teamMeta">
-                                                <p className="bracket__teamName">{normalizedTeam.name}</p>
-                                                <p className="bracket__teamCity">{normalizedTeam.cityName || ""}</p>
+                                            <div className={styles.bracket__teamMeta}>
+                                                <p className={styles.bracket__teamName}>{normalizedTeam.name}</p>
+                                                <p className={styles.bracket__teamCity}>{normalizedTeam.cityName || ""}</p>
                                             </div>
                                             {match.isChampionCard && idx === 0 && match.WinnerTeam?.id === normalizedTeam.id && (
-                                                <span className="bracket__badge">Campione ESL</span>
+                                                <span className={styles.bracket__badge}>Campione ESL</span>
                                             )}
-                                            {normalizedTeam.isPlaceholder && <span className="bracket__badge">In arrivo</span>}
+                                            {normalizedTeam.isPlaceholder && <span className={styles.bracket__badge}>In arrivo</span>}
                                         </div>
                                     );
                                 })}
@@ -79,9 +79,9 @@ const Bracket = ({ rounds }) => (
 export default function Classifica() {
     const rounds = buildBracketRounds();
     return (
-        <section className="classifica">
-            <header className="classifica__intro">
-                <p className="classifica__eyebrow">Fase Nazionale ESL</p>
+        <section className={styles.classifica}>
+            <header className={styles.classifica__intro}>
+                <p className={styles.classifica__eyebrow}>Fase Nazionale ESL</p>
                 <h1>Tabellone Campionato</h1>
                 <p>
                     Le vincitrici dei tornei cittadini avanzano nella griglia nazionale a eliminazione diretta.
@@ -89,7 +89,7 @@ export default function Classifica() {
                     verso il titolo di Campione ESL.
                 </p>
             </header>
-            {rounds.length ? <Bracket rounds={rounds} /> : <p className="classifica__empty">Il tabellone sarà disponibile appena concluse le fasi locali.</p>}
+            {rounds.length ? <Bracket rounds={rounds} /> : <p className={styles.classifica__empty}>Il tabellone sarà disponibile appena concluse le fasi locali.</p>}
         </section>
     );
 }

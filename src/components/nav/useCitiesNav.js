@@ -1,21 +1,16 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
+import { localleagues } from "../../data/CorrectDataStructure";
+
+const cityNavItems = (localleagues || []).map(({ slug, name }) => ({
+  name: name || slug,
+  href: slug ? `/competitions/${slug}` : "/",
+}));
 
 const defaultCities = [
   { name: "ESL", href: "/" },
-  { name: "Brescia", href: "/competitions/brescia" },
-  { name: "Roma", href: "/competitions/roma" },
-  { name: "Milano", href: "/competitions/milano" },
-  { name: "Napoli", href: "/competitions/napoli" },
-  { name: "Torino", href: "/competitions/torino" },
-  { name: "Verona", href: "/competitions/verona" },
-  { name: "Genova", href: "/competitions/genova" },
-  { name: "Bologna", href: "/competitions/bologna" },
-  { name: "Firenze", href: "/competitions/firenze" },
-  { name: "Palermo", href: "/competitions/palermo" },
-  { name: "Catania", href: "/competitions/catania" },
-  { name: "Venezia", href: "/competitions/venezia" },
-  { name: "", href: ""} //elemento vuoto per spacing
+  ...cityNavItems,
+  { name: "", href: "" },
 ];
 
 const SECTION_LINKS = [

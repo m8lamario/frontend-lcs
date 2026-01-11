@@ -1,0 +1,70 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px;
+    border-radius: 24px;
+    background: rgba(5, 5, 5, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.7;
+}
+
+.address {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0;
+}
+
+.mapWrap {
+    position: relative;
+    width: 100%;
+    border-radius: 18px;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+}
+
+.mapWrap iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.navButton {
+    align-self: flex-start;
+    background: #f7ce46;
+    color: #050505;
+    border: none;
+    border-radius: 999px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.navButton:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+    .card {
+        padding: 16px;
+    }
+
+    .mapWrap {
+        aspect-ratio: 4 / 3;
+    }
+}

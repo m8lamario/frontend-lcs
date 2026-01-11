@@ -1,33 +1,87 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import cities from '@/data/cities';
+import { localleagues, matches } from '@/data/CorrectDataStructure';
 import LiveMatchTimeline from '@/components/LiveMatchTimeline';
 import './match.css';
 
-export async function generateStaticParams() {
-    return Object.entries(cities).flatMap(([cityKey, data]) => {
-        if (!Array.isArray(data.matches)) return [];
-        return data.matches.map(match => ({ city: cityKey, matchId: match.id }));
-    });
-}
-
-export async function generateMetadata({ params }) {
-    const { city, matchId } = await params;
-    const key = city?.toLowerCase?.();
-    const match = key ? cities[key]?.matches?.find((m) => m.id === matchId) : null;
-    if (!match) {
-        return { title: 'Partita non trovata' };
-    }
-    const home = match.home?.name || 'Sconosciuta';
-    const away = match.away?.name || 'Sconosciuta';
-    return {
-        title: `${home} vs ${away} — ${cities[key].title}`,
-        description: `Dettaglio partita ${home} vs ${away} (${match.stage || 'Torneo'})`
-    };
-}
-
 const MATCH_DURATION = 50;
+
+const leaguesBySlug = localleagues.reduce((acc, league) => {
+    acc[league.slug.toLowerCase()] = league;
+    return acc;
+}, {});
+
+const matchesByLeague = matches.reduce((acc, match) => {
+    const slugs = new Set(
+        (match?.teams || [])
+            .map(({ team }) => team?.local_league?.toLowerCase?.())
+            .filter(Boolean)
+    );
+    slugs.forEach((slug) => {
+        if (!acc[slug]) acc[slug] = [];
+        acc[slug].push(match);
+    });
+    return acc;
+}, {});
+
+const getMatchesForLeague = (slug) => matchesByLeague[slug?.toLowerCase?.()] || [];
+
+const findMatchForLeague = (slug, matchId) =>
+    getMatchesForLeague(slug).find((match) => String(match.id) === String(matchId));
+
+const getMatchStartTimestamp = (match) => {
+    if (!match?.date) return null;
+    const ts = new Date(match.date).getTime();
+    return Number.isFinite(ts) ? ts : null;
+};
+
+const deriveMatchStatus = (match, { isLive, finished }, nowTs) => {
+    if (isLive) return 'LIVE';
+    if (finished) return 'FINISHED';
+    const start = getMatchStartTimestamp(match);
+    if (start !== null && start > nowTs) return 'SCHEDULED';
+    return match.status || 'SCHEDULED';
+};
+
+const createEventList = (match) => {
+    const events = (match?.teams || []).flatMap((teamEntry) => {
+        const teamName = teamEntry.team?.name || '';
+        return (teamEntry.events || []).map((event) => {
+            const minuteValue = typeof event.minute === 'number' ? event.minute : Number(event.minute);
+            return {
+                minute: Number.isFinite(minuteValue) ? minuteValue : null,
+                type: event.event_type || 'Evento',
+                player: event.player || 'Giocatore sconosciuto',
+                team: teamName
+            };
+        });
+    });
+    return events.sort((a, b) => (a.minute ?? Infinity) - (b.minute ?? Infinity));
+};
+
+const normalizeMatchData = (match) => {
+    const entries = match?.teams || [];
+    const homeEntry = entries.find((team) => team.is_home) || entries[0] || null;
+    const awayEntry = entries.find((team) => !team.is_home) || entries[1] || null;
+
+    return {
+        id: String(match.id),
+        date: match.datetime || null,
+        stage: match.stage || match.name || '',
+        score: match.score_text || '-',
+        status: match.finished ? 'FINISHED' : 'SCHEDULED',
+        home: {
+            name: homeEntry?.team?.name || 'Sconosciuta',
+            logo: homeEntry?.team?.logo || null
+        },
+        away: {
+            name: awayEntry?.team?.name || 'Sconosciuta',
+            logo: awayEntry?.team?.logo || null
+        },
+        events: createEventList(match)
+    };
+};
 
 const formatDate = (dateStr) => {
     if (!dateStr) return { shortDate: '', time: '' };
@@ -48,17 +102,62 @@ const computeLiveState = (match) => {
     return { isLive, finished, minute: isLive ? diffMin : null };
 };
 
-export default async function MatchDetailPage({ params }) {
-    const { city, matchId } = await params;
+const buildMatchView = (match, nowTs) => {
+    const normalized = normalizeMatchData(match);
+    const liveState = computeLiveState(normalized);
+    const status = deriveMatchStatus(normalized, liveState, nowTs);
+    const matchStart = getMatchStartTimestamp(normalized);
+    const isUpcoming = status === 'SCHEDULED' && matchStart !== null && matchStart > nowTs;
+    const shouldHideScore = !liveState.isLive && !liveState.finished && (matchStart === null || nowTs < matchStart);
+
+    return {
+        ...normalized,
+        ...liveState,
+        status,
+        isUpcoming,
+        score: shouldHideScore ? '-' : normalized.score
+    };
+};
+
+export async function generateStaticParams() {
+    return localleagues.flatMap((league) =>
+        getMatchesForLeague(league.slug).map((match) => ({ city: league.slug, matchId: String(match.id) }))
+    );
+}
+
+export async function generateMetadata({ params }) {
+    const resolvedParams = await params;
+    const { city, matchId } = resolvedParams;
     const key = city?.toLowerCase?.();
-    const data = key ? cities[key] : null;
-    if (!data) notFound();
+    const league = leaguesBySlug[key];
+    const match = league ? findMatchForLeague(league.slug, matchId) : null;
+    if (!league || !match) {
+        return { title: 'Partita non trovata' };
+    }
+    const normalized = normalizeMatchData(match);
+    const home = normalized.home?.name || 'Sconosciuta';
+    const away = normalized.away?.name || 'Sconosciuta';
+    return {
+        title: `${home} vs ${away} — ${league.title}`,
+        description: `Dettaglio partita ${home} vs ${away} (${normalized.stage || 'Torneo'})`
+    };
+}
 
-    const match = data.matches?.find((m) => m.id === matchId);
-    if (!match) notFound();
+export default async function MatchDetailPage({ params }) {
+    const resolvedParams = await params;
+    const { city, matchId } = resolvedParams;
+    const key = city?.toLowerCase?.();
+    const league = leaguesBySlug[key];
+    if (!league) notFound();
 
+    const rawMatch = findMatchForLeague(league.slug, matchId);
+    if (!rawMatch) notFound();
+
+    const nowTs = Date.now();
+    const match = buildMatchView(rawMatch, nowTs);
     const { shortDate, time } = formatDate(match.date);
-    const { isLive, finished, minute } = computeLiveState(match);
+    const viewTimeline = match.isLive || match.finished;
+    console.log(viewTimeline);
 
     return (
         <div className="match-detail-page">
@@ -66,7 +165,7 @@ export default async function MatchDetailPage({ params }) {
                 <Link className="back-link" href={`/competitions/${city}/partite`}>
                     &larr; Torna alle partite
                 </Link>
-                <h1>{data.title}</h1>
+                <h1>{league.title}</h1>
                 <p className="match-meta">
                     <span>{shortDate}</span>
                     {time && <span>• {time}</span>}
@@ -86,9 +185,9 @@ export default async function MatchDetailPage({ params }) {
                 <div className="score-section">
                     <p className="score">{match.score || '-'}</p>
                     <p className="status">
-                        {isLive && minute !== null && `${minute}' LIVE`}
-                        {!isLive && finished && 'FT'}
-                        {!isLive && !finished && (match.status || 'SCHEDULED')}
+                        {match.isLive && match.minute !== null && `${match.minute}' LIVE`}
+                        {!match.isLive && match.finished && 'FT'}
+                        {!match.isLive && !match.finished && (match.status || 'SCHEDULED')}
                     </p>
                 </div>
                 <div className="team-block">
@@ -117,10 +216,10 @@ export default async function MatchDetailPage({ params }) {
                 </section>
             )}
 
-            {isLive && (
+            {viewTimeline  && (
                 <section className="timeline-section">
                     <h2>Andamento Live</h2>
-                    <LiveMatchTimeline match={{ ...match, minute }} />
+                    <LiveMatchTimeline match={match} />
                 </section>
             )}
         </div>

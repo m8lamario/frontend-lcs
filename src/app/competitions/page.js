@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import cities from '@/data/cities';
+// Sostituisce il vecchio import di cities con la nuova struttura dati
+import { localleagues, matches as allMatches } from '@/data/CorrectDataStructure';
 import styles from './competitions.module.css';
 
 const formatHighlights = [
@@ -17,30 +18,55 @@ const formatHighlights = [
     }
 ];
 
-const toArray = (value) => (Array.isArray(value) ? value : []); // Normalizza i campi opzionali del mock
+// Utility
+const toArray = (value) => (Array.isArray(value) ? value : []);
+const parseDate = (value) => {
+    const d = new Date(value);
+    return isNaN(d.getTime()) ? null : d;
+};
+const isLiveMatch = (match) => {
+    // Heuristica: non finita e orario di inizio passato => LIVE
+    if (!match || match.finished) return false;
+    const dt = parseDate(match.datetime);
+    if (!dt) return false;
+    return dt <= new Date();
+};
+const isScheduledMatch = (match) => {
+    // Non finita e orario di inizio futuro => SCHEDULED
+    if (!match || match.finished) return false;
+    const dt = parseDate(match.datetime);
+    if (!dt) return false;
+    return dt > new Date();
+};
 
 export default function CompetitionsIndex() {
-    const cityEntries = Object.entries(cities ?? {});
+    // Le "città" corrispondono alle leghe locali
+    const leagues = toArray(localleagues);
+    const matches = toArray(allMatches);
 
-    const totals = cityEntries.reduce(
-        (acc, [, city]) => {
-            const schools = toArray(city.schools);
-            const matches = toArray(city.matches);
-            const live = matches.filter((match) => match.isLive || match.status === 'LIVE').length;
-            const upcoming = matches.filter((match) => match.status === 'SCHEDULED').length;
-
+    const totals = leagues.reduce(
+        (acc, league) => {
+            const teams = toArray(league.teams);
             return {
-                schools: acc.schools + schools.length,
-                matches: acc.matches + matches.length,
-                liveMatches: acc.liveMatches + live,
-                upcoming: acc.upcoming + upcoming
+                schools: acc.schools + teams.length,
+                matches: acc.matches, // i match sono globali, somma sotto
+                liveMatches: acc.liveMatches,
+                upcoming: acc.upcoming
             };
         },
         { schools: 0, matches: 0, liveMatches: 0, upcoming: 0 }
     );
 
+    // Calcolo aggregati globali dai match
+    const liveGlobal = matches.filter(isLiveMatch).length;
+    const upcomingGlobal = matches.filter(isScheduledMatch).length;
+
+    totals.matches = matches.length;
+    totals.liveMatches = liveGlobal;
+    totals.upcoming = upcomingGlobal;
+
     const heroStats = [
-        { label: 'Città attive', value: cityEntries.length, hint: 'stagione in corso' },
+        { label: 'Città attive', value: leagues.length, hint: 'stagione in corso' },
         { label: 'Scuole iscritte', value: totals.schools, hint: 'team approvati' },
         { label: 'Match programmati', value: totals.matches, hint: 'calendario ufficiale' },
         {
@@ -88,35 +114,31 @@ export default function CompetitionsIndex() {
                 </div>
 
                 <div className={styles.cityGrid}>
-                    {cityEntries.map(([slug, city]) => {
-                        const schools = toArray(city.schools);
-                        const matches = toArray(city.matches);
-                        const groups = toArray(city.groups);
-                        const liveNow = matches.filter((match) => match.isLive || match.status === 'LIVE').length;
-                        const scheduled = matches.filter((match) => match.status === 'SCHEDULED').length;
+                    {leagues.map((league) => {
+                        const teams = toArray(league.teams);
+                        const leagueMatches = matches.filter((m) =>
+                            toArray(m.teams).some((tm) => tm?.team?.local_league === league.slug)
+                        );
+                        const liveNow = leagueMatches.filter(isLiveMatch).length;
+                        const scheduled = leagueMatches.filter(isScheduledMatch).length;
+                        const total = leagueMatches.length;
 
                         return (
-                            <article key={slug} className={styles.cityCard}>
+                            <article key={league.slug ?? league.id} className={styles.cityCard}>
                                 <div className={styles.cardHeader}>
-                                    <h3>{city.title}</h3>
+                                    <h3>{league.title || league.name}</h3>
                                     <span className={styles.chip}>
-                                        {schools.length ? `${schools.length} scuole` : 'Roster in arrivo'}
+                                        {teams.length ? `${teams.length} scuole` : 'Roster in arrivo'}
                                     </span>
                                 </div>
                                 <p className={styles.cityMeta}>
                                     {liveNow ? `${liveNow} live • ` : ''}
-                                    {matches.length ? `${matches.length} match totali` : 'Calendario in allestimento'}
+                                    {total ? `${total} match totali` : 'Calendario in allestimento'}
                                     {scheduled ? ` • ${scheduled} in arrivo` : ''}
                                 </p>
-                                {groups.length > 0 && (
-                                    <div className={styles.groupList}>
-                                        {groups.map((group) => (
-                                            <span key={group.name}>{group.name}</span>
-                                        ))}
-                                    </div>
-                                )}
+                                {/* Niente gruppi nella nuova struttura: omesso elenco gruppi */}
                                 <div className={styles.cardFooter}>
-                                    <Link className={styles.cityLink} href={`/competitions/${slug}`}>
+                                    <Link className={styles.cityLink} href={`/competitions/${league.slug}`}>
                                         Esplora città
                                     </Link>
                                 </div>
