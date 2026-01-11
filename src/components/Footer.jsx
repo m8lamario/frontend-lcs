@@ -1,3 +1,4 @@
+import Link from "next/link";
 import './Styles/Footer.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 export default function Footer() {
@@ -21,13 +22,13 @@ export default function Footer() {
                             <h2>Su di noi</h2>
                         </li>
                         <li>
-                            <a>Home</a>
+                            <a href={"/"}>Home</a>
                         </li>
                         <li>
-                            <a>Team</a>
+                            <a href={"/team"}>Team</a>
                         </li>
                         <li>
-                            <a>Contatti</a>
+                            <a href={"/contatti"}>Contatti</a>
                         </li>
                     </ul>
                     <ul>
@@ -35,13 +36,13 @@ export default function Footer() {
                             <h2>Competizione</h2>
                         </li>
                         <li>
-                            <a>Cittadina</a>
+                            <a href={"/competitions"}>Cittadina</a>
                         </li>
                         <li>
-                            <a>Esl</a>
+                            <a href={"/"}>Esl</a>
                         </li>
                         <li>
-                            <a>Regolamento</a>
+                            <a href={"Squadre"}>Regolamento</a>
                         </li>
                     </ul>
                     <ul>
@@ -49,10 +50,10 @@ export default function Footer() {
                             <h2>Legal</h2>
                         </li>
                         <li>
-                            <a>Terms</a>
+                            <Link href={"/terms"}>Terms</Link>
                         </li>
                         <li>
-                            <a>Privacy</a>
+                            <Link href={"/privacy"}>Privacy</Link>
                         </li>
                     </ul>
                     <ul>

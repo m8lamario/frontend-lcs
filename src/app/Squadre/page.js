@@ -1,9 +1,9 @@
 import Link from "next/link";
-import cities from "@/data/cities";
+import { localleagues } from "@/data/CorrectDataStructure";
 import "./Squadre.css";
 
 export default function Squadre() {
-    const totalCities = Object.keys(cities).length;
+    const totalCities = localleagues.length;
 
     const formatSteps = [
         {
@@ -32,22 +32,20 @@ export default function Squadre() {
         }
     ];
 
-    const championSlots = Object.entries(cities).reduce((acc, [slug, city]) => {
-        const champion = city.champion;
+    const championSlots = localleagues.reduce((acc, league) => {
+        const champion = league.teams?.[0];
         if (!champion) {
             return acc;
         }
-
-        const schoolFallback = city.schools?.find((school) => school.name === champion.name) ?? city.schools?.[0];
         acc.push({
-            id: slug,
-            cityName: city.title || slug,
+            id: league.slug,
+            cityName: league.title || league.name || league.slug,
             championName: champion.name,
-            record: champion.record || schoolFallback?.record,
-            colors: champion.colors || schoolFallback?.colors,
-            coach: champion.coach || schoolFallback?.coach,
-            logo: champion.logo || schoolFallback?.logo,
-            highlight: champion.highlight || schoolFallback?.achievements?.[0] || "Highlight in arrivo",
+            record: champion.record || "0V - 0P",
+            colors: champion.colors || league.subtitle || "In definizione",
+            coach: champion.coach,
+            logo: champion.logo || "/logo/PNG-lcs_logo_white_t.png",
+            highlight: champion.highlight || `${champion.record || "0-0"} nella ${league.name}`,
             slotLabel: "Campione in carica"
         });
         return acc;
@@ -73,7 +71,7 @@ export default function Squadre() {
         }
     ];
 
-    const totalSlots = totalCities;
+    const totalSlots = localleagues.length;
     const needsPlayIn = totalSlots > 16;
     const entryRound = needsPlayIn ? "Sedicesimi di finale" : "Ottavi di finale";
 

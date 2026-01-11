@@ -1,0 +1,189 @@
+:global(:root) {
+    --contact-glass-bg: rgba(6, 28, 218, 0.7);
+    --contact-border: rgba(255, 255, 255, 0.12);
+    --contact-text: #f5f5ff;
+}
+
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(40px, 6vw, 72px);
+    padding: 150px clamp(20px, 6vw, 96px);
+    color: var(--contact-text);
+    background: radial-gradient(circle at top, rgba(255, 255, 255, 0.05), transparent 45%),
+        linear-gradient(160deg, rgba(0, 0, 0, 0.85), rgba(0, 20, 80, 0.95));
+    min-height: 100vh;
+}
+
+.hero {
+    display: grid;
+    gap: 20px;
+    max-width: 860px;
+}
+
+.eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+.hero h1 {
+    font-size: clamp(32px, 4.4vw, 48px);
+    font-family: var(--font, 'Audiowide'), sans-serif;
+}
+
+.lead {
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+.heroMeta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    padding: 18px;
+    border-radius: 18px;
+    border: 1px solid var(--contact-border);
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.heroMeta span {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.7;
+}
+
+.heroMeta strong,
+.heroMeta a {
+    display: block;
+    margin-top: 6px;
+    color: inherit;
+    text-decoration: none;
+}
+
+.cardsSection {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: clamp(16px, 3vw, 28px);
+}
+
+.infoCard {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 24px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--contact-border);
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.35);
+}
+
+.cardEyebrow {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.6;
+}
+
+.cardCta {
+    align-self: flex-start;
+    margin-top: 6px;
+    padding: 10px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: var(--contact-text);
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.cardCta:hover {
+    background: rgba(255, 255, 255, 0.12);
+    transform: translateY(-1px);
+}
+
+.formSection {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: clamp(24px, 4vw, 48px);
+    padding: 32px;
+    border-radius: 24px;
+    border: 1px solid var(--contact-border);
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(12px);
+}
+
+.form {
+    display: grid;
+    gap: 18px;
+}
+
+.form label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.form input,
+.form textarea {
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.3);
+    color: var(--contact-text);
+    font: inherit;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form input:focus,
+.form textarea:focus {
+    border-color: var(--third);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(69, 202, 17, 0.2);
+}
+
+.submit {
+    border: none;
+    border-radius: 999px;
+    padding: 14px 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    background: linear-gradient(135deg, var(--third), var(--aux));
+    color: #000;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.submit:not(:disabled):hover {
+    transform: translateY(-1px);
+}
+
+.error {
+    color: #ff8a8a;
+    font-size: 13px;
+}
+
+.success {
+    color: var(--third);
+    font-size: 14px;
+}
+
+@media (max-width: 640px) {
+    .page {
+        padding: 150px 20px 80px;
+    }
+
+    .formSection {
+        padding: 24px;
+    }
+}

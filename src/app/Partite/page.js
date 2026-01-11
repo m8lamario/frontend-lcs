@@ -1,14 +1,14 @@
-import { notFound } from 'next/navigation';
 import AnimatedTitle from '@/components/AnimatedTitle';
 import MatchesSlider from '@/components/MatchesSlider';
 import LiveMatchTimeline from '@/components/LiveMatchTimeline';
-import TeamsRoster from '@/components/TeamsRoster';
-import cities from '@/data/cities';
+import { eslMatches } from '@/data/eslData';
 import '../competitions/[city]/[section]/section.css';
 import './partite.css';
 
 const DEFAULT_CITY_SLUG = 'partite';
 const MATCH_DURATION_MINUTES = 50;
+const MATCH_CENTER_TITLE = 'LCS Match Center';
+const MATCH_CENTER_TAGLINE = 'Il recap nazionale con i migliori highlights ESL.';
 
 const findLiveMatch = (matches = []) => {
     const nowTs = Date.now();
@@ -26,27 +26,21 @@ export const metadata = {
 };
 
 export default function PartitePage() {
-    const cityData = cities[DEFAULT_CITY_SLUG];
-    if (!cityData) {
-        return notFound();
-    }
-
-    const liveMatch = findLiveMatch(cityData.matches);
-    const bannerTitle = cityData.tagline ? `${cityData.title} · ${cityData.tagline}` : cityData.title;
+    const matches = Array.isArray(eslMatches) ? eslMatches : [];
+    const liveMatch = findLiveMatch(matches);
+    const bannerTitle = `${MATCH_CENTER_TITLE} · ${MATCH_CENTER_TAGLINE}`;
 
     return (
         <div className="city-page">
             <div className="city-section city-partite pdt">
                 <div className="match-center-header">
                     <AnimatedTitle text={bannerTitle} />
-                    {cityData.tagline && (
-                        <p className="match-center-tagline">{cityData.tagline}</p>
-                    )}
+                    <p className="match-center-tagline">{MATCH_CENTER_TAGLINE}</p>
                     <p className="match-center-subcopy">
                         Risultati aggiornati, cronache live e roster ufficiali in un unico hub nazionale ESL.
                     </p>
                 </div>
-                <MatchesSlider matches={cityData.matches || []} citySlug={DEFAULT_CITY_SLUG} />
+                <MatchesSlider matches={matches} citySlug={DEFAULT_CITY_SLUG} />
                 {liveMatch && <LiveMatchTimeline match={liveMatch} />}
             </div>
         </div>

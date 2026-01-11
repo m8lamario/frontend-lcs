@@ -1,4 +1,4 @@
-import bracketMock from "@/data/bracketMock";
+import eslData from "@/data/eslData";
 import styles from "./Classifica.module.css";
 
 const DEFAULT_LOGO = "/logo/PNG-lcs_logo_white_t.png";
@@ -12,7 +12,7 @@ const STAGE_CONFIG = [
 const buildBracketRounds = () => {
     let cursor = 0;
     return STAGE_CONFIG.map(({ label, matchCount }) => {
-        const matchesSlice = bracketMock.slice(cursor, cursor + matchCount);
+        const matchesSlice = eslData.slice(cursor, cursor + matchCount);
         cursor += matchCount;
         const matches = Array.from({ length: matchCount }, (_, idx) => {
             const sourceMatch = matchesSlice[idx] ?? {};
