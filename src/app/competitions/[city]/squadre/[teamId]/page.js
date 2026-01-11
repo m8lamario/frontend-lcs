@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { localleagues, teams as apiTeams, players as apiPlayers } from '@/data/CorrectDataStructure';
 import AnimatedTitle from '@/components/AnimatedTitle';
-import './team.css';
+import styles from './team.module.css';
 
 const TEAM_LOGO_FALLBACK = '/logo/PNG-lcs_logo_white_t.png';
 
@@ -95,10 +95,10 @@ export default async function TeamPage({ params }) {
     ].filter(Boolean);
 
     return (
-        <div className="team-page">
-            <div className="team-hero">
-                <div className="team-hero-inner">
-                    <div className="team-hero-logo">
+        <div className={styles['team-page']}>
+            <div className={styles['team-hero']}>
+                <div className={styles['team-hero-inner']}>
+                    <div className={styles['team-hero-logo']}>
                         {team.logo ? (
                             <Image src={team.logo} alt={team.name} width={220} height={220} sizes="320px" />
                         ) : (
@@ -109,9 +109,9 @@ export default async function TeamPage({ params }) {
                         <AnimatedTitle text={team.name} />
                         {team.tagline && <p>{team.tagline}</p>}
                         {pills.length > 0 && (
-                            <div className="team-meta">
+                            <div className={styles['team-meta']}>
                                 {pills.map((pill) => (
-                                    <span key={pill} className="team-pill">{pill}</span>
+                                    <span key={pill} className={styles['team-pill']}>{pill}</span>
                                 ))}
                             </div>
                         )}
@@ -119,45 +119,45 @@ export default async function TeamPage({ params }) {
                 </div>
             </div>
 
-            <div className="team-section">
-                <div className="team-section-header">
+            <div className={styles['team-section']}>
+                <div className={styles['team-section-header']}>
                     <h2>Rosa giocatori</h2>
-                    <span className="section-pill">SQUADRA</span>
+                    <span className={styles['section-pill']}>SQUADRA</span>
                 </div>
                 {roster.length ? (
-                    <div className="roster-grid">
+                    <div className={styles['roster-grid']}>
                         {roster.map((player) => (
-                            <div key={player.id || player.name} className="roster-card">
-                                <div className="roster-badge">{player.number ?? '-'}</div>
-                                <div className="roster-meta">
-                                    <span className="roster-role">{player.role}</span>
-                                    <span className="roster-name">{player.name}</span>
-                                    {player.year && <span className="roster-year">Classe {player.year}</span>}
+                            <div key={player.id || player.name} className={styles['roster-card']}>
+                                <div className={styles['roster-badge']}>{player.number ?? '-'}</div>
+                                <div className={styles['roster-meta']}>
+                                    <span className={styles['roster-role']}>{player.role}</span>
+                                    <span className={styles['roster-name']}>{player.name}</span>
+                                    {player.year && <span className={styles['roster-year']}>Classe {player.year}</span>}
                                 </div>
                             </div>
                         ))}
                     </div>
                 ) : (
-                    <div className="team-empty-state">Rosa non disponibile.</div>
+                    <div className={styles['team-empty-state']}>Rosa non disponibile.</div>
                 )}
             </div>
 
-            <div className="team-section">
-                <div className="team-section-header">
+            <div className={styles['team-section']}>
+                <div className={styles['team-section-header']}>
                     <h2>Staff tecnico</h2>
-                    <span className="section-pill">STAFF</span>
+                    <span className={styles['section-pill']}>STAFF</span>
                 </div>
                 {staff.length ? (
-                    <div className="staff-list">
+                    <div className={styles['staff-list']}>
                         {staff.map((member) => (
-                            <div key={member.id || member.name} className="staff-card">
-                                <span className="staff-role">{member.role}</span>
-                                <span className="staff-name">{member.name}</span>
+                            <div key={member.id || member.name} className={styles['staff-card']}>
+                                <span className={styles['staff-role']}>{member.role}</span>
+                                <span className={styles['staff-name']}>{member.name}</span>
                             </div>
                         ))}
                     </div>
                 ) : (
-                    <div className="team-empty-state">Staff non disponibile.</div>
+                    <div className={styles['team-empty-state']}>Staff non disponibile.</div>
                 )}
             </div>
         </div>

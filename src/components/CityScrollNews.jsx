@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
 import EmptyState from './EmptyState';
+import styles from './CityScrollNews.module.css';
 const MAX_VISIBLE = 5;
 
 export default function CityScrollNews({ items = [], durationMs = 2000, fallbackImage = '/HomeFoto/19.jpg' }) {
@@ -73,19 +74,19 @@ export default function CityScrollNews({ items = [], durationMs = 2000, fallback
 
   return (
     <section
-      className="scroll-news"
+      className={styles.scrollNews}
       aria-roledescription="carousel"
       aria-label="Notizie principali"
       onMouseEnter={() => handlePause(true)}
       onMouseLeave={() => handlePause(false)}
     >
       <article
-        className="scroll-news__card"
+        className={styles.card}
         ref={carouselRef}
         tabIndex={0}
         onKeyDown={handleKeyDown}
       >
-        <div className="scroll-news__image-wrap">
+        <div className={styles.imageWrap}>
           <Image
             key={current.id}
             src={imgSrc}
@@ -93,28 +94,28 @@ export default function CityScrollNews({ items = [], durationMs = 2000, fallback
             fill
             priority
             sizes="(max-width: 600px) 100vw, (max-width: 1024px) 90vw, 1200px"
-            className="scroll-news__image"
+            className={styles.image}
           />
-          <div className="scroll-news__gradient" />
+          <div className={styles.gradient} />
         </div>
-        <div className="scroll-news__content">
-          <div className="scroll-news__eyebrow">
+        <div className={styles.content}>
+          <div className={styles.eyebrow}>
             <span>{index === 0 ? 'In evidenza' : 'Aggiornamento'}</span>
             {dateFormatted && (
-              <time className="scroll-news__date" dateTime={current.date}>{dateFormatted}</time>
+              <time className={styles.date} dateTime={current.date}>{dateFormatted}</time>
             )}
           </div>
-          <h3 className="scroll-news__title">{current.title}</h3>
-          {current?.excerpt && <p className="scroll-news__excerpt">{current.excerpt}</p>}
+          <h3 className={styles.title}>{current.title}</h3>
+          {current?.excerpt && <p className={styles.excerpt}>{current.excerpt}</p>}
         </div>
       </article>
       {slides.length > 1 && (
-        <div className="scroll-news__indicators" role="tablist" aria-label="Indicatori notizie">
+        <div className={styles.indicators} role="tablist" aria-label="Indicatori notizie">
           {slides.map((slide, idx) => (
             <button
               key={slide.id}
               type="button"
-              className={idx === index ? 'is-active' : ''}
+              className={`${styles.indicatorButton} ${idx === index ? styles.indicatorActive : ''}`.trim()}
               role="tab"
               aria-selected={idx === index}
               aria-label={`Vai alla notizia ${idx + 1}`}

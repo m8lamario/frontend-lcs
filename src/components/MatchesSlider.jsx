@@ -7,6 +7,7 @@ import { useMemo, useRef, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import EmptyState from './EmptyState';
 
+
 export default function MatchesSlider({ matches = [], citySlug }) {
   const params = useParams?.() || {};
   const normalizedCity = (citySlug || params.city || '').toString().toLowerCase();

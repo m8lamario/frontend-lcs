@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { localleagues, matches } from '@/data/CorrectDataStructure';
 import LiveMatchTimeline from '@/components/LiveMatchTimeline';
-import './match.css';
+import styles from './match.module.css';
 
 const MATCH_DURATION = 50;
 
@@ -160,56 +160,56 @@ export default async function MatchDetailPage({ params }) {
     console.log(viewTimeline);
 
     return (
-        <div className="match-detail-page">
-            <div className="match-detail-header">
-                <Link className="back-link" href={`/competitions/${city}/partite`}>
+        <div className={styles['match-detail-page']}>
+            <div className={styles['match-detail-header']}>
+                <Link className={styles['back-link']} href={`/competitions/${city}/partite`}>
                     &larr; Torna alle partite
                 </Link>
                 <h1>{league.title}</h1>
-                <p className="match-meta">
+                <p className={styles['match-meta']}>
                     <span>{shortDate}</span>
                     {time && <span>• {time}</span>}
                     {match.stage && <span>• {match.stage}</span>}
                 </p>
             </div>
 
-            <section className="match-detail-card">
-                <div className="team-block">
-                    <div className="team-logo">
+            <section className={styles['match-detail-card']}>
+                <div className={styles['team-block']}>
+                    <div className={styles['team-logo']}>
                         {match.home?.logo && (
                             <Image src={match.home.logo} alt={match.home?.name || 'Squadra casa'} fill sizes="120px" style={{ objectFit: 'contain' }} />
                         )}
                     </div>
-                    <p className="team-name">{match.home?.name || 'TBD'}</p>
+                    <p className={styles['team-name']}>{match.home?.name || 'TBD'}</p>
                 </div>
-                <div className="score-section">
-                    <p className="score">{match.score || '-'}</p>
-                    <p className="status">
+                <div className={styles['score-section']}>
+                    <p className={styles['score']}>{match.score || '-'}</p>
+                    <p className={styles['status']}>
                         {match.isLive && match.minute !== null && `${match.minute}' LIVE`}
                         {!match.isLive && match.finished && 'FT'}
                         {!match.isLive && !match.finished && (match.status || 'SCHEDULED')}
                     </p>
                 </div>
-                <div className="team-block">
-                    <div className="team-logo">
+                <div className={styles['team-block']}>
+                    <div className={styles['team-logo']}>
                         {match.away?.logo && (
                             <Image src={match.away.logo} alt={match.away?.name || 'Squadra ospite'} fill sizes="120px" style={{ objectFit: 'contain' }} />
                         )}
                     </div>
-                    <p className="team-name">{match.away?.name || 'TBD'}</p>
+                    <p className={styles['team-name']}>{match.away?.name || 'TBD'}</p>
                 </div>
             </section>
 
             {Array.isArray(match.events) && match.events.length > 0 && (
-                <section className="events-section">
+                <section className={styles['events-section']}>
                     <h2>Eventi</h2>
                     <ul>
                         {match.events.map((event, idx) => (
                             <li key={`${event.minute}-${idx}`}>
-                                <span className="minute">{event.minute}&rsquo;</span>
-                                <span className="type">{event.type}</span>
-                                <span className="player">{event.player}</span>
-                                {event.team && <span className="team">({event.team})</span>}
+                                <span className={styles['minute']}>{event.minute}&rsquo;</span>
+                                <span className={styles['type']}>{event.type}</span>
+                                <span className={styles['player']}>{event.player}</span>
+                                {event.team && <span className={styles['team']}>({event.team})</span>}
                             </li>
                         ))}
                     </ul>
@@ -217,7 +217,7 @@ export default async function MatchDetailPage({ params }) {
             )}
 
             {viewTimeline  && (
-                <section className="timeline-section">
+                <section className={styles['timeline-section']}>
                     <h2>Andamento Live</h2>
                     <LiveMatchTimeline match={match} />
                 </section>
