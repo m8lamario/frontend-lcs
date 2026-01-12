@@ -40,7 +40,8 @@ export default function Page() {
                                 src={img}
                                 alt="Mole Cup"
                                 fill
-                                priority
+                                loading="lazy"  // non è priority
+                                quality={1}
                                 sizes="(max-width: 900px) 100vw, 520px"
                                 style={{ objectFit: "cover" }}
                             />
