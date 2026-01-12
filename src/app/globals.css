@@ -555,4 +555,7 @@ p.event-tagline{
     .homeESL .div-image{
         aspect-ratio: 16/9;
     }
+    .event-reveal .event-title{
+        text-align: center;
+    }
 }
