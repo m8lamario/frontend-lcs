@@ -1,10 +1,25 @@
-import HeroWithBackground  from "@/components/HeroWithBackground";
-import SectionReveal from "@/components/SectionReveal";
+import dynamic from "next/dynamic";
 import img from "@/../public/HomeFoto/DSCF6614-Migliorato-NR.webp";
 import Image from "next/image";
 import Link from "next/link";
-import EventReveal from "@/components/EventReveal";
-import TestimonialsReveal from "@/components/TestimonialsReveal";
+import { FutbolIcon, TrophyIcon, StarIcon, PeopleGroupIcon, HandHoldingHeartIcon, HandHoldingDollarIcon } from "@/components/Icons";
+
+// Componenti above-the-fold caricati normalmente
+import HeroWithBackground from "@/components/HeroWithBackground";
+
+// Lazy load dei componenti below-the-fold per ridurre il bundle iniziale
+const SectionReveal = dynamic(() => import("@/components/SectionReveal"), {
+    ssr: true,
+});
+const EventReveal = dynamic(() => import("@/components/EventReveal"), {
+    ssr: true,
+    loading: () => <div style={{ minHeight: "300px" }} />,
+});
+const TestimonialsReveal = dynamic(() => import("@/components/TestimonialsReveal"), {
+    ssr: true,
+    loading: () => <div style={{ minHeight: "300px" }} />,
+});
+
 export default function Page() {
     return (
         <div className={"homeESL"}>
@@ -40,7 +55,7 @@ export default function Page() {
                                 <p>Le squadre si affrontano in tre gironi da quattro squadre</p>
                             </div>
                             <div className={"imgCircle"}>
-                                <div className={"circle"}><i className="fa-solid fa-futbol"></i></div>
+                                <div className={"circle"}><FutbolIcon /></div>
                             </div>
                             <div className={"desc"}></div>
                         </li>
@@ -50,7 +65,7 @@ export default function Page() {
                             <div className={"desc"}>
                             </div>
                             <div className={"imgCircle"}>
-                                <div className={"circle"}><i className="fa-solid fa-trophy"></i></div>
+                                <div className={"circle"}><TrophyIcon /></div>
                             </div>
                             <div className={"desc desc-right"}>
                                 <h4>Eliminazione diretta</h4>
@@ -64,7 +79,7 @@ export default function Page() {
                                 <p>Stay tuned</p>
                             </div>
                             <div className={"imgCircle"}>
-                                <div className={"circle"}><i className="fa-solid fa-star"></i></div>
+                                <div className={"circle"}><StarIcon /></div>
                             </div>
                             <div className={"desc"}></div>
                         </li>
@@ -77,7 +92,7 @@ export default function Page() {
                     <p className="values-lead">Lo sport nei giovani può avere un impatto sulla formazione del futuro</p>
                     <div className="values-grid">
                         <article className="value-card">
-                            <div className="value-icon"><i className="fa-solid fa-people-group"></i></div>
+                            <div className="value-icon"><PeopleGroupIcon /></div>
                             <h3>Alternanza scuola lavoro</h3>
                             <ul className="value-list">
                                 <li>Riprese e montaggio</li>
@@ -86,7 +101,7 @@ export default function Page() {
                             </ul>
                         </article>
                         <article className="value-card">
-                            <div className="value-icon"><i className="fa-solid fa-hand-holding-heart"></i></div>
+                            <div className="value-icon"><HandHoldingHeartIcon /></div>
                             <h3>Cause benefiche</h3>
                             <div className="pills">
                                 <span className="pill">ONG Interos</span>
@@ -97,7 +112,7 @@ export default function Page() {
                             </div>
                         </article>
                         <article className="value-card">
-                            <div className="value-icon"><i className="fa-solid fa-hand-holding-dollar"></i></div>
+                            <div className="value-icon"><HandHoldingDollarIcon /></div>
                             <h3>Donazioni</h3>
                             <p className="value-stats">Abbiamo donato oltre <strong>3000€</strong> per l&#39;emergenza Covid e oltre <strong>500€</strong> all&#39;associazione Genova nel cuore</p>
                         </article>
