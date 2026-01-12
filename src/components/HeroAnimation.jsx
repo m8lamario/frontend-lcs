@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useLayoutEffect, useRef } from "react";
-import gsap from "gsap";
+import React, { useEffect, useRef, useState } from "react";
+
 export default function HeroAnimation({
   text = "estudentsleague",
   duration = 2,
@@ -9,6 +9,7 @@ export default function HeroAnimation({
 }) {
   const containerRef = useRef(null);
   const lettersRef = useRef([]);
+  const [mounted, setMounted] = useState(false);
   lettersRef.current = [];
 
   const addToRefs = (el) => {
@@ -17,31 +18,37 @@ export default function HeroAnimation({
     }
   };
 
-  useLayoutEffect(() => {
-    // Rispetta utenti con riduzione movimento
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted || typeof window === "undefined") return;
+    if (!lettersRef.current.length) return;
+
     const prefersReduced =
-      typeof window !== "undefined" &&
       window.matchMedia &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    const ctx = gsap.context(() => {
-      if (!lettersRef.current.length) return;
+    // Dynamic import di GSAP solo quando necessario
+    import("gsap").then(({ gsap }) => {
+      const ctx = gsap.context(() => {
+        // Stato iniziale: nascoste e leggermente spostate
+        gsap.set(lettersRef.current, { y: 20, opacity: 0 });
 
-      // Stato iniziale: nascoste e leggermente spostate
-      gsap.set(lettersRef.current, { y: 20, opacity: 0 });
+        // Animazione di entrata
+        gsap.to(lettersRef.current, {
+          y: 0,
+          opacity: 1,
+          ease: prefersReduced ? "none" : "power3.out",
+          duration: prefersReduced ? 0 : duration,
+          stagger: prefersReduced ? 0 : stagger,
+        });
+      }, containerRef);
 
-      // Animazione di entrata
-      gsap.to(lettersRef.current, {
-        y: 0,
-        opacity: 1,
-        ease: prefersReduced ? "none" : "power3.out",
-        duration: prefersReduced ? 0 : duration,
-        stagger: prefersReduced ? 0 : stagger,
-      });
-    }, containerRef);
-
-    return () => ctx.revert();
-  }, [duration, stagger]);
+      return () => ctx.revert();
+    });
+  }, [mounted, duration, stagger]);
 
   const chars = Array.from(text);
 

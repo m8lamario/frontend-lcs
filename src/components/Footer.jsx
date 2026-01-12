@@ -1,20 +1,21 @@
 import Link from "next/link";
 import './Styles/Footer.css';
-import '@fortawesome/fontawesome-free/css/all.min.css';
+import { FacebookIcon, TwitterIcon, DiscordIcon, LinkedInIcon } from './Icons';
+
 export default function Footer() {
     const currentYear = new Date().getFullYear();
     return (
         <>
             <footer>
                 <div className="logo-wrap">
-                    <img className="logo" src="/logo/PNG-lcs_logo_white_t.png"/>
+                    <img className="logo" src="/logo/PNG-lcs_logo_white_t.png" alt="ESL Logo"/>
                     <h4>ESL</h4>
                 </div>
                 <div className="socials">
-                    <a className="fa-brands fa-facebook"></a>
-                    <a className="fa-brands fa-x-twitter"></a>
-                    <a className="fa-brands fa-discord"></a>
-                    <a className="fa-brands fa-linkedin"></a>
+                    <a href="#" aria-label="Facebook"><FacebookIcon /></a>
+                    <a href="#" aria-label="Twitter"><TwitterIcon /></a>
+                    <a href="#" aria-label="Discord"><DiscordIcon /></a>
+                    <a href="#" aria-label="LinkedIn"><LinkedInIcon /></a>
                 </div>
                 <div className="links">
                     <ul>
