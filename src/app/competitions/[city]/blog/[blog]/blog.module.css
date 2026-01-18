@@ -1,0 +1,311 @@
+.page {
+    min-height: 100vh;
+    padding: clamp(40px, 8vw, 120px) clamp(16px, 6vw, 80px);
+    background:
+        radial-gradient(circle at 20% 20%, rgba(6, 28, 218, 0.35), transparent 55%),
+        radial-gradient(circle at 80% 0%, rgba(255, 203, 5, 0.16), transparent 60%),
+        var(--background);
+    color: var(--text);
+}
+
+.article {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(24px, 4vw, 40px);
+}
+
+.hero {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(20px, 3vw, 36px);
+    padding: clamp(24px, 4vw, 44px);
+    border-radius: 28px;
+    background: linear-gradient(135deg, rgba(6, 28, 218, 0.78), rgba(0, 0, 0, 0.7));
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.hero::before,
+.hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.5;
+    z-index: 0;
+}
+
+.hero::before {
+    background: radial-gradient(circle at 0% 0%, rgba(255, 203, 5, 0.32), transparent 55%);
+}
+
+.hero::after {
+    background: radial-gradient(circle at 80% 20%, rgba(69, 202, 17, 0.22), transparent 60%);
+}
+
+.heroContent,
+.heroMedia {
+    position: relative;
+    z-index: 1;
+}
+
+.heroContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 14px;
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(0, 0, 0, 0.25);
+    letter-spacing: 0.16em;
+    font-size: 0.72rem;
+}
+
+.title {
+    font-family: var(--font), sans-serif;
+    font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+    line-height: 1.1;
+}
+
+.subtitle {
+    font-family: var(--font-secondary), sans-serif;
+    font-size: clamp(1rem, 2vw, 1.35rem);
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.75);
+    align-items: center;
+}
+
+.metaDivider {
+    color: var(--aux);
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 0;
+}
+
+.tags li {
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 0.85rem;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.heroMedia {
+    border-radius: 22px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.35);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.heroMedia img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.bodyCard {
+    border-radius: 28px;
+    padding: clamp(28px, 5vw, 50px);
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.55);
+}
+
+.content {
+    font-size: clamp(1rem, 1.8vw, 1.12rem);
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.88);
+}
+
+.content > * + * {
+    margin-top: 1.4em;
+}
+
+.content h2,
+.content h3,
+.content h4,
+.content h5,
+.content h6 {
+    font-family: var(--font), sans-serif;
+    color: var(--text);
+    line-height: 1.2;
+    margin-top: 2.2em;
+    margin-bottom: 0.6em;
+}
+
+.content h2 {
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+}
+
+.content h3 {
+    font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+}
+
+.content h4 {
+    font-size: clamp(1.2rem, 2vw, 1.4rem);
+}
+
+.content p,
+.content li {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.content ul,
+.content ol {
+    padding-left: 1.4em;
+    display: grid;
+    gap: 0.35em;
+}
+
+.content a {
+    color: var(--aux);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 203, 5, 0.4);
+    transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.content a:hover {
+    color: var(--third);
+    border-color: rgba(69, 202, 17, 0.5);
+}
+
+.content blockquote {
+    margin: 2em 0;
+    padding: 1.4em;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: linear-gradient(135deg, rgba(255, 203, 5, 0.15), rgba(0, 0, 0, 0.35));
+    color: var(--text);
+    font-style: italic;
+    position: relative;
+}
+
+.content blockquote::before {
+    content: "\201C";
+    position: absolute;
+    top: -18px;
+    left: 24px;
+    font-size: 52px;
+    color: rgba(255, 255, 255, 0.1);
+}
+
+.content code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 0 6px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    font-size: 0.94em;
+}
+
+.content pre {
+    padding: 1.2em;
+    border-radius: 18px;
+    background: rgba(0, 0, 0, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    overflow-x: auto;
+    font-size: 0.95em;
+}
+
+.content hr {
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    margin: 3em 0;
+}
+
+.content table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.content th,
+.content td {
+    padding: 0.8em 1em;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.content th {
+    background: rgba(6, 28, 218, 0.25);
+    text-align: left;
+}
+
+.content tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.content img,
+.content video {
+    width: 100%;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+}
+
+.content figure {
+    margin: 2em 0;
+    text-align: center;
+}
+
+.content figcaption {
+    margin-top: 0.8em;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.65);
+}
+
+@media (max-width: 1024px) {
+    .hero {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .page {
+        padding: 32px 16px 80px;
+    }
+
+    .bodyCard,
+    .hero {
+        border-radius: 20px;
+        padding: 22px;
+    }
+
+    .title {
+        font-size: 2.1rem;
+    }
+
+    .tags li {
+        font-size: 0.78rem;
+    }
+}

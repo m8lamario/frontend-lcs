@@ -2,8 +2,10 @@ import { notFound } from 'next/navigation';
 import { localleagues } from '@/data/CorrectDataStructure';
 import AnimatedTitle from '@/components/AnimatedTitle';
 import CityScrollNews from '@/components/CityScrollNews';
+import BlogSlider from '@/components/BlogSlider';
 import LocalPartners from '@/components/LocalPartners';
 import StadiumMap from '@/components/StadiumMap';
+import { getSortedPostsData } from '@/lib/blog';
 import styles from './city.module.css';
 
 const leaguesBySlug = localleagues.reduce((acc, league) => {
@@ -35,6 +37,9 @@ export default async function CityPage({ params }) {
     const hasNews = news.length > 0;
     const partners = Array.isArray(data.partners) ? data.partners : [];
     const stadiums = Array.isArray(data.stadiums) ? data.stadiums : [];
+    
+    const blogPosts = getSortedPostsData(city);
+    const hasBlog = blogPosts.length > 0;
 
     return (
         <div className={styles.cityPage}>
@@ -44,8 +49,11 @@ export default async function CityPage({ params }) {
                 </div>
             </div>
             <div className={styles.cityInfo}>
-                {hasNews && (
-                    <CityScrollNews items={news} durationMs={4000} />
+                {/*{hasNews && (*/}
+                {/*    <CityScrollNews items={news} durationMs={4000} />*/}
+                {/*)}*/}
+                {hasBlog && (
+                    <BlogSlider items={blogPosts} city={city} durationMs={5000} />
                 )}
                 <LocalPartners partners={partners} />
                 {stadiums.length > 0 && (
