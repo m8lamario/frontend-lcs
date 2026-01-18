@@ -3,7 +3,8 @@ import { notFound } from 'next/navigation';
 import styles from './blog.module.css';
 
 export default async function BlogPostPage({ params }) {
-    const { city, blog: slug } = params;
+    const resolvedParams = await params;
+    const { city, blog: slug } = resolvedParams;
 
     try {
         const postData = await getPostData(slug);
