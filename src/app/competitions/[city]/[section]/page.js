@@ -10,9 +10,21 @@ import Standings from '@/components/Standings';
 import NewsSection from '@/components/NewsSection';
 import "./section.css";
 
-const DEFAULT_LOGO = '/logo/PNG-lcs_logo_white_t.png';
+const DEFAULT_LOGO = '/logoCities/lcsw.png';
 const MATCH_DURATION = 50;
 const toArray = (value) => (Array.isArray(value) ? value : []);
+
+const cityBackgrounds = {
+    boracup: '/backgroundCities/boracup.jpg',
+    ferreacup: '/backgroundCities/ferreacup.jpg',
+    leonessacup: '/backgroundCities/leonessacup.jpg',
+    milano: '/backgroundCities/milano.png',
+    molecup: '/backgroundCities/molecup.jpg',
+    olympiuscup: '/backgroundCities/olympiuscup.jpg',
+    turascup: '/backgroundCities/turascup.jpg',
+};
+
+const getBackgroundForCity = (slug) => cityBackgrounds[slug?.toLowerCase()] || '/backgroundCities/milano.png';
 
 const leaguesBySlug = localleagues.reduce((acc, league) => {
     if (league?.slug) acc[league.slug.toLowerCase()] = league;
@@ -195,8 +207,8 @@ export default async function SectionPage({ params }) {
         stage: 'ND',
         score: 'ND - ND',
         events: [],
-        home: { name: 'ND', logo: DEFAULT_LOGO },
-        away: { name: 'ND', logo: DEFAULT_LOGO },
+        home: { name: 'ND' },
+        away: { name: 'ND' },
         date: null
     };
     const timelineMatch = liveMatch || placeholderLiveMatch;
@@ -224,10 +236,11 @@ export default async function SectionPage({ params }) {
     }
 
     const sectionContainerClass = `city-section city-${sectionKey}`;
+    const backgroundImage = getBackgroundForCity(slug);
 
     return (
         <div className="city-page">
-            <div className="banner">
+            <div className="banner" style={{ backgroundImage: `url(${backgroundImage})` }}>
                 <div className="banner-content">
                     <AnimatedTitle text={league.name || league.title} />
                 </div>

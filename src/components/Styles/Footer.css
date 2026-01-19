@@ -23,13 +23,13 @@ footer {
     color: #f9f9f9;
     padding: 5px;
 }
-.logo-wrap{
+footer .logo-wrap{
     grid-area: logo;
     display: flex;
     align-items: center;
     gap: 10px;
 }
-.logo {
+footer .logo {
     width: 25px;
     height: auto;
 }

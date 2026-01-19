@@ -2,15 +2,32 @@
 import { useEffect, useMemo, useState } from "react";
 import { localleagues } from "../../data/CorrectDataStructure";
 
-const cityNavItems = (localleagues || []).map(({ slug, name }) => ({
-  name: name || slug,
-  href: slug ? `/competitions/${slug}` : "/",
-}));
+export const DEFAULT_NAV_LOGO = "/logoCities/lcsw.png";
+const encodeLogoPath = (path) => (typeof path === "string" && path.length ? encodeURI(path) : "");
+const CITY_LOGOS = {
+  esl: DEFAULT_NAV_LOGO,
+  molecup: encodeLogoPath("/logoCities/molecup.png"),
+  leonessacup: encodeLogoPath("/logoCities/leonessacup.png"),
+  olympiuscup: encodeLogoPath("/logoCities/olympiuscup.png"),
+  turascup: encodeLogoPath("/logoCities/turascup.png"),
+  boracup: encodeLogoPath("/logoCities/boracup.png"),
+  ferreacup: encodeLogoPath("/logoCities/ferreacup.png"),
+};
+
+const cityNavItems = (localleagues || []).map(({ slug, name }) => {
+  const normalizedSlug = (slug || "").toLowerCase();
+  return {
+    name: name || slug,
+    href: slug ? `/competitions/${slug}` : "/",
+    slug: normalizedSlug,
+    logoSrc: CITY_LOGOS[normalizedSlug] || DEFAULT_NAV_LOGO,
+  };
+});
 
 const defaultCities = [
-  { name: "ESL", href: "/" },
+  { name: "ESL", href: "/", slug: "esl", logoSrc: CITY_LOGOS.esl },
   ...cityNavItems,
-  { name: "", href: "" },
+  { name: "", href: "", slug: "spacer", logoSrc: "" },
 ];
 
 const SECTION_LINKS = [
@@ -93,6 +110,7 @@ export function useCitiesNav(pathname) {
       baseOrder.some((c, i) => c.href !== cities[i]?.href);
     if (changed) setCities(baseOrder);
     setCurrentCitySlug(currentCitySlug);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname, mounted]);
 
   useEffect(() => {

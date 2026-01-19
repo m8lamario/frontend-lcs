@@ -13,6 +13,18 @@ const leaguesBySlug = localleagues.reduce((acc, league) => {
     return acc;
 }, {});
 
+const cityBackgrounds = {
+    boracup: '/backgroundCities/boracup.jpg',
+    ferreacup: '/backgroundCities/ferreacup.jpg',
+    leonessacup: '/backgroundCities/leonessacup.jpg',
+    milano: '/backgroundCities/milano.png',
+    molecup: '/backgroundCities/molecup.jpg',
+    olympiuscup: '/backgroundCities/olympiuscup.jpg',
+    turascup: '/backgroundCities/turascup.jpg',
+};
+
+const getBackgroundForCity = (slug) => cityBackgrounds[slug?.toLowerCase()] || '/backgroundCities/milano.png';
+
 export const dynamicParams = true;
 
 export function generateStaticParams() {
@@ -40,10 +52,11 @@ export default async function CityPage({ params }) {
     
     const blogPosts = getSortedPostsData(city);
     const hasBlog = blogPosts.length > 0;
+    const backgroundImage = getBackgroundForCity(key);
 
     return (
         <div className={styles.cityPage}>
-            <div className={styles.banner}>
+            <div className={styles.banner} style={{ backgroundImage: `url(${backgroundImage})` }}>
                 <div className={styles.bannerContent}>
                     <AnimatedTitle text={data.name || data.title}/>
                 </div>

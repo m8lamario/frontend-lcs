@@ -8,7 +8,7 @@ export default function Footer() {
         <>
             <footer>
                 <div className="logo-wrap">
-                    <img className="logo" src="/logo/PNG-lcs_logo_white_t.png" alt="ESL Logo"/>
+                    <img className="logo" src="/logoCities/lcsw.png" alt="ESL Logo" loading="lazy"/>
                     <h4>ESL</h4>
                 </div>
                 <div className="socials">

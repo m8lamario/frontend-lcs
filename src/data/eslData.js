@@ -1,11 +1,11 @@
-const DEFAULT_TEAM_LOGO = "/logo/PNG-lcs_logo_white_t.png";
+const DEFAULT_TEAM_LOGO = "/logoCities/lcsw.png";
 
 const __now = new Date();
 const __nowISO = __now.toISOString();
 const __past70ISO = new Date(__now.getTime() - 70 * 60000).toISOString();
 
 const teams = {  // per classifica
-    // manzoni: { id: "team-manzoni", name: "Liceo Manzoni", cityName: "Milano", logo: DEFAULT_TEAM_LOGO },
+    // manzoni: { id: "team-manzoni", name: "Liceo Manzoni", cityName: "Milano", logoCities: DEFAULT_TEAM_LOGO },
 };
 
 

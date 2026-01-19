@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import img from "@/../public/HomeFoto/DSCF6614-Migliorato-NR.webp";
+import img from "../../public/eslHome/DSCF6614-Migliorato-NR.webp";
 import Image from "next/image";
 import Link from "next/link";
 import { FutbolIcon, TrophyIcon, StarIcon, PeopleGroupIcon, HandHoldingHeartIcon, HandHoldingDollarIcon } from "@/components/Icons";

@@ -6,7 +6,7 @@ import EmptyState from './EmptyState';
 import styles from './CityScrollNews.module.css';
 const MAX_VISIBLE = 5;
 
-export default function CityScrollNews({ items = [], durationMs = 2000, fallbackImage = '/HomeFoto/19.jpg' }) {
+export default function CityScrollNews({ items = [], durationMs = 2000, fallbackImage = '/HomeFoto/19.webp' }) {
   const normalized = useMemo(() => {
     if (!Array.isArray(items)) return [];
     return [...items]

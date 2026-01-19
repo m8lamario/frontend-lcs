@@ -16,7 +16,7 @@
 
 .banner {
     width: 100%;
-    height: 220px;
+    height: 100vh;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -63,13 +63,13 @@
     gap: 24px;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1100px) {
     .bannerContent :global(h1) {
         color: var(--text);
         margin-top: -89px;
         font-size: max(2rem, min(5vw, 5rem));
         font-weight: 500;
-        position: fixed !important;
+        position: static !important;
         z-index: 9999 !important;
     }
 }
@@ -81,7 +81,7 @@
 
     .bannerContent :global(h1) {
         margin-top: 0 !important;
-        position: static !important;
+        position: fixed !important;
     }
 }
 

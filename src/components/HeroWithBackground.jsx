@@ -31,7 +31,7 @@ export default function HeroWithBackground() {
         }
     }, []);
 
-    const images = useMemo(() => ["/HomeFoto/13.jpg", "/HomeFoto/19.jpg"], []);
+    const images = useMemo(() => ["/eslHome/13.webp", "/eslHome/19.webp"], []);
     const displayText = isSmall ? "esl" : "estudentsleague";
 
     return (

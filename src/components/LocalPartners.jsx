@@ -2,7 +2,7 @@ import Image from 'next/image';
 import EmptyState from './EmptyState';
 import './Styles/LocalPartners.css';
 
-const fallbackLogo = '/logo/lcs-colorato-trasparente.png';
+const fallbackLogo = '/logoCities/lcs.png';
 
 export default function LocalPartners({ partners = [] }) {
     if (!Array.isArray(partners) || partners.length === 0) {

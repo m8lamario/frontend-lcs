@@ -7,7 +7,7 @@ import styles from './BlogSlider.module.css';
 
 const MAX_VISIBLE = 5;
 
-export default function BlogSlider({ items = [], city, durationMs = 5000, fallbackImage = '/HomeFoto/19.jpg' }) {
+export default function BlogSlider({ items = [], city, durationMs = 5000, fallbackImage = '/HomeFoto/19.webp' }) {
   const normalized = useMemo(() => {
     if (!Array.isArray(items)) return [];
     return [...items]

@@ -44,7 +44,7 @@ export default function Squadre() {
             record: champion.record || "0V - 0P",
             colors: champion.colors || league.subtitle || "In definizione",
             coach: champion.coach,
-            logo: champion.logo || "/logo/PNG-lcs_logo_white_t.png",
+            logo: champion.logo || "/logoCities/lcsw.png",
             highlight: champion.highlight || `${champion.record || "0-0"} nella ${league.name}`,
             slotLabel: "Campione in carica"
         });

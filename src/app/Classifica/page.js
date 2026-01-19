@@ -1,7 +1,7 @@
 import eslData from "@/data/eslData";
 import styles from "./Classifica.module.css";
 
-const DEFAULT_LOGO = "/logo/PNG-lcs_logo_white_t.png";
+const DEFAULT_LOGO = "/logoCities/PNG-lcs_logo_white_t.png";
 const STAGE_CONFIG = [
     { label: "Ottavi di finale", matchCount: 8 },
     { label: "Quarti di finale", matchCount: 4 },

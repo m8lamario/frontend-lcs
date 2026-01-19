@@ -21,7 +21,7 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-image: url("../../../../../public/loghi/Milano/milano.png");
+    background-image: url("../../../../../public/backgroundCities/milano.png");
 }
 
 .city-page .banner .banner-content {
@@ -835,7 +835,7 @@
         display: none; /*ricordarsi di toglierlo quando abbiamo le abbreviazioni squadra*/
     }
 }
-@media (max-width: 1200px) {
+@media (max-width: 1100px) {
     .city-page .banner .banner-content h1{
         color: var(--text);
         margin-top: -89px;

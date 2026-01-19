@@ -137,7 +137,7 @@ const normalizeGroupsFallback = (groups = []) =>
 /**
  * Standings
  * Props:
- * - groups: Array<{ name?: string, teams?: Array<{ id:string, name:string, logo?:string, p?:number, w?:number, d?:number, l?:number, gf?:number, ga?:number, gd?:number, pts?:number }> }>
+ * - groups: Array<{ name?: string, teams?: Array<{ id:string, name:string, logoCities?:string, p?:number, w?:number, d?:number, l?:number, gf?:number, ga?:number, gd?:number, pts?:number }> }>
  * - matches: Array<{ groupId?: string, groupName?: string, finished?: boolean, teams?: Array, homeTeam?: object, awayTeam?: object }>
  * - pointSystem: { win?: number, draw?: number, loss?: number }
  */
@@ -233,7 +233,7 @@ export default function Standings({ groups = [], matches = [], pointSystem = DEF
                       <div className="logo">
                         {team.logo ? (
                           // eslint-disable-next-line @next/next/no-img-element
-                          <img src={team.logo} alt={`logo ${team.name}`} />
+                          <img src={team.logo} alt={`logo ${team.name}`} loading="lazy" />
                         ) : (
                           <div className="placeholder" aria-hidden="true" />
                         )}

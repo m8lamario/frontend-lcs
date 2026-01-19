@@ -4,7 +4,7 @@ import { localleagues, teams as apiTeams, players as apiPlayers } from '@/data/C
 import AnimatedTitle from '@/components/AnimatedTitle';
 import styles from './team.module.css';
 
-const TEAM_LOGO_FALLBACK = '/logo/PNG-lcs_logo_white_t.png';
+const TEAM_LOGO_FALLBACK = '/logoCities/lcsw.png';
 
 const normalizeSlug = (value = '') => value.toString().trim().toLowerCase();
 
@@ -98,7 +98,7 @@ export default async function TeamPage({ params }) {
         <div className={styles['team-page']}>
             <div className={styles['team-hero']}>
                 <div className={styles['team-hero-inner']}>
-                    <div className={styles['team-hero-logo']}>
+                    <div className={styles['team-hero-logoCities']}>
                         {team.logo ? (
                             <Image src={team.logo} alt={team.name} width={220} height={220} sizes="320px" />
                         ) : (

@@ -3,42 +3,13 @@
 export const localleagues = [
     {
         "id": 1,
-        "slug": "molecup",
-        "name": "Mole Cup",
-        "title": "Mole Cup Reale Mutua",
-        "subtitle": "Stage cittadino Torino",
-        "news": [
-            { "id": 101, "title": "Finale regionale al Cus Torino", "excerpt": "Semifinali nel nuovo campo sintetico.", "date": "2025-01-05", "image": "/HomeFoto/13.jpg" },
-            { "id": 102, "title": "Galfer in testa alla classifica", "excerpt": "Tre vittorie consecutive e primato difeso.", "date": "2025-01-03", "image": "/HomeFoto/19.jpg" },
-            { "id": 103, "title": "Allenamenti aperti al pubblico", "excerpt": "Clinic tecnico per studenti e famiglie.", "date": "2024-12-28", "image": "/HomeFoto/DSCF6614-Migliorato-NR.webp" },
-            { "id": 104, "title": "Campus vuoto, ma le porte restano aperte", "excerpt": "Il Comune apre gli spalti per famiglie e giornalisti.", "date": "2025-01-10", "image": "/HomeFoto/13.jpg" }
-        ],
-        "teams": [
-            { "id": 1, "slug": "alfieri", "name": "Alfieri", "short_name": "ALF", "local_league": 1, "coach": "Coach Ribaudo", "record": "4V - 1P", "pts": 12 },
-            { "id": 2, "slug": "galfer", "name": "Galfer", "short_name": "GAL", "local_league": 1, "coach": "Coach Dara", "record": "5V - 0P", "pts": 15 },
-            { "id": 3, "slug": "gioberti", "name": "Gioberti", "short_name": "GIO", "local_league": 1, "coach": "Coach Manera", "record": "2V - 2P", "pts": 7 },
-            { "id": 4, "slug": "copernico", "name": "Copernico", "short_name": "COP", "local_league": 1, "coach": "Coach Latini", "record": "1V - 4P", "pts": 3 },
-            { "id": 5, "slug": "torretta", "name": "Torretta", "short_name": "TOR", "local_league": 1, "coach": "Coach Andrei", "record": "3V - 2P", "pts": 9 },
-            { "id": 1, "slug": "alfieri2", "name": "Alfieri", "short_name": "ALF", "local_league": 1, "coach": "Coach Ribaudo", "record": "4V - 1P", "pts": 12 },
-            { "id": 2, "slug": "galfer2", "name": "Galfer", "short_name": "GAL", "local_league": 1, "coach": "Coach Dara", "record": "5V - 0P", "pts": 15 },
-            { "id": 3, "slug": "gioberti2", "name": "Gioberti", "short_name": "GIO", "local_league": 1, "coach": "Coach Manera", "record": "2V - 2P", "pts": 7 },
-            { "id": 4, "slug": "copernico2", "name": "Copernico", "short_name": "COP", "local_league": 1, "coach": "Coach Latini", "record": "1V - 4P", "pts": 3 },
-            { "id": 5, "slug": "torretta2", "name": "Torretta", "short_name": "TOR", "local_league": 1, "coach": "Coach Andrei", "record": "3V - 2P", "pts": 9 }
-        ],
-        "stadiums": [
-            { "id": 1, "name": "Cus Torino", "address": "Via Milano, 63, 10095 Grugliasco TO", "latitude": "45.020000", "longitude": "7.100000", "local_leagues": [1] },
-            { "id": 2, "name": "Campo Maserati", "address": "Strada Settimo 120, Torino", "latitude": "45.056000", "longitude": "7.660000", "local_leagues": [1] }
-        ]
-    },
-    {
-        "id": 2,
-        "slug": "romacup",
-        "name": "Roma Cup",
-        "title": "Roma Cup Acea",
+        "slug": "leonessacup",
+        "name": "Leonessa Cup",
+        "title": "Leonessa Cup",
         "subtitle": "Girone Centro",
         "news": [
-            { "id": 201, "title": "Calendario ufficiale Roma Cup", "excerpt": "Pubblicate date e orari delle prime giornate.", "date": "2025-02-01", "image": "/HomeFoto/19.jpg" },
-            { "id": 202, "title": "Derby Giulio Cesare vs Visconti", "excerpt": "Attesi oltre 500 studenti sugli spalti.", "date": "2025-02-10", "image": "/HomeFoto/13.jpg" },
+            { "id": 201, "title": "Calendario ufficiale Roma Cup", "excerpt": "Pubblicate date e orari delle prime giornate.", "date": "2025-02-01", "image": "/HomeFoto/19.webp" },
+            { "id": 202, "title": "Derby Giulio Cesare vs Visconti", "excerpt": "Attesi oltre 500 studenti sugli spalti.", "date": "2025-02-10", "image": "/HomeFoto/13.webp" },
             { "id": 203, "title": "Coppa Fair Play", "excerpt": "Due squadre fanno squadra per un progetto cittadino.", "date": "2025-02-14", "image": "/HomeFoto/DSCF6614-Migliorato-NR.webp" }
         ],
         "teams": [
@@ -53,17 +24,17 @@ export const localleagues = [
         ]
     },
     {
-        "id": 3,
-        "slug": "venicecup",
-        "name": "Venezia Cup",
-        "title": "Venezia Cup Maratona",
+        "id": 2,
+        "slug": "olympiuscup",
+        "name": "Olympius Cup",
+        "title": "Olympius Cup",
         "subtitle": "Coppa del Nord-Est",
         "news": [
-            { "id": 301, "title": "San Marco ospita la semifinale", "excerpt": "Il campo sull'acqua sarà il fulcro del weekend.", "date": "2025-03-01", "image": "/HomeFoto/13.jpg" },
-            { "id": 302, "title": "Corso di arbitri studenti", "excerpt": "Nuovi arbitri arrivano da Mestre e Chioggia.", "date": "2025-03-07", "image": "/HomeFoto/19.jpg" }
+            { "id": 301, "title": "San Marco ospita la semifinale", "excerpt": "Il campo sull'acqua sarà il fulcro del weekend.", "date": "2025-03-01", "image": "/HomeFoto/13.webp" },
+            { "id": 302, "title": "Corso di arbitri studenti", "excerpt": "Nuovi arbitri arrivano da Mestre e Chioggia.", "date": "2025-03-07", "image": "/HomeFoto/19.webp" }
         ],
         "teams": [
-            { "id": 20, "slug": "marconi", "name": "Marconi", "short_name": "MAR", "local_league": 3, "coach": "Coach Vega", "record": "4V - 2P", "pts": 14 },
+            { "id": 20, "slug": "marconi", "name": "Marconi", "short_name": "MAR", "local_league": 3, "coach": "Coach Vega", "record": "4V - 2P", "pts": 14, "logo": "/logos/teams/alfieri.webp" },
             { "id": 21, "slug": "laguna", "name": "Laguna", "short_name": "LAG", "local_league": 3, "coach": "Coach Sereni", "record": "3V - 3P", "pts": 9 },
             { "id": 22, "slug": "palazzina", "name": "Palazzina", "short_name": "PAL", "local_league": 3, "coach": "Coach Delfi", "record": "2V - 2P", "pts": 6 },
 
@@ -73,14 +44,14 @@ export const localleagues = [
         ]
     },
     {
-        "id": 4,
-        "slug": "milancup",
-        "name": "Milano Cup",
-        "title": "Milano Cup Allianz",
+        "id": 3,
+        "slug": "turascup",
+        "name": "Turàs Cup",
+        "title": "Turàs Cup",
         "subtitle": "Girone Lombardia",
         "news": [
-            { "id": 401, "title": "Arena di Baggio sold-out", "excerpt": "Prima giornata con 1.200 studenti.", "date": "2025-01-18", "image": "/HomeFoto/13.jpg" },
-            { "id": 402, "title": "Sforza guida la classifica marcatori", "excerpt": "Cinque reti nelle prime due gare.", "date": "2025-01-20", "image": "/HomeFoto/19.jpg" }
+            { "id": 401, "title": "Arena di Baggio sold-out", "excerpt": "Prima giornata con 1.200 studenti.", "date": "2025-01-18", "image": "/HomeFoto/13.webp" },
+            { "id": 402, "title": "Sforza guida la classifica marcatori", "excerpt": "Cinque reti nelle prime due gare.", "date": "2025-01-20", "image": "/HomeFoto/19.webp" }
         ],
         "teams": [
             { "id": 30, "slug": "parini", "name": "Parini", "short_name": "PAR", "local_league": 4, "coach": "Coach Baresi", "record": "2V - 0P", "pts": 6 },
@@ -92,10 +63,10 @@ export const localleagues = [
         ]
     },
     {
-        "id": 5,
-        "slug": "napolicup",
-        "name": "Napoli Cup",
-        "title": "Napoli Cup Givova",
+        "id": 4,
+        "slug": "boracup",
+        "name": "Bora Cup",
+        "title": "Bora Cup",
         "subtitle": "Girone Sud",
         "news": [
             { "id": 501, "title": "Partenza tra fuochi e musica", "excerpt": "Inaugurazione al Collana con dj set.", "date": "2025-02-05", "image": "/HomeFoto/DSCF6614-Migliorato-NR.webp" }
@@ -109,13 +80,13 @@ export const localleagues = [
         ]
     },
     {
-        "id": 6,
-        "slug": "bolognacup",
-        "name": "Bologna Cup",
-        "title": "Bologna Cup Illumia",
+        "id": 5,
+        "slug": "ferreacup",
+        "name": "Ferrea Cup",
+        "title": "Ferrea Cup",
         "subtitle": "Emilia Centrale",
         "news": [
-            { "id": 601, "title": "Derby al PalaDozza", "excerpt": "Istituto Fermi contro Sabin apre il torneo.", "date": "2025-01-25", "image": "/HomeFoto/19.jpg" }
+            { "id": 601, "title": "Derby al PalaDozza", "excerpt": "Istituto Fermi contro Sabin apre il torneo.", "date": "2025-01-25", "image": "/HomeFoto/19.webp" }
         ],
         "teams": [
             { "id": 50, "slug": "fermi", "name": "Fermi", "short_name": "FER", "local_league": 6, "coach": "Coach Pozzi", "record": "2V - 1P", "pts": 6 },
@@ -126,37 +97,32 @@ export const localleagues = [
         ]
     },
     {
-        "id": 7,
-        "slug": "palermocup",
-        "name": "Palermo Cup",
-        "title": "Palermo Cup AMGAS",
-        "subtitle": "Girone Sicilia",
+        "id": 6,
+        "slug": "molecup",
+        "name": "Mole Cup",
+        "title": "Mole Cup Reale Mutua",
+        "subtitle": "Stage cittadino Torino",
         "news": [
-            { "id": 701, "title": "Allenamenti sul mare", "excerpt": "Squadre in campo alla Favorita al tramonto.", "date": "2025-02-12", "image": "/HomeFoto/13.jpg" }
+            { "id": 101, "title": "Finale regionale al Cus Torino", "excerpt": "Semifinali nel nuovo campo sintetico.", "date": "2025-01-05", "image": "/HomeFoto/13.webp" },
+            { "id": 102, "title": "Galfer in testa alla classifica", "excerpt": "Tre vittorie consecutive e primato difeso.", "date": "2025-01-03", "image": "/HomeFoto/19.webp" },
+            { "id": 103, "title": "Allenamenti aperti al pubblico", "excerpt": "Clinic tecnico per studenti e famiglie.", "date": "2024-12-28", "image": "/HomeFoto/DSCF6614-Migliorato-NR.webp" },
+            { "id": 104, "title": "Campus vuoto, ma le porte restano aperte", "excerpt": "Il Comune apre gli spalti per famiglie e giornalisti.", "date": "2025-01-10", "image": "/HomeFoto/13.webp" }
         ],
         "teams": [
-            { "id": 60, "slug": "meli", "name": "Meli", "short_name": "MEL", "local_league": 7, "coach": "Coach Corini", "record": "0V - 0P", "pts": 0 },
-            { "id": 61, "slug": "garibaldi", "name": "Garibaldi", "short_name": "GAR", "local_league": 7, "coach": "Coach Guidi", "record": "0V - 0P", "pts": 0 }
+            { "id": 1, "slug": "alfieri", "name": "Alfieri", "short_name": "ALF", "local_league": 1, "coach": "Coach Ribaudo", "record": "4V - 1P", "pts": 12, "logo": "/logos/teams/alfieri.webp", }, // aggiungere il campo logo
+            { "id": 2, "slug": "galfer", "name": "Galfer", "short_name": "GAL", "local_league": 1, "coach": "Coach Dara", "record": "5V - 0P", "pts": 15 },
+            { "id": 3, "slug": "gioberti", "name": "Gioberti", "short_name": "GIO", "local_league": 1, "coach": "Coach Manera", "record": "2V - 2P", "pts": 7 },
+            { "id": 4, "slug": "copernico", "name": "Copernico", "short_name": "COP", "local_league": 1, "coach": "Coach Latini", "record": "1V - 4P", "pts": 3 },
+            { "id": 5, "slug": "torretta", "name": "Torretta", "short_name": "TOR", "local_league": 1, "coach": "Coach Andrei", "record": "3V - 2P", "pts": 9 },
+            { "id": 1, "slug": "alfieri2", "name": "Alfieri", "short_name": "ALF", "local_league": 1, "coach": "Coach Ribaudo", "record": "4V - 1P", "pts": 12 },
+            { "id": 2, "slug": "galfer2", "name": "Galfer", "short_name": "GAL", "local_league": 1, "coach": "Coach Dara", "record": "5V - 0P", "pts": 15 },
+            { "id": 3, "slug": "gioberti2", "name": "Gioberti", "short_name": "GIO", "local_league": 1, "coach": "Coach Manera", "record": "2V - 2P", "pts": 7 },
+            { "id": 4, "slug": "copernico2", "name": "Copernico", "short_name": "COP", "local_league": 1, "coach": "Coach Latini", "record": "1V - 4P", "pts": 3 },
+            { "id": 5, "slug": "torretta2", "name": "Torretta", "short_name": "TOR", "local_league": 1, "coach": "Coach Andrei", "record": "3V - 2P", "pts": 9 }
         ],
         "stadiums": [
-            { "id": 12, "name": "Campo Favorita", "address": "Viale del Fante 30, Palermo", "latitude": "38.163000", "longitude": "13.340000", "local_leagues": [7] }
-        ]
-    },
-    {
-        "id": 8,
-        "slug": "bariwave",
-        "name": "Bari Wave",
-        "title": "Bari Wave Acqua",
-        "subtitle": "Adriatico Sud",
-        "news": [
-            { "id": 801, "title": "Beach field indoor", "excerpt": "Il palazzetto si trasforma con sabbia scenica.", "date": "2025-03-03", "image": "/HomeFoto/19.jpg" }
-        ],
-        "teams": [
-            { "id": 70, "slug": "marconi-bari", "name": "Marconi Bari", "short_name": "MBA", "local_league": 8, "coach": "Coach Cassano", "record": "1V - 0P", "pts": 3 },
-            { "id": 71, "slug": "scacchi", "name": "Scacchi", "short_name": "SCA", "local_league": 8, "coach": "Coach Ventura", "record": "0V - 1P", "pts": 0 }
-        ],
-        "stadiums": [
-            { "id": 13, "name": "Palaflorio", "address": "Viale Archimede 2, Bari", "latitude": "41.104000", "longitude": "16.871000", "local_leagues": [8] }
+            { "id": 1, "name": "Cus Torino", "address": "Via Milano, 63, 10095 Grugliasco TO", "latitude": "45.020000", "longitude": "7.100000", "local_leagues": [1] },
+            { "id": 2, "name": "Campo Maserati", "address": "Strada Settimo 120, Torino", "latitude": "45.056000", "longitude": "7.660000", "local_leagues": [1] }
         ]
     }
 ]
@@ -166,7 +132,7 @@ export const localleagues = [
 export const teams = [
     { "id": 1, "local_league": "molecup", "slug": "alfieri", "name": "Alfieri", "short_name": "ALF", "players": [ { "id": 1, "first_name": "Pippo", "last_name": "Rossi", "shirt_number": 12, "position": "ATT", "team": 1 }, { "id": 2, "first_name": "Marco", "last_name": "Sella", "shirt_number": 5, "position": "DIF", "team": 1 } ] },
     { "id": 2, "local_league": "molecup", "slug": "galfer", "name": "Galfer", "short_name": "GAL", "players": [ { "id": 3, "first_name": "Luca", "last_name": "Trova", "shirt_number": 8, "position": "CEN", "team": 2 }, { "id": 4, "first_name": "Paolo", "last_name": "Bava", "shirt_number": 9, "position": "ATT", "team": 2 } ] },
-    { "id": 3, "local_league": "molecup", "slug": "gioberti", "name": "Gioberti", "short_name": "GIO", "players": [ { "id": 5, "first_name": "Federico", "last_name": "Lodi", "shirt_number": 6, "position": "CEN", "team": 3 } ] },
+    { "id": 3, "local_league": "molecup", "slug": "gioberti", "name": "Gioberti", "short_name": "GIO",  "players": [ { "id": 5, "first_name": "Federico", "last_name": "Lodi", "shirt_number": 6, "position": "CEN", "team": 3 } ] },
     { "id": 10, "local_league": "romacup", "slug": "giulio-cesare", "name": "Giulio Cesare", "short_name": "GCE", "players": [ { "id": 11, "first_name": "Edoardo", "last_name": "Lauri", "shirt_number": 7, "position": "ATT", "team": 10 } ] },
     { "id": 11, "local_league": "romacup", "slug": "visconti", "name": "Visconti", "short_name": "VIS", "players": [ { "id": 12, "first_name": "Lorenzo", "last_name": "Papi", "shirt_number": 10, "position": "CEN", "team": 11 } ] },
     { "id": 21, "local_league": "venicecup", "slug": "laguna", "name": "Laguna", "short_name": "LAG", "players": [ { "id": 21, "first_name": "Sara", "last_name": "Rossi", "shirt_number": 4, "position": "CEN", "team": 21 } ] },
@@ -225,7 +191,7 @@ export const stadiums = [
 export const matches = [
     {
         "id": 4,
-        "datetime": "2026-01-11T10:25:58Z",
+        "datetime": "2026-01-19T18:25:58Z",
         "stadium": stadiums[0],
         "score_text": "0 - 0",
         "name": "Galfer vs Gioberti",
@@ -357,7 +323,7 @@ export const matches = [
                 "is_home": true,
                 "penalties": 0,
                 "score": 2,
-                "team": { "id": 20, "local_league": "molecup", "slug": "marconi", "name": "Marconi", "short_name": "MAR" },
+                "team": { "id": 20, "local_league": "molecup", "slug": "marconi", "name": "Marconi", "short_name": "MAR", "logo": "/logos/teams/marconi.webp" }, // aggiungere il campo logo per i match
                 "events": [
                     { "id": 20, "team_match": 41, "player": "Giulia Moro", "minute": 21, "event_type": "GOAL" }
                 ]
@@ -386,7 +352,7 @@ export const matchEvents = [
 ]
 
 // Default aggregate export (optional)
-const apiData = { localleagues, /*teams,*/ players, /*stadiums, matches,*/ matchEvents };
+const apiData = { localleagues, teams, players, /*stadiums, matches,*/ matchEvents };
 
 // news
 
