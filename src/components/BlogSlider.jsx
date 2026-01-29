@@ -1,11 +1,12 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from './BlogSlider.module.css';
 
 const MAX_VISIBLE = 5;
+const DRAG_THRESHOLD = 50; // Soglia minima in pixel per considerare un drag
 
 export default function BlogSlider({ items = [], city, durationMs = 5000, fallbackImage = '/HomeFoto/19.webp' }) {
   const normalized = useMemo(() => {
@@ -23,7 +24,12 @@ export default function BlogSlider({ items = [], city, durationMs = 5000, fallba
 
   const [index, setIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
   const intervalRef = useRef(null);
+  const containerRef = useRef(null);
+  const dragStartX = useRef(0);
+  const dragCurrentX = useRef(0);
+  const hasDragged = useRef(false);
 
   useEffect(() => {
     if (slides.length <= 1 || isPaused) return;
@@ -32,6 +38,85 @@ export default function BlogSlider({ items = [], city, durationMs = 5000, fallba
     }, durationMs);
     return () => intervalRef.current && clearInterval(intervalRef.current);
   }, [slides.length, durationMs, isPaused]);
+
+  const handleDragStart = useCallback((clientX) => {
+    setIsDragging(true);
+    setIsPaused(true);
+    dragStartX.current = clientX;
+    dragCurrentX.current = clientX;
+    hasDragged.current = false;
+  }, []);
+
+  const handleDragMove = useCallback((clientX) => {
+    if (!isDragging) return;
+    dragCurrentX.current = clientX;
+    const diff = Math.abs(dragCurrentX.current - dragStartX.current);
+    if (diff > 10) {
+      hasDragged.current = true;
+    }
+  }, [isDragging]);
+
+  const handleDragEnd = useCallback(() => {
+    if (!isDragging) return;
+    setIsDragging(false);
+
+    const diff = dragStartX.current - dragCurrentX.current;
+
+    if (Math.abs(diff) >= DRAG_THRESHOLD && slides.length > 1) {
+      if (diff > 0) {
+        // Drag verso sinistra -> slide successiva
+        setIndex(prev => (prev + 1) % slides.length);
+      } else {
+        // Drag verso destra -> slide precedente
+        setIndex(prev => (prev - 1 + slides.length) % slides.length);
+      }
+    }
+
+    // Reset dopo un breve delay per permettere il click se non c'è stato drag
+    setTimeout(() => {
+      setIsPaused(false);
+    }, 100);
+  }, [isDragging, slides.length]);
+
+  // Mouse events
+  const handleMouseDown = useCallback((e) => {
+    handleDragStart(e.clientX);
+  }, [handleDragStart]);
+
+  const handleMouseMove = useCallback((e) => {
+    handleDragMove(e.clientX);
+  }, [handleDragMove]);
+
+  const handleMouseUp = useCallback(() => {
+    handleDragEnd();
+  }, [handleDragEnd]);
+
+  const handleMouseLeave = useCallback(() => {
+    if (isDragging) {
+      handleDragEnd();
+    }
+    setIsPaused(false);
+  }, [isDragging, handleDragEnd]);
+
+  // Touch events
+  const handleTouchStart = useCallback((e) => {
+    handleDragStart(e.touches[0].clientX);
+  }, [handleDragStart]);
+
+  const handleTouchMove = useCallback((e) => {
+    handleDragMove(e.touches[0].clientX);
+  }, [handleDragMove]);
+
+  const handleTouchEnd = useCallback(() => {
+    handleDragEnd();
+  }, [handleDragEnd]);
+
+  // Previeni il click sul link se c'è stato un drag
+  const handleLinkClick = useCallback((e) => {
+    if (hasDragged.current) {
+      e.preventDefault();
+    }
+  }, []);
 
   if (!slides.length) return null;
 
@@ -43,15 +128,24 @@ export default function BlogSlider({ items = [], city, durationMs = 5000, fallba
 
   return (
     <section
-      className={styles.scrollBlog}
+      ref={containerRef}
+      className={`${styles.scrollBlog} ${isDragging ? styles.dragging : ''}`}
       aria-roledescription="carousel"
       aria-label="Blog posts"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
+      onMouseEnter={() => !isDragging && setIsPaused(true)}
+      onMouseLeave={handleMouseLeave}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
     >
       <Link 
         href={`/competitions/${city}/blog/${current.slug}`}
         className={styles.card}
+        onClick={handleLinkClick}
+        draggable={false}
       >
         <div className={styles.imageWrap}>
           <Image

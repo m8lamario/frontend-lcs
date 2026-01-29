@@ -842,7 +842,7 @@
         font-size: max(2rem,min(5vw,5rem));
         font-weight: 500;
         position: fixed !important;
-        z-index: 9999 !important;
+        z-index: 0 !important;
     }
 }
 

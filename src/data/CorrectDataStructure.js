@@ -21,6 +21,10 @@ export const localleagues = [
         "stadiums": [
             { "id": 5, "name": "Stadio delle Terme", "address": "Largo delle Terme 12, 00184 Roma", "latitude": "41.889100", "longitude": "12.494500", "local_leagues": [2] },
             { "id": 6, "name": "Campo Garbatella", "address": "Via G. Pullino 50, 00154 Roma", "latitude": "41.862900", "longitude": "12.486700", "local_leagues": [2] }
+        ],
+        "partners": [ // da aggiungere
+            { "id": 1, "name": "Superiori Bresciane", "logo": "/partners/supbres.webp", "url": "https://www.superioribresciane.it" },
+            { "id": 2, "name": "Superiori Bresciane", "logo": "/partners/supbres.webp", "url": "https://www.superioribresciane.it" }
         ]
     },
     {
@@ -77,7 +81,7 @@ export const localleagues = [
         ],
         "stadiums": [
             { "id": 10, "name": "Stadio Collana", "address": "Viale Colli Aminei, Napoli", "latitude": "40.851800", "longitude": "14.268100", "local_leagues": [5] }
-        ]
+        ],
     },
     {
         "id": 5,
