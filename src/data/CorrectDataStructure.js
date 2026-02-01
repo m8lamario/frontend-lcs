@@ -25,6 +25,16 @@ export const localleagues = [
         "partners": [ // da aggiungere
             { "id": 1, "name": "Superiori Bresciane", "logo": "/partners/supbres.webp", "url": "https://www.superioribresciane.it" },
             { "id": 2, "name": "Superiori Bresciane", "logo": "/partners/supbres.webp", "url": "https://www.superioribresciane.it" }
+        ],
+        "socials": {
+            "instagram": "@leonessacup",
+            "tiktok": "@leonessacup"
+        },
+        "staff": [
+            { "id": 1, "role": "Coordinatore Staff", "instagram": "@coord_leonessa", "isLeader": true },
+            { "id": 2, "role": "Social Media Manager", "instagram": "@smm_leonessa" },
+            { "id": 3, "role": "Fotografo", "instagram": "@photo_leonessa" },
+            { "id": 4, "role": "Videomaker", "instagram": "@video_leonessa" }
         ]
     },
     {
@@ -45,6 +55,15 @@ export const localleagues = [
         ],
         "stadiums": [
             { "id": 8, "name": "Campo San Trovaso", "address": "Calle della Toletta 2, Venezia", "latitude": "45.430000", "longitude": "12.330000", "local_leagues": [3] }
+        ],
+        "socials": {
+            "instagram": "@olympiuscup",
+            "tiktok": "@olympiuscup"
+        },
+        "staff": [
+            { "id": 1, "role": "Coordinatore Staff", "instagram": "@coord_olympius", "isLeader": true },
+            { "id": 2, "role": "Arbitro Capo", "instagram": "@ref_olympius" },
+            { "id": 3, "role": "Responsabile Logistica", "instagram": "@log_olympius" }
         ]
     },
     {
@@ -64,6 +83,17 @@ export const localleagues = [
         ],
         "stadiums": [
             { "id": 9, "name": "Arena Baggio", "address": "Via Olivieri 22, Milano", "latitude": "45.457000", "longitude": "9.106000", "local_leagues": [4] }
+        ],
+        "socials": {
+            "instagram": "@turascup",
+            "tiktok": "@turascup"
+        },
+        "staff": [
+            { "id": 1, "role": "Coordinatore Staff", "instagram": "@coord_turas", "isLeader": true },
+            { "id": 2, "role": "Content Creator", "instagram": "@content_turas" },
+            { "id": 3, "role": "Speaker", "instagram": "@speaker_turas" },
+            { "id": 4, "role": "Grafico", "instagram": "@design_turas" },
+            { "id": 5, "role": "Fotografo", "instagram": "@photo_turas" }
         ]
     },
     {
@@ -82,6 +112,15 @@ export const localleagues = [
         "stadiums": [
             { "id": 10, "name": "Stadio Collana", "address": "Viale Colli Aminei, Napoli", "latitude": "40.851800", "longitude": "14.268100", "local_leagues": [5] }
         ],
+        "socials": {
+            "instagram": "@boracup",
+            "tiktok": "@boracup"
+        },
+        "staff": [
+            { "id": 1, "role": "Coordinatore Staff", "instagram": "@coord_bora", "isLeader": true },
+            { "id": 2, "role": "Videomaker", "instagram": "@video_bora" },
+            { "id": 3, "role": "Social Media", "instagram": "@social_bora" }
+        ]
     },
     {
         "id": 5,
@@ -98,6 +137,15 @@ export const localleagues = [
         ],
         "stadiums": [
             { "id": 11, "name": "PalaDozza", "address": "Piazza Manfredi Azzarita 8, Bologna", "latitude": "44.498000", "longitude": "11.324000", "local_leagues": [6] }
+        ],
+        "socials": {
+            "instagram": "@ferreacup",
+            "tiktok": "@ferreacup"
+        },
+        "staff": [
+            { "id": 1, "role": "Coordinatore Staff", "instagram": "@coord_ferrea", "isLeader": true },
+            { "id": 2, "role": "Fotografo", "instagram": "@photo_ferrea" },
+            { "id": 3, "role": "Responsabile Arbitri", "instagram": "@ref_ferrea" }
         ]
     },
     {
@@ -125,8 +173,24 @@ export const localleagues = [
             { "id": 5, "slug": "torretta2", "name": "Torretta", "short_name": "TOR", "local_league": 1, "coach": "Coach Andrei", "record": "3V - 2P", "pts": 9 }
         ],
         "stadiums": [
-            { "id": 1, "name": "Cus Torino", "address": "Via Milano, 63, 10095 Grugliasco TO", "latitude": "45.020000", "longitude": "7.100000", "local_leagues": [1] },
-            { "id": 2, "name": "Campo Maserati", "address": "Strada Settimo 120, Torino", "latitude": "45.056000", "longitude": "7.660000", "local_leagues": [1] }
+            { "id": 1, "name": "Cus Torino", "address": "Via Milano, 63, 10095 Grugliasco TO", "latitude": "45.020000", "longitude": "7.100000", "local_leagues": [1] }
+        ],
+        "socials": { //aggiunta
+            "instagram": "@molecup",
+            "tiktok": "@molecup"
+        },
+        "partners": [ //aggiunta
+            { "id": 1, "name": "Superiori Bresciane", "logo": "/partners/supbres.webp", "url": "https://www.superioribresciane.it" },
+        ],
+        "staff": [
+            { "id": 1, "role": "Coordinatore Staff", "instagram": "@coord_mole", "isLeader": true },
+            { "id": 2, "role": "Social Media Manager", "instagram": "@smm_mole" },
+            { "id": 3, "role": "Fotografo", "instagram": "@photo_mole" },
+            { "id": 4, "role": "Videomaker", "instagram": "@video_mole" },
+            { "id": 5, "role": "Speaker", "instagram": "@speaker_mole" },
+            { "id": 6, "role": "Grafico", "instagram": "@design_mole" },
+            { "id": 7, "role": "Grafico", "instagram": "@design_mole" },
+            { "id": 8, "role": "Grafico", "instagram": "@design_mole" }
         ]
     }
 ]

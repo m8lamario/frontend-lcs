@@ -1,0 +1,289 @@
+.socialLinks {
+    margin-top: 4rem;
+    padding: 3rem 2rem;
+    border-radius: 32px;
+    background: radial-gradient(circle at top, var(--secondary), var(--primary));
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+    overflow: hidden;
+    position: relative;
+}
+
+.header {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 2.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.eyebrow {
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.3rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 0.75rem;
+}
+
+.title {
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    margin-bottom: 0.5rem;
+    color: var(--text);
+}
+
+.subtitle {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.cardsContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 1.75rem 2rem;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-decoration: none;
+    color: var(--text);
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: translateY(-4px) scale(1.02);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.3),
+        0 0 60px var(--card-glow);
+}
+
+.cardGlow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--card-gradient);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 0;
+}
+
+.card:hover .cardGlow {
+    opacity: 0.15;
+}
+
+.cardContent {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+.iconWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: var(--card-gradient);
+    flex-shrink: 0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover .iconWrapper {
+    transform: scale(1.1) rotate(-3deg);
+    box-shadow: 0 8px 25px var(--card-glow);
+}
+
+.icon {
+    width: 28px;
+    height: 28px;
+    color: white;
+}
+
+.cardInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    flex: 1;
+    min-width: 0;
+}
+
+.platformName {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 500;
+}
+
+.handle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cardArrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+
+.cardArrow svg {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+}
+
+.card:hover .cardArrow {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.card:hover .cardArrow svg {
+    transform: translateX(3px);
+}
+
+.hoverEffect {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, var(--card-glow) 0%, transparent 70%);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease, opacity 0.4s ease;
+    opacity: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.hoverEffect.active {
+    width: 400px;
+    height: 400px;
+    opacity: 0.3;
+}
+
+/* Animazioni di entrata */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: slideUp 0.6s ease forwards;
+}
+
+.card:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .socialLinks {
+        padding: 2rem 1.25rem;
+        margin-top: 2rem;
+        border-radius: 24px;
+    }
+
+    .header {
+        margin-bottom: 2rem;
+    }
+
+    .eyebrow {
+        font-size: 0.75rem;
+        letter-spacing: 0.2rem;
+    }
+
+    .cardsContainer {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .card {
+        padding: 1.25rem 1.5rem;
+    }
+
+    .iconWrapper {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+    }
+
+    .icon {
+        width: 24px;
+        height: 24px;
+    }
+
+    .handle {
+        font-size: 1.1rem;
+    }
+
+    .cardArrow {
+        width: 36px;
+        height: 36px;
+    }
+
+    .cardArrow svg {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+@media (max-width: 400px) {
+    .socialLinks {
+        padding: 1.5rem 1rem;
+    }
+
+    .card {
+        padding: 1rem 1.25rem;
+    }
+
+    .cardContent {
+        gap: 1rem;
+    }
+
+    .iconWrapper {
+        width: 44px;
+        height: 44px;
+    }
+
+    .platformName {
+        font-size: 0.7rem;
+    }
+
+    .handle {
+        font-size: 1rem;
+    }
+}

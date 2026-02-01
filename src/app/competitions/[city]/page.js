@@ -5,6 +5,8 @@ import CityScrollNews from '@/components/CityScrollNews';
 import BlogSlider from '@/components/BlogSlider';
 import LocalPartners from '@/components/LocalPartners';
 import StadiumMap from '@/components/StadiumMap';
+import SocialLinks from '@/components/SocialLinks';
+import StaffSection from '@/components/StaffSection';
 import { getSortedPostsData } from '@/lib/blog';
 import styles from './city.module.css';
 
@@ -49,7 +51,9 @@ export default async function CityPage({ params }) {
     const hasNews = news.length > 0;
     const partners = Array.isArray(data.partners) ? data.partners : [];
     const stadiums = Array.isArray(data.stadiums) ? data.stadiums : [];
-    
+    const socials = data.socials || {};
+    const staff = Array.isArray(data.staff) ? data.staff : [];
+
     const blogPosts = getSortedPostsData(city);
     const hasBlog = blogPosts.length > 0;
     const backgroundImage = getBackgroundForCity(key);
@@ -69,9 +73,17 @@ export default async function CityPage({ params }) {
                     <BlogSlider items={blogPosts} city={city} durationMs={5000} />
                 )}
                 <LocalPartners partners={partners} />
+                <SocialLinks socials={socials} />
+                <StaffSection staff={staff} />
                 {stadiums.length > 0 && (
                     <section className={styles.stadiumSection}>
-                        <h2>Stadio e direzioni</h2>
+                        <div className={styles.stadiumHeader}>
+                            <p className={styles.stadiumEyebrow}>Dove giochiamo</p>
+                            <h2 className={styles.stadiumTitle}>Stadi e indicazioni</h2>
+                            <p className={styles.stadiumSubtitle}>
+                                Trova lo stadio più vicino e ottieni le indicazioni per raggiungerlo facilmente.
+                            </p>
+                        </div>
                         <div className={styles.stadiumGrid}>
                             {stadiums.map((stadium) => (
                                 <StadiumMap
