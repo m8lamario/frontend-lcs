@@ -35,6 +35,7 @@
 
 .city-page .banner .banner-content h1 {
     margin-top: 110px;
+    font-family: var(--font);
     font-size: clamp(2rem, 5vw, 5rem);
     font-weight: 500;
     color: var(--text);
@@ -842,10 +843,9 @@
         font-size: max(2rem,min(5vw,5rem));
         font-weight: 500;
         position: fixed !important;
-        z-index: 0 !important;
+        z-index: 9999 !important;
     }
 }
-
 .banner-match-center {
     background-image: linear-gradient(135deg, rgba(6, 10, 20, 0.85), rgba(24, 60, 92, 0.85));
     background-blend-mode: overlay;

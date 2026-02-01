@@ -23,7 +23,7 @@ const TestimonialsReveal = dynamic(() => import("@/components/TestimonialsReveal
 export default function Page() {
     return (
         <div className={"homeESL"}>
-            <HeroWithBackground text="estudentsleague" />
+            <HeroWithBackground text="lega calcio studenti" />
 
             <div className={"contentHome"}>
                 <EventReveal />

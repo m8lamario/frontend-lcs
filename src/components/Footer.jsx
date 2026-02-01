@@ -9,7 +9,7 @@ export default function Footer() {
             <footer>
                 <div className="logo-wrap">
                     <img className="logo" src="/logoCities/lcsw.png" alt="ESL Logo" loading="lazy"/>
-                    <h4>ESL</h4>
+                    <h4>LCS</h4>
                 </div>
                 <div className="socials">
                     <a href="#" aria-label="Facebook"><FacebookIcon /></a>

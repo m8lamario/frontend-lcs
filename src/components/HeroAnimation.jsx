@@ -71,14 +71,14 @@ export default function HeroAnimation({
           alignItems: "center",
           gap: "0.02em",
           color: "var(--text)",
-            fontFamily: "Audiowide, sans-serif",
+            fontFamily: "var(--font)",
             textTransform: "uppercase",
           textAlign: "center",
           lineHeight: 1.05,
           fontWeight: 400,
           // dimensioni fluide per diversi viewport
-          fontSize: "clamp(32px, 7vw, 96px)",
-          letterSpacing: "0.01em",
+          fontSize: "clamp(32px, 13vw, 200px)",
+          letterSpacing: "0.02em",
           whiteSpace: "pre-wrap",
         }}
       >

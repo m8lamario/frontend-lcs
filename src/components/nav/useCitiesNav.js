@@ -25,7 +25,7 @@ const cityNavItems = (localleagues || []).map(({ slug, name }) => {
 });
 
 const defaultCities = [
-  { name: "ESL", href: "/", slug: "esl", logoSrc: CITY_LOGOS.esl },
+  { name: "LSC", href: "/", slug: "esl", logoSrc: CITY_LOGOS.esl },
   ...cityNavItems,
   { name: "", href: "", slug: "spacer", logoSrc: "" },
 ];

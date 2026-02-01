@@ -2,7 +2,7 @@
     padding: 150px 6vw;
     margin: 0 auto;
     color: var(--text);
-    font-family: var(--font-secondary);
+    font-family: var(--font-secondary), serif;
 }
 
 .classifica__intro {

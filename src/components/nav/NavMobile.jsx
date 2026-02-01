@@ -41,6 +41,20 @@ export default function NavMobile({ mobileCities, sectionLinks }) {
     return matchIndex >= 0 ? matchIndex : 0;
   });
 
+  const extractSectionFromPathname = (path = "") => {
+    const match = path.match(/\/competitions\/[^/]+\/([^/]+)/i);
+    return match ? match[1].toLowerCase() : "";
+  };
+
+  const [focusedSectionIndex, setFocusedSectionIndex] = useState(() => {
+    const sectionFromPath = extractSectionFromPathname(pathname || "");
+    if (!sectionFromPath) return 0; // Home di default
+    const matchIndex = sectionLinks.findIndex(
+      (link) => link.href.replace(/^\//, "").toLowerCase() === sectionFromPath
+    );
+    return matchIndex >= 0 ? matchIndex : 0;
+  });
+
   useEffect(() => {
     const slugFromPath = getSlugFromPathname(pathname || "");
     if (!slugFromPath) return;
@@ -51,6 +65,19 @@ export default function NavMobile({ mobileCities, sectionLinks }) {
       setFocusedCityIndex((prev) => (prev === matchIndex ? prev : matchIndex));
     }
   }, [pathname, mobileCities]);
+
+  useEffect(() => {
+    const sectionFromPath = extractSectionFromPathname(pathname || "");
+    const matchIndex = sectionLinks.findIndex(
+      (link) => link.href.replace(/^\//, "").toLowerCase() === sectionFromPath
+    );
+    if (matchIndex >= 0) {
+      setFocusedSectionIndex((prev) => (prev === matchIndex ? prev : matchIndex));
+    } else if (!sectionFromPath || sectionFromPath === "") {
+      // Se siamo sulla home della città, focus su Home (index 0)
+      setFocusedSectionIndex(0);
+    }
+  }, [pathname, sectionLinks]);
 
   const focusedCitySlug = useMemo(() => {
     const city = mobileCities[focusedCityIndex];
@@ -166,15 +193,17 @@ export default function NavMobile({ mobileCities, sectionLinks }) {
       }
     });
     if (left) left.scrollLeft = 0;
-    if (sections) sections.scrollLeft = 0;
     scrollItemIntoCenter(right, focusedCityIndex);
+    scrollItemIntoCenter(sections, focusedSectionIndex);
     const cleanLeft = attachFocusHandlers(left, "x");
     const cleanRight = attachFocusHandlers(right, "x", setFocusedCityIndex);
-    const cleanSections = attachFocusHandlers(sections, "x");
+    const cleanSections = attachFocusHandlers(sections, "x", setFocusedSectionIndex);
     [left, right, sections].forEach((list) => {
       if (!list) return;
       const lis = list.querySelectorAll("li");
-      const focusIndex = list === right ? focusedCityIndex : 0;
+      let focusIndex = 0;
+      if (list === right) focusIndex = focusedCityIndex;
+      else if (list === sections) focusIndex = focusedSectionIndex;
       lis.forEach((li, i) => li.classList.toggle("focused", i === focusIndex));
     });
     return () => {
@@ -182,7 +211,7 @@ export default function NavMobile({ mobileCities, sectionLinks }) {
       cleanRight();
       cleanSections();
     };
-  }, [open, focusedCityIndex]);
+  }, [open, focusedCityIndex, focusedSectionIndex]);
 
   useEffect(() => {
     if (!open) return;
@@ -218,8 +247,9 @@ export default function NavMobile({ mobileCities, sectionLinks }) {
     router.push(city.href);
   };
 
-  const handleMobileSectionClick = (e, link) => {
+  const handleMobileSectionClick = (e, link, index) => {
     e.preventDefault();
+    setFocusedSectionIndex(index);
     setOpen(false);
     router.push(buildContextHref(link.href));
   };
@@ -266,9 +296,9 @@ export default function NavMobile({ mobileCities, sectionLinks }) {
               ))}
             </ul>
             <ul className="menu-right-list sections" ref={mobileSectionsListRef}>
-              {sectionLinks.map((link) => (
+              {sectionLinks.map((link, index) => (
                 <li key={link.href}>
-                  <a href={buildContextHref(link.href)} onClick={(e) => handleMobileSectionClick(e, link)}>
+                  <a href={buildContextHref(link.href)} onClick={(e) => handleMobileSectionClick(e, link, index)}>
                     {link.name}
                   </a>
                 </li>

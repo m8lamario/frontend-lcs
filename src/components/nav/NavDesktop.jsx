@@ -225,7 +225,6 @@ export default function NavDesktop({ cities, mounted, persistCitiesOrder }) {
           ))}
         </ul>
         <div className="triangle"></div>
-        <div className="stripes"></div>
       </div>
     </>
   );

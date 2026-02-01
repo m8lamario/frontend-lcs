@@ -19,14 +19,14 @@ body{
 :root {
     --background: #000000;
     --zero: rgba(255, 255, 255, 0.3);
-    --primary: #061cda;
-    --secondary: #0066df;
-    --text: #ffff;
-    --third: #45ca11;
-    --aux: #FFCB05;
-    --glassmorphism-bg: rgba(6, 28, 218, 0.9);
-    --font: 'Audiowide', sans-serif;
-    --font-secondary: 'geist', sans-serif;
+    --primary: #011674;
+    --secondary: #012bfd;
+    --text: #f6eae3;
+    --third: #00edaf;
+    --aux: #68ffd5;
+    --glassmorphism-bg: rgba(1, 22, 116, 0.9);
+    --font: 'komu-new-c';
+    --font-secondary: 'komu-new-c';
     --fs-p-mobile: 14px;
     --fs-p-desktop: 16px;
     --fs-h4-mobile: 16px;
@@ -43,7 +43,7 @@ body{
 /* Bridge gradiente tra slideshow e colore fisso */
 .contentHome {
     position: relative;
-    background-color: var(--glassmorphism-bg);
+    background-color: var(--primary);
     isolation: isolate; /* nuovo stacking context */
 }
 
@@ -54,7 +54,7 @@ body{
     right: 0;
     top: -160px;        /* estende sopra la sezione per coprire la coda dello slideshow */
     height: 160px;      /* altezza della sfumatura */
-    background: linear-gradient(to bottom, rgba(0,0,0,0),  var(--glassmorphism-bg));
+    background: linear-gradient(to bottom, rgba(0,0,0,0),  var(--primary));
     pointer-events: none;
     z-index: 5;         /* sopra allo slideshow, sotto ai contenuti */
 }

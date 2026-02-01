@@ -30,7 +30,7 @@
 
 .hero h1 {
     font-size: clamp(32px, 4.4vw, 48px);
-    font-family: var(--font, 'Audiowide'), sans-serif;
+    font-family: var(--font), sans-serif;
 }
 
 .lead {

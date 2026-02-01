@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./Styles/Nav.css";
 import { usePathname } from "next/navigation";
 import NavDesktop from "./nav/NavDesktop.jsx";
@@ -21,6 +21,39 @@ export default function Nav() {
   const [navLogoSrc, setNavLogoSrc] = useState(DEFAULT_NAV_LOGO);
   const [navLogoLabel, setNavLogoLabel] = useState("LCS");
 
+  // Smart navbar: hide on scroll down, show on scroll up
+  const [navHidden, setNavHidden] = useState(false);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Solo su schermi > 1100px
+      if (window.innerWidth <= 1100) {
+        setNavHidden(false);
+        return;
+      }
+
+      const currentScrollY = window.scrollY;
+      const scrollingDown = currentScrollY > lastScrollY.current;
+      const scrolledPastThreshold = currentScrollY > 100;
+
+      if (scrollingDown && scrolledPastThreshold) {
+        setNavHidden(true);
+      } else {
+        setNavHidden(false);
+      }
+
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
+  }, []);
+
   useEffect(() => {
     // Trova la città corrente basandosi sullo slug estratto dal pathname
     if (currentCitySlug && currentCitySlug !== "esl") {
@@ -40,7 +73,7 @@ export default function Nav() {
   }, [cities, currentCitySlug]);
 
   return (
-    <nav>
+    <nav className={navHidden ? "nav-hidden" : undefined} suppressHydrationWarning>
       <a href="/" className="logo" aria-label={`Vai alla home di ${navLogoLabel}`} suppressHydrationWarning>
         <img
           src={navLogoSrc}

@@ -32,7 +32,7 @@ export default function HeroWithBackground() {
     }, []);
 
     const images = useMemo(() => ["/eslHome/13.webp", "/eslHome/19.webp"], []);
-    const displayText = isSmall ? "esl" : "estudentsleague";
+    const displayText = isSmall ? "lcs" : "lega calcio studenti";
 
     return (
         <section
