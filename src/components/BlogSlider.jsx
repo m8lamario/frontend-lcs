@@ -175,6 +175,7 @@ export default function BlogSlider({ items = [], city, durationMs = 5000, fallba
             <button
               key={idx}
               type="button"
+              aria-label="carousel indicator"
               className={`${styles.indicatorButton} ${idx === index ? styles.indicatorActive : ''}`}
               onClick={(e) => {
                 e.preventDefault();

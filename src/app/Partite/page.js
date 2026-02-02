@@ -5,7 +5,7 @@ import { eslMatches } from '@/data/eslData';
 import '../competitions/[city]/[section]/section.css';
 import './partite.css';
 
-const DEFAULT_CITY_SLUG = 'partite';
+const DEFAULT_CITY_SLUG = 'esl';
 const MATCH_DURATION_MINUTES = 50;
 const MATCH_CENTER_TITLE = 'LCS Match Center';
 const MATCH_CENTER_TAGLINE = 'Il recap nazionale con i migliori highlights ESL.';

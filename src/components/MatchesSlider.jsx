@@ -169,7 +169,11 @@ export default function MatchesSlider({ matches = [], citySlug }) {
       const liveNow = start != null && diffMin >= 0 && diffMin < MATCH_DURATION;
       const finished = start != null && diffMin >= MATCH_DURATION;
       const liveText = liveNow ? `${diffMin}' LIVE` : null;
-      const matchHref = normalizedCity && m.id ? `/competitions/${normalizedCity}/partite/${m.id}` : undefined;
+      // Se citySlug è 'esl' o 'lsc' o vuoto, siamo sulla root LSC e il link deve essere /Partite/id
+      const isLSCRoot = !normalizedCity || normalizedCity === 'esl' || normalizedCity === 'lsc';
+      const matchHref = m.id
+        ? (isLSCRoot ? `/Partite/${m.id}` : `/competitions/${normalizedCity}/partite/${m.id}`)
+        : undefined;
 
       return (
         <Link key={m.id || `${shortDate}-${time}`} href={matchHref || '#'} className="match-card" ref={setCardRef} aria-label={`Dettaglio partita ${m.home?.name || ''} contro ${m.away?.name || ''}`}>

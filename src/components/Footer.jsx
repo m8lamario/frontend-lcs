@@ -1,6 +1,6 @@
 import Link from "next/link";
 import './Styles/Footer.css';
-import { FacebookIcon, TwitterIcon, DiscordIcon, LinkedInIcon } from './Icons';
+import {InstagramIcon, TikTokIcon} from './Icons';
 
 export default function Footer() {
     const currentYear = new Date().getFullYear();
@@ -12,10 +12,8 @@ export default function Footer() {
                     <h4>LCS</h4>
                 </div>
                 <div className="socials">
-                    <a href="#" aria-label="Facebook"><FacebookIcon /></a>
-                    <a href="#" aria-label="Twitter"><TwitterIcon /></a>
-                    <a href="#" aria-label="Discord"><DiscordIcon /></a>
-                    <a href="#" aria-label="LinkedIn"><LinkedInIcon /></a>
+                    <a href="https://www.instagram.com/lcsrealemutua/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><InstagramIcon /></a>
+                    <a href="https://www.tiktok.com/@molecup_torino" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><TikTokIcon /></a>
                 </div>
                 <div className="links">
                     <ul>
