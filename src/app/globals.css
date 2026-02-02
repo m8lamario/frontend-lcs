@@ -12,10 +12,6 @@ html, body, #__next {
     border: 0;
 }
 
-body{
-    margin:0;
-    background-color: var(--glassmorphism-bg);
-}
 :root {
     --background: #000000;
     --zero: rgba(255, 255, 255, 0.3);
@@ -27,10 +23,15 @@ body{
     --glassmorphism-bg: rgba(1, 22, 116, 0.9);
     --font: 'komu-new-c';
     --font-secondary: 'komu-new-c';
+    --font-p: "helvetica-lt-pro";
     --fs-p-mobile: 14px;
     --fs-p-desktop: 16px;
     --fs-h4-mobile: 16px;
     --lt-row-gap: 18px;
+}
+body{
+    margin:0;
+    background-color: var(--primary);
 }
 .logo{font-weight:700}
 .main{

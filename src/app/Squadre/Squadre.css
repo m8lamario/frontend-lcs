@@ -5,8 +5,12 @@
     gap: clamp(32px, 4vw, 54px);
     color: var(--text);
     font-family: var(--font-secondary), sans-serif;
+    letter-spacing: 0.02em;
+    font-weight: 200;
 }
-
+.squadre-page p {
+    font-family: var(--font-p), serif;
+}
 .glass-panel {
     position: relative;
     border-radius: 24px;

@@ -23,10 +23,15 @@
     background: rgba(255,255,255,0.06);
 }
 
+.classifica p {
+    font-family: var(--font-p), serif;
+}
+
 .classifica h1 {
     font-family: var(--font);
     font-size: clamp(36px, 4vw, 56px);
     margin: 18px 0 10px;
+    font-family: var(--font-p), serif;
 }
 
 .classifica__intro p {
