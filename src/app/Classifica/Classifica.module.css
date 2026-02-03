@@ -28,10 +28,9 @@
 }
 
 .classifica h1 {
-    font-family: var(--font);
+    font-family: var(--font), serif;
     font-size: clamp(36px, 4vw, 56px);
     margin: 18px 0 10px;
-    font-family: var(--font-p), serif;
 }
 
 .classifica__intro p {
@@ -65,7 +64,7 @@
 }
 
 .bracket__roundLabel {
-    font-family: var(--font);
+    font-family: var(--font), serif;
     text-align: center;
     text-transform: uppercase;
     letter-spacing: 0.2em;
