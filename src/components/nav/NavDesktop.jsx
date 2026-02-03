@@ -167,6 +167,34 @@ export default function NavDesktop({ cities, mounted, persistCitiesOrder }) {
     } catch {}
   }, []);
 
+  useEffect(() => {
+    const normalizeHref = (href = "") => href.replace(/^\//, "").toLowerCase();
+    const getSectionFromPath = (path = "") => {
+      const cleanPath = (path || "/").split("?")[0].split("#")[0];
+      if (/^\/competitions\/[^/]+\/?$/i.test(cleanPath)) return "";
+      const competitionMatch = cleanPath.match(/^\/competitions\/[^/]+\/([^/]+)/i);
+      if (competitionMatch) return decodeURIComponent(competitionMatch[1] || "").toLowerCase();
+      const rootSection = cleanPath.replace(/^\//, "").split("/")[0] || "";
+      return decodeURIComponent(rootSection).toLowerCase();
+    };
+
+    const sectionSlug = getSectionFromPath(pathname || "/");
+    setNavLinks((prev) => {
+      const idx = prev.findIndex((l) => {
+        if (!sectionSlug) return (l.href || "/") === "/";
+        return normalizeHref(l.href) === sectionSlug;
+      });
+      if (idx <= 0) return prev;
+      const arr = [...prev];
+      const [item] = arr.splice(idx, 1);
+      const next = [item, ...arr];
+      try {
+        localStorage.setItem(RIGHT_ORDER_KEY, JSON.stringify(next));
+      } catch {}
+      return next;
+    });
+  }, [pathname]);
+
   const handleRightLinkClick = (e, link, index) => {
     // rispetta click con modifier o tasto non sinistro
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;

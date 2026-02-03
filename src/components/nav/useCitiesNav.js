@@ -71,9 +71,12 @@ export function useCitiesNav(pathname) {
 
     const path = pathname || "/";
     let currentCitySlug = "";
-    if (/^\/competitions\//i.test(path))
+    const isCompetitionsPath = /^\/competitions\//i.test(path);
+    if (isCompetitionsPath) {
       currentCitySlug = decodeURIComponent(path.split("/")[2] || "").toLowerCase();
-    else currentCitySlug = decodeURIComponent(path.replace(/^\//, "")).toLowerCase();
+    } else {
+      currentCitySlug = "esl";
+    }
 
     if (currentCitySlug) {
       const idx = baseOrder.findIndex((c) => {
@@ -92,8 +95,8 @@ export function useCitiesNav(pathname) {
       }
     }
 
-    // FORZA LSC PRIMA SE SIAMO SU ROOT "/" ANCHE SE L'ORDINE SALVATO AVEVA ALTRO AL PRIMO POSTO
-    if (path === "/") {
+    // FORZA LSC PRIMA SE NON SIAMO DENTRO /competitions
+    if (!isCompetitionsPath) {
       const idxLSC = baseOrder.findIndex(
         (c) => c.href === "/" || c.name.toLowerCase() === "esl"
       );
@@ -114,22 +117,54 @@ export function useCitiesNav(pathname) {
   }, [pathname, mounted]);
 
   useEffect(() => {
+    if (!mounted) return;
     if (typeof window === "undefined") return;
+
+    const normalizeHref = (href = "") => href.replace(/^\//, "").toLowerCase();
+    const getSectionFromPath = (path = "") => {
+      const cleanPath = (path || "/").split("?")[0].split("#")[0];
+      if (/^\/competitions\/[^/]+\/?$/i.test(cleanPath)) return "";
+      const competitionMatch = cleanPath.match(/^\/competitions\/[^/]+\/([^/]+)/i);
+      if (competitionMatch) return decodeURIComponent(competitionMatch[1] || "").toLowerCase();
+      const rootSection = cleanPath.replace(/^\//, "").split("/")[0] || "";
+      return decodeURIComponent(rootSection).toLowerCase();
+    };
+
+    let baseOrder = [...SECTION_LINKS];
     try {
       const raw = localStorage.getItem("navSectionLinksOrder");
-      if (!raw) return;
-      const saved = JSON.parse(raw);
-      if (!Array.isArray(saved) || !saved.length) return;
-      const hrefOrder = saved.map((l) => l.href);
-      const merged = [
-        ...hrefOrder
-          .map((h) => SECTION_LINKS.find((l) => l.href === h))
-          .filter(Boolean),
-        ...SECTION_LINKS.filter((l) => !hrefOrder.includes(l.href)),
-      ];
-      setSectionLinks(merged);
+      if (raw) {
+        const saved = JSON.parse(raw);
+        if (Array.isArray(saved) && saved.length) {
+          const hrefOrder = saved.map((l) => l.href);
+          baseOrder = [
+            ...hrefOrder
+              .map((h) => SECTION_LINKS.find((l) => l.href === h))
+              .filter(Boolean),
+            ...SECTION_LINKS.filter((l) => !hrefOrder.includes(l.href)),
+          ];
+        }
+      }
     } catch {}
-  }, []);
+
+    const sectionSlug = getSectionFromPath(pathname || "/");
+    const idx = baseOrder.findIndex((l) => {
+      if (!sectionSlug) return (l.href || "/") === "/";
+      return normalizeHref(l.href) === sectionSlug;
+    });
+    if (idx > 0) {
+      const arr = [...baseOrder];
+      const [item] = arr.splice(idx, 1);
+      arr.unshift(item);
+      baseOrder = arr;
+    }
+
+    const changed =
+      baseOrder.length !== sectionLinks.length ||
+      baseOrder.some((l, i) => l.href !== sectionLinks[i]?.href);
+    if (changed) setSectionLinks(baseOrder);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname, mounted]);
 
   const mobileCities = defaultCities;
 
